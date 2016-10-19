@@ -1,0 +1,21 @@
+.post-text {
+  text-align: center;
+}
+
+.blog-title {
+  @extend .post-text;
+}
+
+.post {
+  @extend .post-text;
+}
+
+.post-content {
+  max-width: 50%;
+  text-align: justify;
+}
+
+.comments {
+  margin-top: 5%;
+  max-width: 30%;
+}

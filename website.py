@@ -1,7 +1,7 @@
 #! /usr/bin/python2
 from functools import partial
 
-from flask import Blueprint, abort, Flask, render_template, flash, request, send_from_directory
+from flask import abort, Flask, render_template, flash, request, send_from_directory
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 
@@ -30,30 +30,43 @@ def cacheit(key, thunk):
     return cached
 
 def NeverWhere(configfile=None):
-    blueprint = Blueprint("NeverWhere",__name__, template_folder="templates")
 
-    @blueprint.route('/favicon.ico')
+    app = Flask(__name__)
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
     #def favicon():
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-    @blueprint.route("/", methods=("GET", "POST"))
+    @app.route("/", methods=("GET", "POST"))
     def index():
+        print "matched index"
         return render_template("index.html")
 
-    @blueprint.route("./scripts/<filename>")
+    @app.route("/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):
-        return send_from_directory(app.config["scripts"], filename)
+        print "matched scripts route"
+        return send_from_directory("/home/wes/riotblog/scripts/", filename)
 
-    @blueprint.route("./styles/<filename>")
+    @app.route("/styles/<filename>", methods=("GET", "POST"))
     def send_style(filename):
-        return send_from_directory(app.config["styles"], filename)
+        return send_from_directory("./styles", filename)
 
-    app = Flask(__name__)
-    app.register_blueprint(blueprint, url_prefix="/")
+    @app.route("/switchpost/<pid>")
+    def switchPost(pid):
+        posts = {
+                    "1" : "Post one! ",
+                    "2" : "Post two! "
+                }
+        return posts.get(pid, "Nothing here!")
+
+
+
+    @app.route("/<path:path>")
+    def page_not_found(path):
+        return "Custom failure message"
+
     Bootstrap(app)
-    app.config["scripts"] = "./scripts"
-    app.config["styles"] = "./styles"
+    app.run(debug=True)
     return app
 
 app = NeverWhere()
