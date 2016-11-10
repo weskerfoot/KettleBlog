@@ -1,3 +1,12 @@
+@mixin responsive-block($bw) {
+  @media (max-width: 700px) {
+    max-width: $bw+20%;
+  }
+  @media (max-width: 500px) {
+    max-width: $bw+40%;
+  }
+}
+
 .post-text {
   text-align: center;
 }
@@ -13,9 +22,48 @@
 .post-content {
   max-width: 50%;
   text-align: justify;
+  font-size: 1.5em;
+  @include responsive-block(50);
+}
+
+.comment-block {
+  max-width: 30%;
+  @include responsive-block(30);
 }
 
 .comments {
   margin-top: 5%;
-  max-width: 30%;
+  @extend .comment-block;
+}
+
+.comment {
+  margin-top: 2%;
+  max-width: 40%;
+  @include responsive-block(45);
+}
+
+.comments-loader {
+  margin-top: 2%;
+}
+
+.comment-body {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.postnav {
+  @extend .post-text;
+}
+
+.rounded-button {
+  border-radius: 13px;
+}
+
+.maxinput {
+  background-color: grey;
+}
+
+.maxwarn {
+  margin-top: 15px;
+  @extend .comment-block;
 }

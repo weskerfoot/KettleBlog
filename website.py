@@ -5,10 +5,14 @@ from flask import abort, Flask, render_template, flash, request, send_from_direc
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 
+from time import sleep
+
 from urllib import unquote
 
 from urllib import quote, unquote
 from json import dumps, loads
+
+from comment import testcomments
 
 from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
@@ -54,11 +58,20 @@ def NeverWhere(configfile=None):
     @app.route("/switchpost/<pid>")
     def switchPost(pid):
         posts = {
-                    "1" : "Post one! ",
-                    "2" : "Post two! "
+                    "1" : "Post one is changed! ",
+                    "2" : "Post two here! "
                 }
-        return posts.get(pid, "Nothing here!")
+        return posts.get(pid, "false")
 
+
+    @app.route("/comments/<pid>")
+    def comments(pid):
+        sleep(5);
+        try:
+            return testcomments.get(int(pid), dumps([]))
+        except ValueError as e:
+            print e
+            return dumps([])
 
 
     @app.route("/<path:path>")
