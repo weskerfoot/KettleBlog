@@ -54,7 +54,6 @@ next() {
   }
 }
 
-
 this.setPost = function(pid) {
   self.update();
   self.loading = true;
