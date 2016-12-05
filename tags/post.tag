@@ -4,7 +4,11 @@
     <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading} onclick={next}>Next Post</button>
   </div>
 
-  <div if={!loading} class="post centered">
+  <h4 class="post centered" if={nomore}>
+    No More Posts!
+  </h4>
+
+  <div if={!(loading || nomore)} class="post centered">
     <h4>{ opts.title }</h4>
     <h5>By { opts.creator }</h5>
     <p class="post-content centered text-break">{ content }</p>
@@ -66,9 +70,12 @@ this.setPost = function(pid) {
       function(body) {
         if (body === "false") {
           self.nomore = true;
+          route("/");
+          self.update()
         }
         else {
           self.content = R.join(" ")(R.repeat(body, 20));
+          route("/"+pid);
         }
 
         self.loading = false;

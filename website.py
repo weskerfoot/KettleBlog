@@ -1,4 +1,4 @@
-#! /usr/bin/python2
+#! /usr/bin/python3
 from functools import partial
 
 from flask import abort, Flask, render_template, flash, request, send_from_directory
@@ -7,9 +7,8 @@ from flask_appconfig import AppConfig
 
 from time import sleep
 
-from urllib import unquote
-
-from urllib import quote, unquote
+from urllib.parse import unquote
+from urllib.parse import quote, unquote
 from json import dumps, loads
 
 from comment import testcomments
@@ -43,12 +42,12 @@ def NeverWhere(configfile=None):
 
     @app.route("/", methods=("GET", "POST"))
     def index():
-        print "matched index"
+        print("matched index")
         return render_template("index.html")
 
     @app.route("/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):
-        print "matched scripts route"
+        print("matched scripts route")
         return send_from_directory("/home/wes/riotblog/scripts/", filename)
 
     @app.route("/styles/<filename>", methods=("GET", "POST"))
@@ -59,7 +58,7 @@ def NeverWhere(configfile=None):
     def switchPost(pid):
         posts = {
                     "1" : "Post one is changed! ",
-                    "2" : "Post two here! "
+                    "2" : "Post two here and it's changed! "
                 }
         return posts.get(pid, "false")
 
@@ -70,9 +69,12 @@ def NeverWhere(configfile=None):
         try:
             return testcomments.get(int(pid), dumps([]))
         except ValueError as e:
-            print e
+            print(e)
             return dumps([])
 
+    @app.route("/insert/<pid>")
+    def insert(pid):
+        print("inserting new post")
 
     @app.route("/<path:path>")
     def page_not_found(path):
