@@ -1,10 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import           Control.Applicative
-import           Snap.Core
-import           Snap.Util.FileServe
-import           Snap.Http.Server
+import Control.Applicative
+import Snap.Core
+import Snap.Util.FileServe
+import Snap.Http.Server
+import qualified Data.Text.IO as TIO (readFile)
+import Data.Text
+import qualified Data.HashMap.Strict as HM
+import Text.Hamlet
 
 main :: IO ()
 main = quickHttpServe site
