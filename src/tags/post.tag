@@ -61,7 +61,7 @@ next() {
 this.setPost = function(pid) {
   self.update();
   self.loading = true;
-  fetch("/switchpost/"+pid)
+  fetch("/blog/switchpost/"+pid)
     .then(
       function(resp) {
         return resp.text();

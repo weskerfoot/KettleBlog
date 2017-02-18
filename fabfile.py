@@ -23,26 +23,32 @@ def minifyJS():
 
 @task
 def buildVenv():
-    local("virtualenv -p $(which python3) ./venv")
-    with prefix("source ./venv/bin/activate"):
-        local("pip3 install -r requirements.txt")
-    local("mv venv ./build/")
+    with cd("~/build"):
+        run("virtualenv -p $(which python3) ~/build/venv")
+        with prefix("source ~/build/venv/bin/activate"):
+            run("pip3 install -r requirements.txt")
 
 @task
 def copyFiles():
-    local("cp ./{blog.ini,blog.service} ./build/")
+    local("cp ./{blog.ini,blog.service,requirements.txt} ./build/")
     local("cp ./src/*py ./build/")
     local("cp ./src/styles/*.css ./build/styles/")
     local("cp -r ./src/templates ./build/templates")
 
 @task
 def upload():
+    run("rm -r ~/build")
     run("mkdir -p ~/build")
     rsync_project(local_dir="./build/", remote_dir="~/build/", delete=True, exclude=[".git"])
 
 @task
 def serveUp():
-    sudo("cp -r /home/wes/build /srv/riotblog")
+    sudo("rm -r /srv/http/riotblog")
+    sudo("cp -r /home/wes/build /srv/http/riotblog")
+    sudo("cp /home/wes/build/blog.service /etc/systemd/system/blog.service")
+    sudo("systemctl daemon-reload")
+    sudo("systemctl enable blog.service")
+    sudo("systemctl restart blog.service")
 
 @task(default=True)
 def build():
@@ -51,7 +57,7 @@ def build():
     buildTags()
     buildScss()
     minifyJS()
-    buildVenv()
     copyFiles()
     upload()
+    buildVenv()
     serveUp()

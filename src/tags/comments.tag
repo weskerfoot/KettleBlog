@@ -78,7 +78,7 @@ echo(ev) {
 var self = this;
 
 getComments(pid) {
-  fetch("/comments/"+pid)
+  fetch("/blog/comments/"+pid)
     .then(
       function(resp) {
         return resp.text();

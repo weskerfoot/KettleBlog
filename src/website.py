@@ -39,21 +39,21 @@ def NeverWhere(configfile=None):
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-    @app.route("/", methods=("GET", "POST"))
+    @app.route("/blog/", methods=("GET", "POST"))
     def index():
         print("matched index")
         return render_template("index.html")
 
-    @app.route("/scripts/<filename>", methods=("GET", "POST"))
+    @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):
         print("matched scripts route")
-        return send_from_directory("./scripts", filename)
+        return send_from_directory("/srv/http/riotblog/scripts", filename)
 
-    @app.route("/styles/<filename>", methods=("GET", "POST"))
+    @app.route("/blog/styles/<filename>", methods=("GET", "POST"))
     def send_style(filename):
-        return send_from_directory("./styles", filename)
+        return send_from_directory("/srv/http/riotblog/styles", filename)
 
-    @app.route("/switchpost/<pid>")
+    @app.route("/blog/switchpost/<pid>")
     def switchPost(pid):
         posts = {
                     "1" : "Post one is changed! ",
@@ -62,7 +62,7 @@ def NeverWhere(configfile=None):
         return posts.get(pid, "false")
 
 
-    @app.route("/comments/<pid>")
+    @app.route("/blog/comments/<pid>")
     def comments(pid):
         sleep(5);
         try:
@@ -71,7 +71,7 @@ def NeverWhere(configfile=None):
             print(e)
             return dumps([])
 
-    @app.route("/insert/<pid>")
+    @app.route("/blog/insert/<pid>")
     def insert(pid):
         print("inserting new post")
 
@@ -79,10 +79,9 @@ def NeverWhere(configfile=None):
     def page_not_found(path):
         return "Custom failure message"
 
-    app.run(debug=True)
     return app
 
 app = NeverWhere()
 
-if __name__ == "__main__":
-    NeverWhere("./appconfig").run(host="localhost", port=8001, debug=True)
+#if __name__ == "__main__":
+    #NeverWhere("./appconfig").run(host="localhost", port=8001, debug=True)
