@@ -1,0 +1,12 @@
+[Unit]
+Description=My Blargh
+After=network.target
+
+[Service]
+User=http
+Group=http
+WorkingDirectory=/srv/http/riotblog
+ExecStart=/usr/bin/uwsgi --ini /srv/http/riotblog/blog.ini
+
+[Install]
+WantedBy=multi.user.target

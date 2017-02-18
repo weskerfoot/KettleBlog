@@ -3,3 +3,4 @@
 *.scssc
 *.swp
 *.bak
+*venv*

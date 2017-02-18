@@ -1,7 +1,0 @@
-flags: {}
-extra-package-dbs: []
-packages:
-- '.'
-extra-deps:
-- ginger-0.3.7.2
-resolver: lts-7.12

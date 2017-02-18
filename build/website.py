@@ -2,7 +2,6 @@
 from functools import partial
 
 from flask import abort, Flask, render_template, flash, request, send_from_directory
-from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 
 from time import sleep
@@ -48,7 +47,7 @@ def NeverWhere(configfile=None):
     @app.route("/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):
         print("matched scripts route")
-        return send_from_directory("/home/wes/riotblog/scripts/", filename)
+        return send_from_directory("./scripts", filename)
 
     @app.route("/styles/<filename>", methods=("GET", "POST"))
     def send_style(filename):
@@ -80,7 +79,6 @@ def NeverWhere(configfile=None):
     def page_not_found(path):
         return "Custom failure message"
 
-    Bootstrap(app)
     app.run(debug=True)
     return app
 
