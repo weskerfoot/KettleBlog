@@ -29,6 +29,13 @@ def buildVenv():
             run("pip3 install -r requirements.txt")
 
 @task
+def buildLocalVenv():
+    with lcd("~/riotblog/build"):
+        local("virtualenv -p $(which python3) ~/riotblog/build/venv")
+        with prefix("source ~/riotblog/build/venv/bin/activate"):
+            local("pip3 install -r requirements.txt")
+
+@task
 def copyFiles():
     local("cp ./{blog.ini,blog.service,requirements.txt} ./build/")
     local("cp ./src/*py ./build/")
@@ -37,9 +44,8 @@ def copyFiles():
 
 @task
 def upload():
-    run("rm -r ~/build")
     run("mkdir -p ~/build")
-    rsync_project(local_dir="./build/", remote_dir="~/build/", delete=True, exclude=[".git"])
+    rsync_project(local_dir="./build/", remote_dir="~/build/", delete=False, exclude=[".git"])
 
 @task
 def serveUp():
@@ -52,7 +58,6 @@ def serveUp():
 
 @task(default=True)
 def build():
-    local("rm -r ./build")
     local("mkdir -p build/{scripts,styles}")
     buildTags()
     buildScss()
@@ -61,3 +66,29 @@ def build():
     upload()
     buildVenv()
     serveUp()
+
+@task
+def update():
+    local("mkdir -p build/{scripts,styles}")
+    buildTags()
+    buildScss()
+    minifyJS()
+    copyFiles()
+    upload()
+    serveUp()
+
+@task
+def locbuild():
+    local("mkdir -p build/{scripts,styles}")
+    buildTags()
+    buildScss()
+    minifyJS()
+    copyFiles()
+    local("sudo rm -fr /srv/http/riotblog")
+    local("sudo mkdir -p /srv/http/riotblog")
+    local("sudo cp -r ./build/* /srv/http/riotblog/")
+    local("sudo cp /home/wes/riotblog/blog.service /etc/systemd/system/blog.service")
+    local("sudo systemctl daemon-reload")
+    local("sudo systemctl enable blog.service")
+    local("sudo systemctl restart blog.service")
+    local("sudo systemctl restart nginx")

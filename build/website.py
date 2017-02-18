@@ -4,8 +4,6 @@ from functools import partial
 from flask import abort, Flask, render_template, flash, request, send_from_directory
 from flask_appconfig import AppConfig
 
-from time import sleep
-
 from urllib.parse import unquote
 from urllib.parse import quote, unquote
 from json import dumps, loads
@@ -56,15 +54,14 @@ def NeverWhere(configfile=None):
     @app.route("/blog/switchpost/<pid>")
     def switchPost(pid):
         posts = {
-                    "1" : "Post one is changed! ",
-                    "2" : "Post two here and it's changed! "
+                    "1" : "Post one is now changed as before! ",
+                    "2" : "Post two here and it's changed again and again! "
                 }
         return posts.get(pid, "false")
 
 
     @app.route("/blog/comments/<pid>")
     def comments(pid):
-        sleep(5);
         try:
             return testcomments.get(int(pid), dumps([]))
         except ValueError as e:
@@ -83,5 +80,5 @@ def NeverWhere(configfile=None):
 
 app = NeverWhere()
 
-#if __name__ == "__main__":
-    #NeverWhere("./appconfig").run(host="localhost", port=8001, debug=True)
+if __name__ == "__main__":
+    NeverWhere("./appconfig").run(host="localhost", port=8001, debug=True)
