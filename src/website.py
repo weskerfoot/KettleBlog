@@ -2,6 +2,7 @@
 from functools import partial
 
 from flask import abort, Flask, render_template, flash, request, send_from_directory
+from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
 
 from urllib.parse import unquote
@@ -14,6 +15,9 @@ from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
 
 import os
+from posts import Posts
+
+posts = Posts()
 
 def cacheit(key, thunk):
     """
@@ -33,6 +37,8 @@ def NeverWhere(configfile=None):
 
     app = Flask(__name__)
     app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.config["COUCHDB_SERVER"] = "http://localhost:5984"
+    app.config["COUCHDB_DATABASE"] = "blog"
     #def favicon():
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
@@ -68,9 +74,9 @@ def NeverWhere(configfile=None):
             print(e)
             return dumps([])
 
-    @app.route("/blog/insert/<pid>")
-    def insert(pid):
-        print("inserting new post")
+    @app.route("/blog/insert/")
+    def insert():
+        return posts.savepost(**request.args)
 
     @app.route("/<path:path>")
     def page_not_found(path):

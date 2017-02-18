@@ -1,7 +1,7 @@
 <post>
   <div class="postnav centered">
-    <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading} onclick={prev}>Go Back</button>
-    <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading} onclick={next}>Go Forward</button>
+    <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading} onclick={prev}>Last One</button>
+    <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading} onclick={next}>Next One</button>
   </div>
 
   <h4 class="post centered" if={nomore}>

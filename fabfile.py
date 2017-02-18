@@ -80,6 +80,8 @@ def update():
 @task
 def locbuild():
     local("mkdir -p build/{scripts,styles}")
+    local("cp requirements.txt ./build/requirements.txt")
+    buildLocalVenv()
     buildTags()
     buildScss()
     minifyJS()
@@ -91,4 +93,3 @@ def locbuild():
     local("sudo systemctl daemon-reload")
     local("sudo systemctl enable blog.service")
     local("sudo systemctl restart blog.service")
-    local("sudo systemctl restart nginx")
