@@ -80,7 +80,7 @@ def NeverWhere(configfile=None):
 
     @app.route("/<path:path>")
     def page_not_found(path):
-        return "Custom failure message"
+        return "Oops, couldn't find that :/"
 
     return app
 

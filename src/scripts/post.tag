@@ -14,7 +14,7 @@
     <p class="post-content centered text-break">{ this.content }</p>
 
     <div class="divider"></div>
-    <comments pid={pid}>
+    <comments pid={this.pid}>
     </comments>
   </div>
 
@@ -51,14 +51,11 @@ prev(ev) {
 }
 
 next(ev) {
-  console.log("next event fired");
   ev.preventDefault();
   if (self.nextloading || self.prevloading) {
     return;
   }
   self.nextloading = " loading";
-  console.log(self.pid);
-  console.log(self.nomore);
   if (!self.nomore) {
     self.pid++;
     self.setPost(self.pid);
@@ -66,20 +63,13 @@ next(ev) {
   }
 }
 
-this.setPost = function(pid) {
-  console.log("trying to change the post");
-  console.log(fetch);
+setPost(pid) {
   this.update();
-  console.log("updated");
   this.loading = true;
-  fetch("/blog/switchpost/"+pid)
+  fetch(`/blog/switchpost/${pid}`)
+    .then((resp) => resp.text())
     .then(
-      function(resp) {
-        console.log("got a response");
-        return resp.text();
-      })
-    .then(
-      function(body) {
+      (body) => {
         if (body === "false") {
           self.nomore = true;
           route("/");
@@ -87,7 +77,7 @@ this.setPost = function(pid) {
         }
         else {
           self.content = R.join(" ")(R.repeat(body, 20));
-          route("/"+pid);
+          route(`/${pid}`);
         }
 
         self.loading = false;
@@ -97,7 +87,7 @@ this.setPost = function(pid) {
       });
 }
 
-this.on("mount", function() { this.setPost(self.pid) });
+this.on("mount", () => { this.setPost(self.pid) });
 
 </script>
 </post>
