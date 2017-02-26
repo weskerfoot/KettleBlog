@@ -1,17 +1,17 @@
 <post>
   <div class="postnav centered">
-    <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading} onclick={prev}>Last One</button>
-    <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading} onclick={next}>Next One</button>
+    <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading} onclick={this.prev}>Last One</button>
+    <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading} onclick={this.next}>Next One</button>
   </div>
 
   <h4 class="post centered" if={nomore}>
     No More Posts!
   </h4>
 
-  <div if={!(loading || nomore)} class="post centered">
+  <div if={!(this.loading || this.nomore)} class="post centered">
     <h4>{ opts.title }</h4>
     <h5>By { opts.creator }</h5>
-    <p class="post-content centered text-break">{ content }</p>
+    <p class="post-content centered text-break">{ this.content }</p>
 
     <div class="divider"></div>
     <comments pid={pid}>
@@ -32,9 +32,10 @@ this.nextloading = "";
 
 this.nomore = false
 this.pid = 1;
-content = "";
+this.content = "";
 
-prev() {
+prev(ev) {
+  ev.preventDefault();
   if (self.prevloading || self.nextloading) {
     return;
   }
@@ -49,7 +50,9 @@ prev() {
   }
 }
 
-next() {
+next(ev) {
+  console.log("next event fired");
+  ev.preventDefault();
   if (self.nextloading || self.prevloading) {
     return;
   }
@@ -64,11 +67,15 @@ next() {
 }
 
 this.setPost = function(pid) {
-  self.update();
-  self.loading = true;
+  console.log("trying to change the post");
+  console.log(fetch);
+  this.update();
+  console.log("updated");
+  this.loading = true;
   fetch("/blog/switchpost/"+pid)
     .then(
       function(resp) {
+        console.log("got a response");
         return resp.text();
       })
     .then(

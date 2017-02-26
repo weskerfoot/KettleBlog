@@ -11,5 +11,4 @@ riot.mount("post",
     "title" : "A cool post here"
   });
 
-riot.mount("comments");
 riot.mount("bbutton");
