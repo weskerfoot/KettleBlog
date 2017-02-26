@@ -19,6 +19,11 @@
   </div>
 
 <script>
+
+import 'whatwg-fetch';
+import route from 'riot-route'
+import { default as R } from 'ramda';
+
 var self = this;
 
 this.loading = false;

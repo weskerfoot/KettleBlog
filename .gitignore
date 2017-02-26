@@ -1,6 +1,9 @@
+*.sw*
 *.pyc
-*.log
-*.scssc
-*.swp
-*.bak
-*venv*
+.vim-session
+*~
+venv
+build
+node_modules
+.sass_cache/*
+deploy.sh

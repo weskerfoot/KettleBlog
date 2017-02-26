@@ -9,4 +9,8 @@
       </div>
     </div>
   </div>
+<script>
+import { default as R } from 'ramda';
+this.R = R;
+</script>
 </comment>

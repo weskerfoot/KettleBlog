@@ -1,51 +1,83 @@
 .post-text, .blog-title, .post, .postnav {
-  text-align: center; }
+  text-align: center;
+}
 
 .post-content {
   max-width: 50%;
   text-align: justify;
-  font-size: 1.5em; }
-  @media (max-width: 700px) {
-    .post-content {
-      max-width: 70%; } }
-  @media (max-width: 500px) {
-    .post-content {
-      max-width: 90%; } }
+  font-size: 1.5em;
+}
+
+@media (max-width: 700px) {
+  .post-content {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+  .post-content {
+    max-width: 90%;
+  }
+}
 
 .comment-block, .comments, .maxwarn {
-  max-width: 30%; }
-  @media (max-width: 700px) {
-    .comment-block, .comments, .maxwarn {
-      max-width: 50%; } }
-  @media (max-width: 500px) {
-    .comment-block, .comments, .maxwarn {
-      max-width: 70%; } }
+  max-width: 30%;
+}
+
+@media (max-width: 700px) {
+  .comment-block, .comments, .maxwarn {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .comment-block, .comments, .maxwarn {
+    max-width: 70%;
+  }
+}
 
 .comments {
-  margin-top: 5%; }
+  margin-top: 5%;
+}
 
 .comment {
   margin-top: 2%;
-  max-width: 40%; }
-  @media (max-width: 700px) {
-    .comment {
-      max-width: 65%; } }
-  @media (max-width: 500px) {
-    .comment {
-      max-width: 85%; } }
+  max-width: 40%;
+}
+
+@media (max-width: 700px) {
+  .comment {
+    max-width: 65%;
+  }
+}
+
+@media (max-width: 500px) {
+  .comment {
+    max-width: 85%;
+  }
+}
 
 .comments-loader {
-  margin-top: 2%; }
+  margin-top: 2%;
+}
 
 .comment-body {
   margin-left: 10px;
-  margin-right: 10px; }
+  margin-right: 10px;
+}
 
 .rounded-button {
-  border-radius: 13px; }
+  border-radius: 13px;
+}
 
 .maxinput {
-  background-color: grey; }
+  background-color: grey;
+}
 
 .maxwarn {
-  margin-top: 15px; }
+  margin-top: 15px;
+}
+
+.footer {
+  margin-top: 10%;
+}

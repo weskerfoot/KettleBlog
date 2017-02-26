@@ -22,3 +22,9 @@ class Posts:
                 "author" : author
                 }
         return jsonify(self.db.save(doc))
+
+    def getposts(self, start, end):
+        return jsonify([])
+
+    def getcomments(self, postID):
+        return jsonify([])

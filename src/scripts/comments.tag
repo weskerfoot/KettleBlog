@@ -1,22 +1,15 @@
 <comments>
-  <div if={loading}
-       class="loading comments-loader">
-  </div>
-  <comment
-    if={!loading}
-    each={comments}
-    data={this}
-  />
+  <div if={loading} class="loading comments-loader"></div>
+  <comment if={!loading} each={this.comments} data="{this}"></comment>
   <textarea onfocus={clearplaceholder}
             onblur={checkplaceholder}
             oninput={echo}
             __disabled={disabled}
-            class={"form-input comments centered " + maxed}
-            name="textarea"
+            class={"form-input comments centered " + this.maxed}
+            ref="textarea"
             rows="10"
             cols="50"
-            maxlength={maxlength}
-            >
+            maxlength={maxlength}>
       { placeholder }
   </textarea>
   <div if={warn} class="toast toast-danger maxwarn centered">
@@ -24,18 +17,20 @@
       onclick={closewarning}
       class="btn btn-clear float-right">
     </button>
-    You've reached the max comment size
+    Your comment is too long!
   </div>
+<script>
+import 'whatwg-fetch';
 
-comments = [];
-maxlength = 700;
+this.comments = [];
+this.maxlength = 700;
 
-placeholder = "Comment here!";
-focused = false;
-maxed = false;
-warn = false;
-disabled = "";
-loading = true;
+this.placeholder = "Comment here!";
+this.focused = false;
+this.maxed = "";
+this.warn = false;
+this.disabled = "";
+this.loading = true;
 
 clearplaceholder() {
   if (!this.focused) {
@@ -47,7 +42,7 @@ clearplaceholder() {
 }
 
 checkplaceholder() {
-  if (this.textarea.value.trim().length == 0) {
+  if (this.refs.textarea.value.trim().length == 0) {
     this.update({
       "placeholder" : "Comment here!",
       "focused"     : false
@@ -60,7 +55,7 @@ closewarning() {
 }
 
 echo(ev) {
-  if (this.textarea.value.length >= maxlength) {
+  if (this.refs.textarea.value.length >= maxlength) {
     this.update({
       "maxed" : "maxinput",
       "warn"  : true
@@ -68,7 +63,7 @@ echo(ev) {
   }
   else {
     this.update({
-      "maxed" : false,
+      "maxed" : "",
       "warn"  : false
     });
     window.setTimeout(this.closewarning, 5000);
@@ -97,7 +92,5 @@ this.on("mount",
   function() {
     this.getComments(self.opts.pid);
   });
-
-<script>
 </script>
 </comments>

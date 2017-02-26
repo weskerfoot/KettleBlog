@@ -7,19 +7,14 @@ import fabric.operations as op
 env.hosts = ["wes@mgoal.ca:444"]
 
 @task
-def buildTags():
-    with lcd("./build"):
-        local("riot ../src/tags scripts/tags.min.js")
-
-@task
 def buildScss():
     with lcd("./build"):
         local("sassc ../src/styles/riotblog.scss > styles/riotblog.min.css")
 
 @task
-def minifyJS():
-    with lcd("./build"):
-        local("uglifyjs ../src/scripts/riotblog.js > scripts/riotblog.min.js")
+def buildJS():
+    local("rollup -c rollup.config.js")
+    local("uglifyjs build/bundle.js > build/scripts/riotblog.min.js")
 
 @task
 def buildVenv():
@@ -59,9 +54,8 @@ def serveUp():
 @task(default=True)
 def build():
     local("mkdir -p build/{scripts,styles}")
-    buildTags()
     buildScss()
-    minifyJS()
+    buildJS()
     copyFiles()
     upload()
     buildVenv()
@@ -70,9 +64,8 @@ def build():
 @task
 def update():
     local("mkdir -p build/{scripts,styles}")
-    buildTags()
     buildScss()
-    minifyJS()
+    buildJS()
     copyFiles()
     upload()
     serveUp()
@@ -81,10 +74,9 @@ def update():
 def locbuild():
     local("mkdir -p build/{scripts,styles}")
     local("cp requirements.txt ./build/requirements.txt")
-    buildLocalVenv()
-    buildTags()
+    #buildLocalVenv()
     buildScss()
-    minifyJS()
+    buildJS()
     copyFiles()
     local("sudo rm -fr /srv/http/riotblog")
     local("sudo mkdir -p /srv/http/riotblog")

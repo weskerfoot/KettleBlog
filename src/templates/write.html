@@ -11,11 +11,8 @@
   <body>
     {% block content %}
 
-    <posts>
-      <post></post>
-    </posts>
-    <editor>
-    </editor>
+    <posteditor>
+    </posteditor>
 
     {% endblock %}
 
@@ -30,6 +27,11 @@
 {% endblock %}
 
 {% block scripts %}
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.22.1/ramda.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/riot/2.6.7/riot+compiler.min.js"></script>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/riot-route/3.0.2/route.min.js"></script>
+  <script type="text/javascript" src="/blog/scripts/tags.min.js"></script>
   <script type="text/javascript" src="/blog/scripts/riotblog.min.js"></script>
 {% endblock %}
 
