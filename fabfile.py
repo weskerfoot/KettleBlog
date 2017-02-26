@@ -44,7 +44,7 @@ def upload():
 
 @task
 def serveUp():
-    sudo("rm -r /srv/http/riotblog")
+    sudo("rm -fr /srv/http/riotblog")
     sudo("cp -r /home/wes/build /srv/http/riotblog")
     sudo("cp /home/wes/build/blog.service /etc/systemd/system/blog.service")
     sudo("systemctl daemon-reload")

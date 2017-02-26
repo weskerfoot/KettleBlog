@@ -12,9 +12,9 @@
             maxlength={this.maxlength}>
       { placeholder }
   </textarea>
-  <div if={warn} class="toast toast-danger maxwarn centered">
+  <div if={this.warn} class="toast toast-danger maxwarn centered">
     <button
-      onclick={closewarning}
+      onclick={this.closewarning}
       class="btn btn-clear float-right">
     </button>
     Your comment is too long!
@@ -55,7 +55,7 @@ closewarning() {
 }
 
 echo(ev) {
-  if (this.refs.textarea.value.length >= maxlength) {
+  if (this.refs.textarea.value.length >= this.maxlength) {
     this.update({
       "maxed" : "maxinput",
       "warn"  : true
@@ -66,7 +66,7 @@ echo(ev) {
       "maxed" : "",
       "warn"  : false
     });
-    window.setTimeout(this.closewarning, 5000);
+    window.setTimeout(this.closewarning, 15000);
   }
 }
 
