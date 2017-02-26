@@ -9,7 +9,7 @@
             ref="textarea"
             rows="10"
             cols="50"
-            maxlength={maxlength}>
+            maxlength={this.maxlength}>
       { placeholder }
   </textarea>
   <div if={warn} class="toast toast-danger maxwarn centered">
