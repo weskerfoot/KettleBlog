@@ -2,15 +2,16 @@
   <div class="comment centered">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">{title} by {author}</h4>
+        <h4 class="card-title">Comment posted by {author}</h4>
       </div>
       <div class="card-body comment-body">
-        {R.join(" ")(R.repeat(text, 20))}
+        { text }
       </div>
+      <button if={delete !== undefined} onclick={delete} class="btn">
+        Delete this comment
+      </button>
     </div>
   </div>
 <script>
-import { default as R } from 'ramda';
-this.R = R;
 </script>
 </comment>

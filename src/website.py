@@ -17,7 +17,7 @@ cache = MemcachedCache(['127.0.0.1:11211'])
 import os
 from posts import Posts
 
-posts = Posts()
+#posts = Posts()
 
 def cacheit(key, thunk):
     """
@@ -43,6 +43,11 @@ def NeverWhere(configfile=None):
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+    @app.route("/blog/decision/", methods=("GET", "POST"))
+    def decision():
+        print("matched decision")
+        return render_template("decisions.html")
+
     @app.route("/blog/", methods=("GET", "POST"))
     def index():
         print("matched index")
@@ -60,8 +65,8 @@ def NeverWhere(configfile=None):
     @app.route("/blog/switchpost/<pid>")
     def switchPost(pid):
         posts = {
-                    "1" : "Post one is now changed as before! ",
-                    "2" : "Post two here and it's changed again and again! "
+                    "1" : "post 1",
+                    "2" : "post 2"
                 }
         return posts.get(pid, "false")
 

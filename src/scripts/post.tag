@@ -10,8 +10,10 @@
 
   <div if={!(this.loading || this.nomore)} class="post centered">
     <h4>{ opts.title }</h4>
-    <h5>By { opts.creator }</h5>
-    <p class="post-content centered text-break">{ this.content }</p>
+    <h5>Posted by { opts.creator }</h5>
+    <p class="post-content centered text-break">
+      { this.content }
+    </p>
 
     <div class="divider"></div>
     <comments pid={this.pid}>
@@ -76,7 +78,7 @@ setPost(pid) {
           self.update()
         }
         else {
-          self.content = R.join(" ")(R.repeat(body, 20));
+          self.content = body;
           route(`/${pid}`);
         }
 

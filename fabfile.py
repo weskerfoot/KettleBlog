@@ -72,9 +72,10 @@ def update():
 
 @task
 def locbuild():
+    local("rm -rf ./build")
     local("mkdir -p build/{scripts,styles}")
     local("cp requirements.txt ./build/requirements.txt")
-    #buildLocalVenv()
+    buildLocalVenv()
     buildScss()
     buildJS()
     copyFiles()

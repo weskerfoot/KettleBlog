@@ -1,6 +1,6 @@
 <comments>
   <div if={loading} class="loading comments-loader"></div>
-  <comment if={!loading} each={this.comments} data="{this}"></comment>
+  <comment if={!loading} each={R.sortBy(R.prop("time"), R.values(this.comments))} data="{this}"></comment>
   <textarea onfocus={clearplaceholder}
             onblur={checkplaceholder}
             oninput={echo}
@@ -12,6 +12,9 @@
             maxlength={this.maxlength}>
       { placeholder }
   </textarea>
+  <button onclick={submit} class="btn comment-submit">
+    Submit Comment
+  </button>
   <div if={this.warn} class="toast toast-danger maxwarn centered">
     <button
       onclick={this.closewarning}
@@ -21,11 +24,13 @@
   </div>
 <script>
 import 'whatwg-fetch';
+import { default as R } from 'ramda';
+this.R = R;
 
 this.comments = [];
 this.maxlength = 700;
 
-this.placeholder = "Comment here!";
+this.placeholder = "Comment on this post";
 this.focused = false;
 this.maxed = "";
 this.warn = false;
@@ -80,12 +85,24 @@ getComments(pid) {
       })
     .then(
       function(body) {
+        var parsed =JSON.parse(body);
+        parsed.map(function(comment) { self.comments[comment["id"]] = comment; } );
+        self.update();
         self.update(
           {
-            "comments" : JSON.parse(body),
             "loading"  : false
           });
       });
+}
+
+submit() {
+  var id = Math.random();
+  this.comments[id] = {
+      "author" : "name",
+      "text" : this.refs.textarea.value,
+      "delete" : (() => { delete self.comments[id]; self.update(); })
+    };
+  this.update();
 }
 
 this.on("mount",

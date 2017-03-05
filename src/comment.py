@@ -1,7 +1,13 @@
 from json import dumps
 
-def comment(author, title, text):
+from random import randint
+
+from time import time
+
+def comment(author, title, text, t):
     return {
+            "time" : t,
+            "id" : randint(1,2**32-1),
             "title"  : title,
             "author" : author,
             "text"   : text
@@ -11,14 +17,14 @@ def comment(author, title, text):
 testcomments = {
                 1 : dumps(
                     [
-                        comment("Anonymous Coward 0", "Some comment?", "super duper awesome comment here"),
-                        comment("Anonymous Coward 1", "Something? IDEK", "super duper worse comment here"),
-                        comment("Anonymous Coward 2", "Some other comment?", "super duper dang terrible comment here")
+                        comment("Person 1", "Two", "A Comment here", 1),
+                        comment("Person 2", "One", "Some other comment", 2),
+                        comment("Person 3", "Three", "My opinion is correct", 3)
                         ]),
                 2 : dumps(
                     [
-                        comment("Anonymous Coward 3", "Some comment?", "super duper awesome comment here"),
-                        comment("Anonymous Coward 4", "Something? IDEK", "super duper worse comment here"),
-                        comment("Anonymous Coward 5", "Some other comment?", "super duper dang terrible comment here")
-                        ])
+                        comment("Person 1", "Two", "A cool terrible Comment here", 1),
+                        comment("Person 2", "One", "Some other awful comment", 2),
+                        comment("Person 3", "Three", "My opinion is not correct", 3)
+                    ])
                     }
