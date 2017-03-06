@@ -3,6 +3,7 @@
 import couchdb
 from flask import jsonify
 from flask_marshmallow import Marshmallow
+#from comment import comment
 
 class Posts:
     def __init__(self, host=None, port=None):
@@ -23,8 +24,9 @@ class Posts:
                 }
         return jsonify(self.db.save(doc))
 
-    def getposts(self, start, end):
-        return jsonify([])
+    def getposts(self, limit, start):
+        result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True, limit=limit, skip=start)
+        return jsonify(list(result))
 
     def getcomments(self, postID):
         return jsonify([])

@@ -4,7 +4,6 @@ import './comment.tag';
 import './bbutton.tag';
 import './post.tag';
 import './posts.tag';
-import "./decision.tag";
 
 riot.mount("post",
   {

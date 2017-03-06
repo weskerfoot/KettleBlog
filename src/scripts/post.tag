@@ -4,13 +4,13 @@
     <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading} onclick={this.next}>Next One</button>
   </div>
 
-  <h4 class="post centered" if={nomore}>
+  <h4 class="post centered" if={this.nomore}>
     No More Posts!
   </h4>
 
   <div if={!(this.loading || this.nomore)} class="post centered">
-    <h4>{ opts.title }</h4>
-    <h5>Posted by { opts.creator }</h5>
+    <h4>{ this.title }</h4>
+    <h5>Posted by { this.author }</h5>
     <p class="post-content centered text-break">
       { this.content }
     </p>
@@ -28,13 +28,16 @@ import { default as R } from 'ramda';
 
 var self = this;
 
-this.loading = false;
-this.prevloading = "";
-this.nextloading = "";
+self.author = "";
+self.title = "";
+self.content = "";
+self.loading = false;
+self.prevloading = "";
+self.nextloading = "";
 
-this.nomore = false
-this.pid = 1;
-this.content = "";
+self.nomore = false;
+self.pid = 1;
+self.content = "";
 
 prev(ev) {
   ev.preventDefault();
@@ -68,7 +71,7 @@ next(ev) {
 setPost(pid) {
   this.update();
   this.loading = true;
-  fetch(`/blog/switchpost/${pid}`)
+  fetch(`/blog/switchpost/${pid-1}`)
     .then((resp) => resp.text())
     .then(
       (body) => {
@@ -78,7 +81,24 @@ setPost(pid) {
           self.update()
         }
         else {
-          self.content = body;
+          var postcontent = JSON.parse(body);
+          console.log(postcontent);
+          if (postcontent.length == 0) {
+            self.loading = false;
+            self.prevloading = "";
+            self.nextloading = "";
+            self.author = "";
+            self.content = "";
+            self.title = "No more posts!";
+            self.nomore = true;
+            self.update();
+            route(`/${pid}`);
+            return;
+          }
+          self.author = postcontent[0].doc.author[0];
+          self.content = postcontent[0].doc.content[0];
+          self.title = postcontent[0].doc.title[0];
+          self.update();
           route(`/${pid}`);
         }
 

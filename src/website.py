@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 from functools import partial
 
-from flask import abort, Flask, render_template, flash, request, send_from_directory
+from flask import abort, Flask, render_template, flash, request, send_from_directory, jsonify
 from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
 
@@ -17,7 +17,7 @@ cache = MemcachedCache(['127.0.0.1:11211'])
 import os
 from posts import Posts
 
-#posts = Posts()
+posts = Posts()
 
 def cacheit(key, thunk):
     """
@@ -62,15 +62,6 @@ def NeverWhere(configfile=None):
     def send_style(filename):
         return send_from_directory("/srv/http/riotblog/styles", filename)
 
-    @app.route("/blog/switchpost/<pid>")
-    def switchPost(pid):
-        posts = {
-                    "1" : "post 1",
-                    "2" : "post 2"
-                }
-        return posts.get(pid, "false")
-
-
     @app.route("/blog/comments/<pid>")
     def comments(pid):
         try:
@@ -82,6 +73,14 @@ def NeverWhere(configfile=None):
     @app.route("/blog/insert/")
     def insert():
         return posts.savepost(**request.args)
+
+    @app.route("/blog/switchpost/<pid>")
+    def getposts(pid):
+        try:
+            index = int(pid)
+        except ValueError:
+            index = 0
+        return posts.getposts(index+1, index)
 
     @app.route("/<path:path>")
     def page_not_found(path):
