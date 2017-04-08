@@ -64,7 +64,6 @@ prev(ev) {
   if (self.pid > 1) {
     self.pid--;
     route(`/${self.pid}`);
-    //self.setPost(self.pid);
     self.update();
   }
 }
@@ -78,7 +77,6 @@ next(ev) {
   if (!self.nomore) {
     self.pid++;
     route(`/${self.pid}`);
-    //self.setPost(self.pid);
     self.update();
   }
 }
