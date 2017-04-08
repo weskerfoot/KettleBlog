@@ -82,8 +82,7 @@ next(ev) {
 }
 
 setPost(pid) {
-  console.log("in setPost");
-  console.log(pid);
+  this.pid = pid;
   this.update();
   this.loading = true;
   fetch(`/blog/switchpost/${pid-1}`)
