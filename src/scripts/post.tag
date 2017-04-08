@@ -63,7 +63,7 @@ prev(ev) {
   }
   if (self.pid > 1) {
     self.pid--;
-    route(`/${self.pid}`);
+    route(`/post/${self.pid}`);
     self.update();
   }
 }
@@ -76,12 +76,13 @@ next(ev) {
   self.nextloading = " loading";
   if (!self.nomore) {
     self.pid++;
-    route(`/${self.pid}`);
+    route(`/post/${self.pid}`);
     self.update();
   }
 }
 
 setPost(pid) {
+  console.log(pid);
   this.pid = pid;
   this.update();
   this.loading = true;
@@ -91,7 +92,6 @@ setPost(pid) {
       (body) => {
         if (body === "false") {
           self.nomore = true;
-          route("/");
           self.update()
         }
         else {
@@ -121,7 +121,8 @@ setPost(pid) {
       });
 }
 this.on("mount", () => {
-  route("*", this.setPost);
+  route("/", () => { route("/post/1") });
+  route("/post/*", this.setPost);
   console.log("starting the router");
   route.start(true);
 });
