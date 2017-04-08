@@ -1,14 +1,27 @@
 <post>
   <div class="postnav centered">
-    <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading} onclick={this.prev}>Last One</button>
-    <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading} onclick={this.next}>Next One</button>
+
+    <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading}
+            onclick={this.prev}
+    >
+      Last One
+    </button>
+
+    <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading}
+            onclick={this.next}
+    >
+      Next One
+    </button>
+
   </div>
 
   <h4 class="post centered" if={this.nomore}>
     No More Posts!
   </h4>
 
-  <div if={!(this.loading || this.nomore)} class="post centered">
+  <div if={!(this.loading || this.nomore)}
+       class="post centered"
+  >
     <h4>{ this.title }</h4>
     <h5>Posted by { this.author }</h5>
     <p class="post-content centered text-break">
@@ -50,7 +63,8 @@ prev(ev) {
   }
   if (self.pid > 1) {
     self.pid--;
-    self.setPost(self.pid);
+    route(`/${self.pid}`);
+    //self.setPost(self.pid);
     self.update();
   }
 }
@@ -63,12 +77,15 @@ next(ev) {
   self.nextloading = " loading";
   if (!self.nomore) {
     self.pid++;
-    self.setPost(self.pid);
+    route(`/${self.pid}`);
+    //self.setPost(self.pid);
     self.update();
   }
 }
 
 setPost(pid) {
+  console.log("in setPost");
+  console.log(pid);
   this.update();
   this.loading = true;
   fetch(`/blog/switchpost/${pid-1}`)
@@ -92,14 +109,12 @@ setPost(pid) {
             self.title = "No more posts!";
             self.nomore = true;
             self.update();
-            route(`/${pid}`);
             return;
           }
           self.author = postcontent[0].doc.author[0];
           self.content = postcontent[0].doc.content[0];
           self.title = postcontent[0].doc.title[0];
           self.update();
-          route(`/${pid}`);
         }
 
         self.loading = false;
@@ -108,8 +123,11 @@ setPost(pid) {
         self.update();
       });
 }
-
-this.on("mount", () => { this.setPost(self.pid) });
+this.on("mount", () => {
+  route("*", this.setPost);
+  console.log("starting the router");
+  route.start(true);
+});
 
 </script>
 </post>
