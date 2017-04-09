@@ -1,24 +1,20 @@
 <post>
   <div class="postnav centered">
-
     <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading}
             onclick={this.prev}
     >
       Last One
     </button>
-
     <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading}
             onclick={this.next}
     >
       Next One
     </button>
-
   </div>
 
   <h4 class="post centered" if={this.nomore}>
     No More Posts!
   </h4>
-
   <div if={!(this.loading || this.nomore)}
        class="post centered"
   >
@@ -27,7 +23,6 @@
     <p class="post-content centered text-break">
       { this.content }
     </p>
-
     <div class="divider"></div>
     <comments pid={this.pid}>
     </comments>
@@ -49,7 +44,6 @@ self.prevloading = "";
 self.nextloading = "";
 
 self.nomore = false;
-self.pid = 1;
 self.content = "";
 
 prev(ev) {

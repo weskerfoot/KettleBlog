@@ -53,6 +53,10 @@ def NeverWhere(configfile=None):
         print("matched index")
         return render_template("index.html")
 
+    @app.route("/blog/editor/", methods=("GET", "POST"))
+    def editor():
+        return render_template("write.html")
+
     @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):
         print("matched scripts route")

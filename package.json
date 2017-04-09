@@ -29,6 +29,7 @@
     "whatwg-fetch": "^2.0.2"
   },
   "dependencies": {
+    "showdown": "^1.6.4",
     "whatwg-fetch": "^2.0.2"
   }
 }

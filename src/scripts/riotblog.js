@@ -4,7 +4,9 @@ import './comment.tag';
 import './bbutton.tag';
 import './post.tag';
 import './posts.tag';
+import './editor.tag';
 
+riot.mount("editor");
 riot.mount("post",
   {
     "creator" : "author"
