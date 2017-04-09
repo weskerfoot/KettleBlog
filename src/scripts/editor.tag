@@ -5,11 +5,11 @@
         <textarea onfocus={clearplaceholder}
                   onblur={checkplaceholder}
                   oninput={echo}
+                  rows="30"
+                  cols="10"
                   __disabled={""}
-                  class="form-input editor centered"
+                  class="editor form-input centered"
                   ref="textarea"
-                  rows="10"
-                  cols="50"
                   maxlength={this.maxlength}>
           { placeholder }
         </textarea>
@@ -18,9 +18,11 @@
           Submit Post
         </button>
       </div>
+
       <div class="column col-6">
         <raw content="{this.converted}"></raw>
       </div>
+
     </div>
   </div>
 <script>
@@ -56,8 +58,11 @@ checkplaceholder() {
 }
 
 echo(ev) {
-  this.update({"converted" : this.converter.makeHtml(this.refs.textarea.value)});
-  console.log("tried updating the raw tag");
+  this.update({
+      "converted" : this.converter.makeHtml(
+                      this.refs.textarea.value.trim()
+                    )
+    });
 }
 
 var self = this;
