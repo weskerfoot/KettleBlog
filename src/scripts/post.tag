@@ -24,8 +24,6 @@
       { this.content }
     </p>
     <div class="divider"></div>
-    <comments pid={this.pid}>
-    </comments>
   </div>
 
 <script>

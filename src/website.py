@@ -9,8 +9,6 @@ from urllib.parse import unquote
 from urllib.parse import quote, unquote
 from json import dumps, loads
 
-from comment import testcomments
-
 from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
 
@@ -65,14 +63,6 @@ def NeverWhere(configfile=None):
     @app.route("/blog/styles/<filename>", methods=("GET", "POST"))
     def send_style(filename):
         return send_from_directory("/srv/http/riotblog/styles", filename)
-
-    @app.route("/blog/comments/<pid>")
-    def comments(pid):
-        try:
-            return testcomments.get(int(pid), dumps([]))
-        except ValueError as e:
-            print(e)
-            return dumps([])
 
     @app.route("/blog/insert/")
     def insert():
