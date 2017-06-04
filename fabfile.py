@@ -10,6 +10,7 @@ env.hosts = ["wes@mgoal.ca:444"]
 def buildScss():
     with lcd("./build"):
         local("sassc ../src/styles/riotblog.scss > styles/riotblog.min.css")
+        local("sassc ../src/styles/projects.scss > styles/projects.min.css")
 
 @task
 def buildJS():
@@ -25,9 +26,9 @@ def buildVenv():
 
 @task
 def buildLocalVenv():
-    with lcd("~/riotblog/build"):
-        local("virtualenv -p $(which python3) ~/riotblog/build/venv")
-        with prefix("source ~/riotblog/build/venv/bin/activate"):
+    with lcd("~/primop.me/build"):
+        local("virtualenv -p $(which python3) ~/primop.me/build/venv")
+        with prefix("source ~/primop.me/build/venv/bin/activate"):
             local("pip3 install -r requirements.txt")
 
 @task
@@ -82,7 +83,7 @@ def locbuild():
     local("sudo rm -fr /srv/http/riotblog")
     local("sudo mkdir -p /srv/http/riotblog")
     local("sudo cp -r ./build/* /srv/http/riotblog/")
-    local("sudo cp /home/wes/riotblog/blog.service /etc/systemd/system/blog.service")
+    local("sudo cp /home/wes/primop.me/blog.service /etc/systemd/system/blog.service")
     local("sudo systemctl daemon-reload")
     local("sudo systemctl enable blog.service")
     local("sudo systemctl restart blog.service")
