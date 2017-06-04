@@ -1,22 +1,10 @@
 <post>
-  <div class="postnav centered">
-    <button class={"btn btn-primary " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading}
-            onclick={this.prev}
-    >
-      Last One
-    </button>
-    <button class={"btn btn-primary " + (this.nomore ? "disabled" : " ") + this.nextloading}
-            onclick={this.next}
-    >
-      Next One
-    </button>
-  </div>
-
-  <h4 class="post centered" if={this.nomore}>
+  <h4 class="content-box centered" if={this.nomore}>
     No More Posts!
   </h4>
-  <div if={!(this.loading || this.nomore)}
-       class="post centered"
+  <div
+    if={!(this.loading || this.nomore)}
+    class="content-box post centered"
   >
     <h4>{ this.title }</h4>
     <h5>Posted by { this.author }</h5>
@@ -25,11 +13,28 @@
     </p>
     <div class="divider"></div>
   </div>
+  <div class="controls container">
+    <div class="columns">
+      <div class="column col-6">
+        <button class={"btn btn-lg nav-button float-right " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading}
+                onclick={this.prev}
+        >
 
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="column col-6">
+        <button class={"btn btn-lg nav-button float-left  " + (this.nomore ? "disabled" : " ") + this.nextloading}
+                onclick={this.next}
+        >
+          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 <script>
 
 import 'whatwg-fetch';
-import route from 'riot-route'
 import { default as R } from 'ramda';
 
 var self = this;
@@ -55,9 +60,9 @@ prev(ev) {
   }
   if (self.pid > 1) {
     self.pid--;
-    route(`/post/${self.pid}`);
     self.update();
   }
+  self.setPost(self.pid);
 }
 
 next(ev) {
@@ -68,13 +73,12 @@ next(ev) {
   self.nextloading = " loading";
   if (!self.nomore) {
     self.pid++;
-    route(`/post/${self.pid}`);
     self.update();
   }
+  self.setPost(self.pid);
 }
 
 setPost(pid) {
-  console.log(pid);
   this.pid = pid;
   this.update();
   this.loading = true;
@@ -88,7 +92,6 @@ setPost(pid) {
         }
         else {
           var postcontent = JSON.parse(body);
-          console.log(postcontent);
           if (postcontent.length == 0) {
             self.loading = false;
             self.prevloading = "";
@@ -112,12 +115,8 @@ setPost(pid) {
         self.update();
       });
 }
-this.on("mount", () => {
-  route("/", () => { route("/post/1") });
-  route("/post/*", this.setPost);
-  console.log("starting the router");
-  route.start(true);
-});
+
+this.setPost(this.opts.pid);
 
 </script>
 </post>

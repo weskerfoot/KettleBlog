@@ -13,7 +13,9 @@ from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
 
 import os
+
 from posts import Posts
+from projects import getProjects
 
 posts = Posts()
 
@@ -32,7 +34,6 @@ def cacheit(key, thunk):
     return cached
 
 def NeverWhere(configfile=None):
-
     app = Flask(__name__)
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["COUCHDB_SERVER"] = "http://localhost:5984"
@@ -40,6 +41,14 @@ def NeverWhere(configfile=None):
     #def favicon():
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+    @app.route("/blog/projects", methods=("GET",))
+    def projects():
+        return jsonify(cacheit("projects", getProjects))
+
+    @app.route("/blog/stuff", methods=("GET",))
+    def stuff():
+        return render_template("projects.html")
 
     @app.route("/blog/decision/", methods=("GET", "POST"))
     def decision():

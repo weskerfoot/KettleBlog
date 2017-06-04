@@ -65,7 +65,7 @@ echo(ev) {
     });
 }
 
-var self = this;
+var self = this; /* Why do we need this??????????? */
 
 submit() {
   var post = {
