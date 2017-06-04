@@ -23,13 +23,19 @@
     "riot-route": "^3.1.0",
     "rollup": "^0.41.4",
     "rollup-plugin-buble": "^0.15.0",
-    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-riot": "^1.1.0",
     "whatwg-fetch": "^2.0.2"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
+    "axios": "^0.16.1",
+    "font-awesome": "^4.7.0",
+    "immutable": "^3.8.1",
+    "rollup-plugin-json": "^2.1.1",
     "showdown": "^1.6.4",
+    "spectre.css": "^0.2.14",
     "whatwg-fetch": "^2.0.2"
   }
 }
