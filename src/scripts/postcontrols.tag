@@ -1,5 +1,5 @@
 <postcontrols>
-    <div class="container centered">
+    <div class="container">
       <div class="columns">
         <div class="column col-6">
           <button class={"btn btn-lg nav-button float-right " + (this.opts.state.pid <= 1 ? "disabled" : " ") + this.opts.prevloading}
