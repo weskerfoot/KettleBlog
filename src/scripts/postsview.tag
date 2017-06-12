@@ -1,5 +1,5 @@
 <postsview>
   <posts>
-    <post pid={1}></post>
+    <post state={this.parent.opts.state}></post>
   </posts>
 </postsview>

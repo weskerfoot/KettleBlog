@@ -1,53 +1,52 @@
 <post>
-  <h4 class="content-box centered" if={this.nomore}>
-    No More Posts!
-  </h4>
-  <div
-    if={!(this.loading || this.nomore)}
-    class="content-box post centered"
-  >
-    <h4>{ this.title }</h4>
-    <h5>Posted by { this.author }</h5>
-    <p class="post-content centered text-break">
-      { this.content }
-    </p>
-    <div class="divider"></div>
-  </div>
-  <div class="controls container">
-    <div class="columns">
-      <div class="column col-6">
-        <button class={"btn btn-lg nav-button float-right " + (this.pid <= 1 ? "disabled" : " ") + this.prevloading}
-                onclick={this.prev}
-        >
+  <div class="posts-box post centered">
+    <div class="text-break animated fadeIn">
+      <div
+        if={this.swipe}
+        class={`animated ${this.transition}`}
+      >
+        <div if={this.nomore}>
+          <h4>No more posts!</h4>
+        </div>
 
-          <i class="fa fa-arrow-left" aria-hidden="true"></i>
-        </button>
+        <div if={!this.nomore}>
+          <h4>{ this.title }</h4>
+          <h5>Posted by { this.author }</h5>
+          <p class="post-content centered text-break">
+            { this.content }
+          </p>
+        </div>
+        <div class="divider"></div>
       </div>
-      <div class="column col-6">
-        <button class={"btn btn-lg nav-button float-left  " + (this.nomore ? "disabled" : " ") + this.nextloading}
-                onclick={this.next}
-        >
-          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        </button>
-      </div>
+    </div>
+    <div
+      data-is="postcontrols"
+      state={this.opts.state}
+      prevloading={this.prevloading}
+      prev={this.prev}
+      nomore={this.nomore}
+      nextloading={this.nextloading}
+      next={this.next}
+    >
     </div>
   </div>
 <script>
 
 import 'whatwg-fetch';
 import { default as R } from 'ramda';
+import './postcontrols.tag';
 
 var self = this;
 
 self.author = "";
 self.title = "";
 self.content = "";
-self.loading = false;
 self.prevloading = "";
 self.nextloading = "";
-
+self.transition = "";
 self.nomore = false;
 self.content = "";
+self.swipe = true;
 
 prev(ev) {
   ev.preventDefault();
@@ -55,14 +54,13 @@ prev(ev) {
     return;
   }
   self.prevloading = " loading";
-  if (self.nomore) {
-    self.nomore = false;
-  }
-  if (self.pid > 1) {
-    self.pid--;
+
+  if (self.opts.state.pid > 1) {
+    self.opts.state.pid--;
     self.update();
   }
-  self.setPost(self.pid);
+  self.update({"swipe" : false});
+  self.setPost(self.opts.state.pid, "fadeInLeft");
 }
 
 next(ev) {
@@ -72,51 +70,55 @@ next(ev) {
   }
   self.nextloading = " loading";
   if (!self.nomore) {
-    self.pid++;
+    self.opts.state.pid++;
     self.update();
   }
-  self.setPost(self.pid);
+  self.update({"swipe" : false});
+  self.setPost(self.opts.state.pid, "fadeInRight");
 }
 
-setPost(pid) {
-  this.pid = pid;
-  this.update();
-  this.loading = true;
-  fetch(`/blog/switchpost/${pid-1}`)
+setPost(pid, transition) {
+  this.opts.state.pid = pid;
+  fetch(`/blog/switchpost/${this.opts.state.pid-1}`)
     .then((resp) => resp.text())
     .then(
       (body) => {
         if (body === "false") {
           self.nomore = true;
+          self.prevloading = "";
+          self.nextloading = "";
+          self.swipe = true;
+          self.transition = transition;
           self.update()
+          return;
         }
         else {
           var postcontent = JSON.parse(body);
           if (postcontent.length == 0) {
-            self.loading = false;
             self.prevloading = "";
             self.nextloading = "";
-            self.author = "";
-            self.content = "";
-            self.title = "No more posts!";
             self.nomore = true;
+            self.swipe = true;
+            self.transition = transition;
             self.update();
             return;
           }
           self.author = postcontent[0].doc.author[0];
           self.content = postcontent[0].doc.content[0];
           self.title = postcontent[0].doc.title[0];
+          self.transition = transition;
+          self.swipe = true;
+          self.nomore = false;
           self.update();
         }
 
-        self.loading = false;
         self.prevloading = "";
         self.nextloading = "";
         self.update();
       });
 }
 
-this.setPost(this.opts.pid);
+this.setPost(this.opts.state.pid);
 
 </script>
 </post>

@@ -3,12 +3,25 @@
 }
 
 .navigate {
-  margin: auto;
   width: 70%;
+  margin: auto;
 }
 
 .content-box {
+  display: flex;                   /* defines flexbox */
+  flex-direction: column;          /* top to bottom */
+  justify-content: space-between;  /* first item at start, last at end */
+  position: relative;
+}
+
+.projects-box {
+  @extend .content-box;
   height: 350px !important;
+}
+
+.posts-box {
+  @extend .content-box;
+  height: 250px !important;
 }
 
 .content {

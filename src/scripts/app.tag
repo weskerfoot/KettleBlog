@@ -10,12 +10,14 @@
   <div class="content">
     <loading if={!this.state.loaded}></loading>
     <projectsview
-      if={this.active.projects}
+      class="animated fadeInDown"
+      if={this.active.projects && this.state.loaded}
       state={this.state}
       ref="projectsview"
     >
     </projectsview>
     <postsview
+      state={this.state}
       if={this.active.posts}
       ref="postsview"
     >
@@ -32,6 +34,7 @@ this.route = route;
 this.riot = riot;
 
 this.state = {
+  "pid" : 1,
   "projects" : Z.empty,
   "loaded" : false
 };
@@ -66,8 +69,6 @@ to(name) {
 }
 
 this.on("mount", () => {
-  route("/", () => { route("/post/1") });
-  route("/post/*", this.setPost);
   route.start(true);
 });
 

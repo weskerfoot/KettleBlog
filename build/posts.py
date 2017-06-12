@@ -23,8 +23,6 @@ class Posts:
                 }
         return jsonify(self.db.save(doc))
 
-    def getposts(self, start, end):
-        return jsonify([])
-
-    def getcomments(self, postID):
-        return jsonify([])
+    def getposts(self, limit, start):
+        result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True, limit=limit, skip=start)
+        return jsonify(list(result))

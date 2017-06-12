@@ -1,9 +1,7 @@
 <projects>
-    <div class="content-box">
+    <div class="projects-box">
       <h3>Projects for { this.username }</h3>
-      <div
-        class="text-break"
-      >
+      <div class="text-break">
         <div if={this.swipe} class={`card animated ${this.transition}`}>
           <div class="card-header">
             <h4 class="card-title">{ this.project().name }</h4>
@@ -19,28 +17,28 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="controls container">
-      <div class="columns">
-        <div class="column col-6">
-          <button
-            onclick={this.prev}
-            class="btn btn-lg nav-button float-right"
-          >
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>
-          </button>
-        </div>
-        <div class="column col-6">
-          <button
-            onclick={this.next}
-            class="btn btn-lg nav-button float-left"
-          >
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-          </button>
+      <div class="controls container">
+        <div class="columns">
+          <div class="column col-6">
+            <button
+              onclick={this.prev}
+              class="btn btn-lg nav-button float-right"
+            >
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="column col-6">
+            <button
+              onclick={this.next}
+              class="btn btn-lg nav-button float-left"
+            >
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    </div>
 <script>
 import Z from './zipper.js';
 

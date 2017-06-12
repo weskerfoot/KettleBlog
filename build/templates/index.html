@@ -1,37 +1,23 @@
-{% block head %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <link rel="stylesheet" href="/blog/styles/spectre.min.css">
+  <link rel="stylesheet" href="/blog/styles/riotblog.min.css">
+  <link rel="stylesheet" href="/blog/styles/projects.min.css">
+  <link rel="stylesheet" href="/blog/styles/animate.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<header class="text-center nav navbar">
-  <section class="centered page-top navbar-section">
-    <h1 class="blog-title">nowhere</h1>
-  </section>
-</header>
-{% endblock %}
-
+</head>
 <html>
   <body>
-    {% block content %}
-
-    <posts>
-      <post></post>
-    </posts>
-    <editor>
-    </editor>
-
-    {% endblock %}
-
+    <section class="text-center nav navbar centered page-top navbar-section">
+      <h1 class="blog-title">WK</h1>
+    </section>
+    <app></app>
     <footer class="footer">
     </footer>
 
-{% block styles %}
-
-  <link rel="stylesheet" href="/blog/styles/spectre.min.css">
-  <link rel="stylesheet" href="/blog/styles/riotblog.min.css">
-
-{% endblock %}
-
-{% block scripts %}
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="text/javascript" src="/blog/scripts/riotblog.min.js"></script>
-{% endblock %}
-
   </body>
 </html>

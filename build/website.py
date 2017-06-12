@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 from functools import partial
 
-from flask import abort, Flask, render_template, flash, request, send_from_directory
+from flask import abort, Flask, render_template, flash, request, send_from_directory, jsonify
 from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
 
@@ -9,13 +9,13 @@ from urllib.parse import unquote
 from urllib.parse import quote, unquote
 from json import dumps, loads
 
-from comment import testcomments
-
 from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
 
 import os
+
 from posts import Posts
+from projects import getProjects
 
 posts = Posts()
 
@@ -34,7 +34,6 @@ def cacheit(key, thunk):
     return cached
 
 def NeverWhere(configfile=None):
-
     app = Flask(__name__)
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["COUCHDB_SERVER"] = "http://localhost:5984"
@@ -43,10 +42,27 @@ def NeverWhere(configfile=None):
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+    @app.route("/blog/projects", methods=("GET",))
+    def projects():
+        return jsonify(cacheit("projects", getProjects))
+
+    @app.route("/blog/stuff", methods=("GET",))
+    def stuff():
+        return render_template("projects.html")
+
+    @app.route("/blog/decision/", methods=("GET", "POST"))
+    def decision():
+        print("matched decision")
+        return render_template("decisions.html")
+
     @app.route("/blog/", methods=("GET", "POST"))
     def index():
         print("matched index")
         return render_template("index.html")
+
+    @app.route("/blog/editor/", methods=("GET", "POST"))
+    def editor():
+        return render_template("write.html")
 
     @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):
@@ -57,30 +73,21 @@ def NeverWhere(configfile=None):
     def send_style(filename):
         return send_from_directory("/srv/http/riotblog/styles", filename)
 
-    @app.route("/blog/switchpost/<pid>")
-    def switchPost(pid):
-        posts = {
-                    "1" : "Post one is now changed as before! ",
-                    "2" : "Post two here and it's changed again and again! "
-                }
-        return posts.get(pid, "false")
-
-
-    @app.route("/blog/comments/<pid>")
-    def comments(pid):
-        try:
-            return testcomments.get(int(pid), dumps([]))
-        except ValueError as e:
-            print(e)
-            return dumps([])
-
     @app.route("/blog/insert/")
     def insert():
         return posts.savepost(**request.args)
 
+    @app.route("/blog/switchpost/<pid>")
+    def getposts(pid):
+        try:
+            index = int(pid)
+        except ValueError:
+            index = 0
+        return posts.getposts(index+1, index)
+
     @app.route("/<path:path>")
     def page_not_found(path):
-        return "Custom failure message"
+        return "Oops, couldn't find that :/"
 
     return app
 
