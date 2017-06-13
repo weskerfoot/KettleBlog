@@ -1,8 +1,9 @@
 <post>
   <div class="posts-box post centered">
     <div class="text-break animated fadeIn">
+      <loading if={this.loading}></loading>
       <div
-        if={this.swipe}
+        if={this.swipe && !this.loading}
         class={`animated ${this.transition}`}
       >
         <h4>{ this.title }</h4>
@@ -40,7 +41,8 @@ self.nextloading = "";
 self.transition = "";
 self.nomore = false;
 self.content = "";
-self.swipe = true;
+self.swipe = false;
+self.loading = !self.opts.state.loaded;
 
 prev(ev) {
   ev.preventDefault();
@@ -53,7 +55,7 @@ prev(ev) {
     self.opts.state.pid--;
     self.update();
   }
-  self.update({"swipe" : false});
+  self.update({"swipe" : !self.swipe});
   self.setPost(self.opts.state.pid, "fadeInLeft");
 }
 
@@ -67,11 +69,12 @@ next(ev) {
     self.opts.state.pid++;
     self.update();
   }
-  self.update({"swipe" : false});
+  self.update({"swipe" : !self.swipe});
   self.setPost(self.opts.state.pid, "fadeInRight");
 }
 
 setPost(pid, transition) {
+  self.update({"loading" : self.opts.state.loaded});
   fetch(`/blog/switchpost/${pid-1}`)
     .then((resp) => resp.text())
     .then(
@@ -80,6 +83,7 @@ setPost(pid, transition) {
           self.nomore = true;
           self.prevloading = "";
           self.nextloading = "";
+          self.loading = false;
           self.update()
           return;
         }
@@ -89,9 +93,10 @@ setPost(pid, transition) {
             self.prevloading = "";
             self.nextloading = "";
             self.nomore = true;
-            self.swipe = true;
+            self.swipe = !self.swipe;
             self.transition = "";
             self.opts.state.pid--;
+            self.loading = false;
             self.update();
             return;
           }
@@ -100,8 +105,9 @@ setPost(pid, transition) {
           self.content = postcontent[0].doc.content[0];
           self.title = postcontent[0].doc.title[0];
           self.transition = transition;
-          self.swipe = true;
+          self.swipe = !self.swipe;
           self.nomore = false;
+          self.loading = false;
           self.update();
         }
 
