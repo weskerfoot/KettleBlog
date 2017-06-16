@@ -36,6 +36,7 @@ def copyFiles():
     local("cp ./{blog.ini,blog.service,requirements.txt} ./build/")
     local("cp ./src/*py ./build/")
     local("cp ./src/styles/*.css ./build/styles/")
+    local("uglifycss ./build/styles/*css > ./build/styles/primop.me.min.css")
     local("cp -r ./src/templates ./build/templates")
 
 @task

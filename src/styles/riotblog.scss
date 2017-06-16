@@ -2,16 +2,20 @@
   text-align: center;
 }
 
+.loading {
+}
+
 .navigate {
-  width: 70%;
-  margin: auto;
+  width: 20% !important;
+  margin-bottom: 25px !important;
+  margin: auto !important;
 }
 
 .content-box {
-  display: flex;                   /* defines flexbox */
-  flex-direction: column;          /* top to bottom */
-  justify-content: space-between;  /* first item at start, last at end */
-  position: relative;
+  display: flex !important;                   /* defines flexbox */
+  flex-direction: column !important;          /* top to bottom */
+  justify-content: space-between !important;  /* first item at start, last at end */
+  position: relative !important;
 }
 
 .projects-box {

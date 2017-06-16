@@ -1,3 +1,3 @@
 <loading>
-  <div class="loading"></div>
+  <div class="loading animated fadeIn"></div>
 </loading>

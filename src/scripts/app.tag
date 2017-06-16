@@ -1,10 +1,10 @@
 <app>
   <ul class="navigate tab tab-block">
-    <li class={"tab-item animated fadeIn " + (this.active.projects ? "active" : "")}>
-      <a onclick={to("projects")} href="#">Projects</a>
-    </li>
     <li class={"tab-item " + (this.active.posts ? "active" : "")}>
       <a onclick={to("posts")} href="#">Posts</a>
+    </li>
+    <li class={"tab-item animated fadeIn " + (this.active.projects ? "active" : "")}>
+      <a onclick={to("projects")} href="#">Projects</a>
     </li>
   </ul>
   <div class="content">
@@ -46,19 +46,21 @@ this.active = {
 
 var self = this;
 
-this.route("posts",
-  function() {
-    self.active.posts = true;
-    self.active.projects = false;
-    self.update();
-  });
+function projects() {
+  self.active.projects = true;
+  self.active.posts = false;
+  self.update();
+}
 
-this.route("projects",
-  function() {
-    self.active.projects = true;
-    self.active.posts = false;
-    self.update();
-  });
+function posts() {
+  self.active.posts = true;
+  self.active.projects = false;
+  self.update();
+}
+
+this.route("posts", posts);
+this.route("/", posts);
+this.route("projects", projects);
 
 to(name) {
   return (function(e) {
@@ -78,9 +80,6 @@ function loaduser() {
     .then(function(resp) {
       self.state.projects = Z.fromList(resp.data);
       self.state.loaded = true;
-      if (!self.active.posts) {
-        self.active.projects = true;
-      }
       self.update();
     });
 }
