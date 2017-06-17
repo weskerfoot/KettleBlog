@@ -1,3 +1,5 @@
+$branding: #5764c6;
+
 .post-text, .ltb-title, .post, .postnav {
   text-align: center;
 }
@@ -11,7 +13,25 @@
   margin: auto !important;
 }
 
+.navigate-tab {
+  border: thin solid;
+  border-radius: 5px !important;
+  margin-bottom: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  &:hover {
+    background-color: $branding;
+  }
+}
+
+.navigate-item {
+  &:hover {
+    color: white !important;
+  }
+}
+
 .content-box {
+  margin-top: 10px;
   display: flex !important;                   /* defines flexbox */
   flex-direction: column !important;          /* top to bottom */
   justify-content: space-between !important;  /* first item at start, last at end */
