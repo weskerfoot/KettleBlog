@@ -15,7 +15,7 @@ class Posts:
 
         self.db = self.client["blog"]
 
-    def savepost(self, title, content, author):
+    def savepost(self, title="", content="", author=""):
         doc = {
                 "title" : title,
                 "content" : content,

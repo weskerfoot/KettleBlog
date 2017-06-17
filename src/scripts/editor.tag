@@ -30,7 +30,9 @@ import './raw.tag';
 import 'whatwg-fetch';
 import { default as showdown } from 'showdown';
 import { default as R } from 'ramda';
+import querystring from 'querystring';
 this.R = R;
+this.querystring = querystring;
 
 this.converter = new showdown.Converter();
 this.converted = "<h3>Nothing here yet</h3>";
@@ -68,10 +70,26 @@ echo(ev) {
 var self = this; /* Why do we need this??????????? */
 
 submit() {
-  var post = {
+  var post = self.querystring.stringify({
+      "title" : "title",
       "author" : "name",
-      "text" : this.refs.textarea.value
+      "content" : this.refs.textarea.value
+  });
+
+  var headers = {
+    "headers" : {
+      "Content-Type" : "application/x-www-form-urlencoded"
+    }
   };
+
+  axios.post("/blog/insert/", post, headers)
+  .then(function(resp) {
+    console.log(resp);
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
+
   console.log("Submitting the post");
   console.log(post);
 }

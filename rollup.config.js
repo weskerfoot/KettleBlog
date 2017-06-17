@@ -8,7 +8,7 @@ export default {
   dest: 'build/bundle.js',
   plugins: [
     riot(),
-    nodeResolve({ jsnext: true }),
+    nodeResolve({ jsnext: true, preferBuiltins: false}),
     commonjs(),
     buble()
   ],

@@ -50,11 +50,6 @@ def NeverWhere(configfile=None):
     def stuff():
         return render_template("projects.html")
 
-    @app.route("/blog/decision/", methods=("GET", "POST"))
-    def decision():
-        print("matched decision")
-        return render_template("decisions.html")
-
     @app.route("/blog/", methods=("GET", "POST"))
     def index():
         print("matched index")
@@ -73,9 +68,11 @@ def NeverWhere(configfile=None):
     def send_style(filename):
         return send_from_directory("/srv/http/riotblog/styles", filename)
 
-    @app.route("/blog/insert/")
+    @app.route("/blog/insert/", methods=("POST",))
     def insert():
-        return posts.savepost(**request.args)
+        print("XXX")
+        print(request.form)
+        return posts.savepost(**request.form)
 
     @app.route("/blog/switchpost/<pid>")
     def getposts(pid):

@@ -9,7 +9,7 @@
         <h4>{ this.title }</h4>
         <h5>Posted by { this.author }</h5>
         <p class="post-content centered text-break">
-          { this.content }
+          <raw content="{ this.converter.makeHtml(this.content) }"></raw>
         </p>
         <div class="divider"></div>
       </div>
@@ -27,10 +27,14 @@
   </div>
 <script>
 
+import './raw.tag';
 import 'whatwg-fetch';
 import { default as R } from 'ramda';
+import { default as showdown } from 'showdown';
 import './postcontrols.tag';
 import route from 'riot-route';
+
+this.converter = new showdown.Converter();
 
 var self = this;
 
