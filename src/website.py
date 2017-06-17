@@ -4,6 +4,7 @@ from functools import partial
 from flask import abort, Flask, render_template, flash, request, send_from_directory, jsonify
 from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
+from flask_login import LoginManager, login_required
 
 from urllib.parse import unquote
 from urllib.parse import quote, unquote
@@ -18,6 +19,7 @@ from posts import Posts
 from projects import getProjects
 
 posts = Posts()
+login_manager = LoginManager()
 
 def cacheit(key, thunk):
     """
@@ -55,10 +57,6 @@ def NeverWhere(configfile=None):
         print("matched index")
         return render_template("index.html")
 
-    @app.route("/blog/editor/", methods=("GET", "POST"))
-    def editor():
-        return render_template("write.html")
-
     @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):
         print("matched scripts route")
@@ -68,12 +66,6 @@ def NeverWhere(configfile=None):
     def send_style(filename):
         return send_from_directory("/srv/http/riotblog/styles", filename)
 
-    @app.route("/blog/insert/", methods=("POST",))
-    def insert():
-        print("XXX")
-        print(request.form)
-        return posts.savepost(**request.form)
-
     @app.route("/blog/switchpost/<pid>")
     def getposts(pid):
         try:
@@ -82,6 +74,26 @@ def NeverWhere(configfile=None):
             index = 0
         return posts.getposts(index+1, index)
 
+    # editor routes
+
+    @app.route("/blog/editor/", methods=("GET", "POST"))
+    @login_required
+    def editor():
+        """
+        View the post editor, requires auth
+        """
+        return render_template("write.html")
+
+    @app.route("/blog/insert/", methods=("POST",))
+    @login_required
+    def insert():
+        """
+        Insert a post, requires auth
+        """
+        return posts.savepost(**request.form)
+
+    # default, not found error
+
     @app.route("/<path:path>")
     def page_not_found(path):
         return "Oops, couldn't find that :/"
@@ -89,6 +101,8 @@ def NeverWhere(configfile=None):
     return app
 
 app = NeverWhere()
+
+login_manager.init_app(app)
 
 if __name__ == "__main__":
     NeverWhere("./appconfig").run(host="localhost", port=8001, debug=True)
