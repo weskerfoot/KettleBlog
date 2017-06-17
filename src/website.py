@@ -5,6 +5,7 @@ from flask import abort, Flask, render_template, flash, request, send_from_direc
 from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
 from flask_login import LoginManager, login_required
+from flask_wtf.csrf import CSRFProtect
 
 from urllib.parse import unquote
 from urllib.parse import quote, unquote
@@ -102,7 +103,13 @@ def NeverWhere(configfile=None):
 
 app = NeverWhere()
 
+app.config.from_envvar('RIOTBLOG_SETTINGS')
+
 login_manager.init_app(app)
+
+csrf = CSRFProtect()
+
+csrf.init_app(app)
 
 if __name__ == "__main__":
     NeverWhere("./appconfig").run(host="localhost", port=8001, debug=True)

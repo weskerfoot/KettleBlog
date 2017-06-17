@@ -7,6 +7,7 @@ User=http
 Group=http
 WorkingDirectory=/srv/http/riotblog
 ExecStart=/usr/bin/uwsgi --ini /srv/http/riotblog/blog.ini
+Environment="RIOTBLOG_SETTINGS=/srv/http/riotblog/riotblog_prod.cfg"
 
 [Install]
 WantedBy=multi.user.target
