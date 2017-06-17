@@ -2,17 +2,18 @@
   text-align: center; }
 
 .navigate {
-  width: 70%;
-  margin: auto; }
+  width: 20% !important;
+  margin-bottom: 25px !important;
+  margin: auto !important; }
 
 .content-box, .projects-box, .posts-box {
-  display: flex;
+  display: flex !important;
   /* defines flexbox */
-  flex-direction: column;
+  flex-direction: column !important;
   /* top to bottom */
-  justify-content: space-between;
+  justify-content: space-between !important;
   /* first item at start, last at end */
-  position: relative; }
+  position: relative !important; }
 
 .projects-box {
   height: 350px !important; }
@@ -34,17 +35,11 @@
       max-width: 80%; } }
 
 .post-content {
-  max-width: 50%;
-  text-align: justify;
-  font-size: 1.5em; }
-
-@media (max-width: 700px) {
-  .post-content {
-    max-width: 70%; } }
-
-@media (max-width: 500px) {
-  .post-content {
-    max-width: 90%; } }
+  max-width: 100%;
+  font-family: 'Open Sans',sans-serif;
+  font-size: 1.4em;
+  line-height: 1.6em;
+  color: #3A4145; }
 
 .rounded-button {
   border-radius: 13px; }

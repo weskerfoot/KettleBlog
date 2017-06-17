@@ -30,8 +30,11 @@
 import 'whatwg-fetch';
 import { default as R } from 'ramda';
 import './postcontrols.tag';
+import route from 'riot-route';
 
 var self = this;
+
+self.route = route;
 
 self.author = "";
 self.title = "";
@@ -56,7 +59,7 @@ prev(ev) {
     self.update();
   }
   self.update({"swipe" : !self.swipe});
-  self.setPost(self.opts.state.pid, "fadeInLeft");
+  self.setPost(self.opts.state.pid, "fadeIn");
 }
 
 next(ev) {
@@ -70,7 +73,7 @@ next(ev) {
     self.update();
   }
   self.update({"swipe" : !self.swipe});
-  self.setPost(self.opts.state.pid, "fadeInRight");
+  self.setPost(self.opts.state.pid, "fadeIn");
 }
 
 setPost(pid, transition) {
@@ -113,6 +116,7 @@ setPost(pid, transition) {
 
         self.prevloading = "";
         self.nextloading = "";
+        self.route(`/posts/${self.opts.state.pid}`);
         self.update();
       });
 }

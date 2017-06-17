@@ -1,6 +1,6 @@
 <projects>
     <div class="projects-box">
-      <h3>Projects for { this.username }</h3>
+      <h3>My Projects</h3>
       <div class="text-break">
         <div if={this.swipe} class={`card animated ${this.transition}`}>
           <div class="card-header">

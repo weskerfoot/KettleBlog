@@ -1,7 +1,7 @@
 <app>
   <ul class="navigate tab tab-block">
     <li class={"tab-item " + (this.active.posts ? "active" : "")}>
-      <a onclick={to("posts")} href="#">Posts</a>
+      <a onclick={to(`posts/${this.state.pid}`)} href="#">Posts</a>
     </li>
     <li class={"tab-item animated fadeIn " + (this.active.projects ? "active" : "")}>
       <a onclick={to("projects")} href="#">Projects</a>
@@ -52,23 +52,28 @@ function projects() {
   self.update();
 }
 
-function posts() {
+function posts(pid) {
   self.active.posts = true;
+  self.state.pid = parseInt(pid, 10);
   self.active.projects = false;
   self.update();
 }
 
-this.route("posts", posts);
-this.route("/", posts);
-this.route("projects", projects);
-
 to(name) {
   return (function(e) {
-    e.preventDefault();
+    /* This may or may not be used as an event handler */
+    if (e !== undefined) {
+      e.preventDefault();
+    }
     this.route(name);
     return;
   }).bind(this);
 }
+
+this.route("posts", self.to(`posts/${self.state.pid}`));
+this.route("posts/*", posts);
+this.route("/", self.to("posts"));
+this.route("projects", projects);
 
 this.on("mount", () => {
   route.start(true);
