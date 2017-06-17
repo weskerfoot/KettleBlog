@@ -2,6 +2,8 @@
   <div class="centered container">
     <div class="columns">
       <div class="column col-6">
+        <input ref="title"></input>
+        <input ref="author"></input>
         <textarea onfocus={clearplaceholder}
                   onblur={checkplaceholder}
                   oninput={echo}
@@ -71,8 +73,8 @@ var self = this; /* Why do we need this??????????? */
 
 submit() {
   var post = self.querystring.stringify({
-      "title" : "title",
-      "author" : "name",
+      "title" : this.refs.title.value,
+      "author" : this.refs.author.value,
       "content" : this.refs.textarea.value
   });
 
