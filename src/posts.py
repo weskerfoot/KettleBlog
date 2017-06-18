@@ -16,13 +16,17 @@ class Posts:
         self.db = self.client["blog"]
 
     def savepost(self, title="", content="", author="", _id=False):
-        doc = {
-                "title" : title,
-                "content" : content,
-                "author" : author
-                }
         if _id:
-            doc["_id"] = _id
+            doc = self.db[_id]
+            doc["title"] = title
+            doc["content"] = content
+            doc["author"] = author
+        else:
+            doc = {
+                    "title" : title,
+                    "content" : content,
+                    "author" : author
+                    }
 
         return jsonify(self.db.save(doc))
 

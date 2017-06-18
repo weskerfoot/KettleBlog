@@ -5,7 +5,7 @@
         <ul>
           <li each={this.currentPosts}>
             <p>
-              {title} by {author}, id = {_id}
+              {title} by {author}
             </p>
             <button
               class="btn btn-primary"
@@ -87,16 +87,18 @@ echo(ev) {
 }
 
 submit() {
-  var post = self.querystring.stringify({
+  var post = {
       "title" : this.refs.title.value,
       "author" : this.refs.author.value,
       "content" : this.refs.textarea.value,
       "csrf_token" : this.opts.csrf_token
-  });
+  };
 
   if (this._id) {
     post["_id"] = this._id;
   }
+
+  var postQuery = self.querystring.stringify(post);
 
   var headers = {
     "headers" : {
@@ -105,7 +107,7 @@ submit() {
     }
   };
 
-  axios.post("/blog/insert/", post, headers)
+  axios.post("/blog/insert/", postQuery, headers)
   .then(function(resp) {
     console.log(resp);
   })
