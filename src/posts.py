@@ -26,3 +26,16 @@ class Posts:
     def getposts(self, limit, start):
         result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True, limit=limit, skip=start)
         return jsonify(list(result))
+
+    def allposts(self):
+        result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True)
+
+        posts = []
+        for item in result:
+            posts.append({
+                            "_id" : item.doc["_id"],
+                            "title" : item.doc["title"],
+                            "author" : item.doc["author"]
+                        })
+
+        return jsonify(posts)

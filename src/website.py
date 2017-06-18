@@ -93,6 +93,10 @@ def NeverWhere(configfile=None):
             index = 0
         return posts.getposts(index+1, index)
 
+    @app.route("/blog/allposts")
+    def allposts():
+        return posts.allposts()
+
     # editor routes
 
     @app.route("/blog/editor/", methods=("GET", "POST"))
@@ -113,8 +117,9 @@ def NeverWhere(configfile=None):
         author = request.form.get("author", "no author")
         title = request.form.get("title", "no title")
         content = request.form.get("content", "no content")
+        postid = request.form.get("postid", False)
 
-        post = {"author" : author, "title" : title, "content" : content}
+        post = {"author" : author, "title" : title, "content" : content }
 
         return posts.savepost(**post)
 

@@ -24,7 +24,6 @@
       <div class="column col-6">
         <raw content="{this.converted}"></raw>
       </div>
-
     </div>
   </div>
 <script>
@@ -97,5 +96,18 @@ submit() {
   console.log("Submitting the post");
   console.log(post);
 }
+
+listPosts() {
+  axios.get("/blog/allposts")
+  .then(function(resp) {
+    console.log(resp);
+  })
+  .catch(function(err) {
+    console.log(err);
+  })
+}
+
+self.listPosts();
+
 </script>
 </editor>
