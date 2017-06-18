@@ -14,6 +14,13 @@
             </button>
           </li>
         </ul>
+        <button
+          class="btn btn-primary"
+          onclick={newPost}
+        >
+          New Post
+        </button>
+
         <span>title</span><input ref="title">
         <span>author</span><input ref="author"></input>
         <span>Editing post {_id}</span>
@@ -45,6 +52,8 @@ import 'whatwg-fetch';
 import { default as showdown } from 'showdown';
 import { default as R } from 'ramda';
 import querystring from 'querystring';
+import Z from './zipper.js';
+
 this.R = R;
 this.querystring = querystring;
 
@@ -86,6 +95,15 @@ echo(ev) {
     });
 }
 
+newPost() {
+  this._id = false
+  this.refs.title.value = "";
+  this.refs.author.value = "";
+  this.refs.textarea.value = "";
+  this.echo();
+  this.update();
+}
+
 submit() {
   var post = {
       "title" : this.refs.title.value,
@@ -109,26 +127,26 @@ submit() {
 
   axios.post("/blog/insert/", postQuery, headers)
   .then(function(resp) {
-    console.log(resp);
+    /* Refresh the current list of posts */
+    self._id = resp.data[0];
     self.listPosts();
   })
   .catch(function(err) {
     console.log(err);
   })
-
-  console.log("Submitting the post");
-  console.log(post);
 }
 
 loadPost(_id) {
   return function() {
     axios.get(`/blog/getpost/${_id}`)
     .then(function(resp) {
+
       self.refs.textarea.value = resp.data.content;
       self.refs.title.value = resp.data.title;
       self.refs.author.value = resp.data.author;
       self._id = _id;
       self.focused = true;
+
       self.update();
       self.echo();
     })
