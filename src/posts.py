@@ -39,3 +39,6 @@ class Posts:
                         })
 
         return jsonify(posts)
+
+    def getpost(self, _id):
+        return jsonify(self.db[_id])

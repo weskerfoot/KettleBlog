@@ -2,6 +2,14 @@
   <div class="centered container">
     <div class="columns">
       <div class="column col-6">
+        <ul>
+          <li each={this.currentPosts}>
+            <p>
+              {title} by {author}, id = {_id}
+            </p>
+            <button onclick={loadPost(this._id)}>Load it</button>
+          </li>
+        </ul>
         <span>title</span><input ref="title">
         <span>author</span><input ref="author"></input>
         <textarea onfocus={clearplaceholder}
@@ -42,6 +50,9 @@ this.placeholderText = "Write a post!"
 this.placeholder = this.placeholderText;
 this.focused = false;
 
+this.currentPosts = [];
+var self = this;
+
 clearplaceholder() {
   if (!this.focused) {
     this.update({
@@ -67,8 +78,6 @@ echo(ev) {
                     )
     });
 }
-
-var self = this; /* Why do we need this??????????? */
 
 submit() {
   var post = self.querystring.stringify({
@@ -97,10 +106,25 @@ submit() {
   console.log(post);
 }
 
+loadPost(_id) {
+  return function() {
+    axios.get(`/blog/getpost/${_id}`)
+    .then(function(resp) {
+      self.refs.textarea.value = resp.data.content;
+      self.focused = true;
+      self.update();
+      self.echo();
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  };
+}
+
 listPosts() {
   axios.get("/blog/allposts")
   .then(function(resp) {
-    console.log(resp);
+    self.update({"currentPosts" : resp.data});
   })
   .catch(function(err) {
     console.log(err);

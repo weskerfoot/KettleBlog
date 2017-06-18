@@ -97,6 +97,10 @@ def NeverWhere(configfile=None):
     def allposts():
         return posts.allposts()
 
+    @app.route("/blog/getpost/<_id>")
+    def getpost(_id):
+        return posts.getpost(_id)
+
     # editor routes
 
     @app.route("/blog/editor/", methods=("GET", "POST"))
