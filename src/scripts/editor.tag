@@ -110,6 +110,7 @@ submit() {
   axios.post("/blog/insert/", postQuery, headers)
   .then(function(resp) {
     console.log(resp);
+    self.listPosts();
   })
   .catch(function(err) {
     console.log(err);
