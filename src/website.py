@@ -121,9 +121,9 @@ def NeverWhere(configfile=None):
         author = request.form.get("author", "no author")
         title = request.form.get("title", "no title")
         content = request.form.get("content", "no content")
-        postid = request.form.get("postid", False)
+        postid = request.form.get("_id", False)
 
-        post = {"author" : author, "title" : title, "content" : content }
+        post = {"author" : author, "title" : title, "content" : content, "_id" : postid }
 
         return posts.savepost(**post)
 

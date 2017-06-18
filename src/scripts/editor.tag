@@ -7,11 +7,16 @@
             <p>
               {title} by {author}, id = {_id}
             </p>
-            <button onclick={loadPost(this._id)}>Load it</button>
+            <button
+              class="btn btn-primary"
+              onclick={loadPost(this._id)}>
+                Load it
+            </button>
           </li>
         </ul>
         <span>title</span><input ref="title">
         <span>author</span><input ref="author"></input>
+        <span>Editing post {_id}</span>
         <textarea onfocus={clearplaceholder}
                   onblur={checkplaceholder}
                   oninput={echo}
@@ -45,6 +50,8 @@ this.querystring = querystring;
 
 this.converter = new showdown.Converter();
 this.converted = "<h3>Nothing here yet</h3>";
+
+this._id = false;
 
 this.placeholderText = "Write a post!"
 this.placeholder = this.placeholderText;
@@ -87,6 +94,10 @@ submit() {
       "csrf_token" : this.opts.csrf_token
   });
 
+  if (this._id) {
+    post["_id"] = this._id;
+  }
+
   var headers = {
     "headers" : {
       "Content-Type" : "application/x-www-form-urlencoded",
@@ -111,6 +122,9 @@ loadPost(_id) {
     axios.get(`/blog/getpost/${_id}`)
     .then(function(resp) {
       self.refs.textarea.value = resp.data.content;
+      self.refs.title.value = resp.data.title;
+      self.refs.author.value = resp.data.author;
+      self._id = _id;
       self.focused = true;
       self.update();
       self.echo();

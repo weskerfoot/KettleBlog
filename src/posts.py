@@ -15,12 +15,15 @@ class Posts:
 
         self.db = self.client["blog"]
 
-    def savepost(self, title="", content="", author=""):
+    def savepost(self, title="", content="", author="", _id=False):
         doc = {
                 "title" : title,
                 "content" : content,
                 "author" : author
                 }
+        if _id:
+            doc["_id"] = _id
+
         return jsonify(self.db.save(doc))
 
     def getposts(self, limit, start):
