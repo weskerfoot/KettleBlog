@@ -10,3 +10,4 @@ node_modules
 deploy.sh
 tags
 build
+.sass_cache

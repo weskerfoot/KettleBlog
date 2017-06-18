@@ -108,9 +108,9 @@ setPost(pid, transition) {
             return;
           }
           self.opts.state.pid = pid;
-          self.author = postcontent[0].doc.author[0];
-          self.content = postcontent[0].doc.content[0];
-          self.title = postcontent[0].doc.title[0];
+          self.author = postcontent[0].doc.author;
+          self.content = postcontent[0].doc.content;
+          self.title = postcontent[0].doc.title;
           self.transition = transition;
           self.swipe = !self.swipe;
           self.nomore = false;

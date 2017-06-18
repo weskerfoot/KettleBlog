@@ -4,12 +4,14 @@ from functools import partial
 from flask import abort, Flask, render_template, flash, request, send_from_directory, jsonify
 from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager, login_required, login_user
 from flask_wtf.csrf import CSRFProtect
 
 from urllib.parse import unquote
 from urllib.parse import quote, unquote
 from json import dumps, loads
+
+from admin import Admin
 
 from werkzeug.contrib.cache import MemcachedCache
 cache = MemcachedCache(['127.0.0.1:11211'])
@@ -44,6 +46,22 @@ def NeverWhere(configfile=None):
     #def favicon():
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return Admin
+
+    @app.route("/blog/admin_login", methods=("GET", "POST"))
+    def admin_login():
+        password = request.args.get("password")
+        success = False
+        if password == app.config["ADMIN_PASSWORD"]:
+            print("logged in successfully")
+            success = True
+            login_user(Admin())
+        else:
+            print("did not log in successfully")
+        return render_template("login.html", success=success)
 
     @app.route("/blog/projects", methods=("GET",))
     def projects():
@@ -91,7 +109,14 @@ def NeverWhere(configfile=None):
         """
         Insert a post, requires auth
         """
-        return posts.savepost(**request.form)
+
+        author = request.form.get("author", "no author")
+        title = request.form.get("title", "no title")
+        content = request.form.get("content", "no content")
+
+        post = {"author" : author, "title" : title, "content" : content}
+
+        return posts.savepost(**post)
 
     # default, not found error
 

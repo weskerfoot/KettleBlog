@@ -11,8 +11,7 @@
   <body>
     {% block content %}
 
-    <editor>
-    </editor>
+    <editor csrf_token="{{ csrf_token() }}"></editor>
 
     {% endblock %}
 

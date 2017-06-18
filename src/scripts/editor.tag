@@ -2,8 +2,8 @@
   <div class="centered container">
     <div class="columns">
       <div class="column col-6">
-        <input ref="title"></input>
-        <input ref="author"></input>
+        <span>title</span><input ref="title">
+        <span>author</span><input ref="author"></input>
         <textarea onfocus={clearplaceholder}
                   onblur={checkplaceholder}
                   oninput={echo}
@@ -75,12 +75,14 @@ submit() {
   var post = self.querystring.stringify({
       "title" : this.refs.title.value,
       "author" : this.refs.author.value,
-      "content" : this.refs.textarea.value
+      "content" : this.refs.textarea.value,
+      "csrf_token" : this.opts.csrf_token
   });
 
   var headers = {
     "headers" : {
-      "Content-Type" : "application/x-www-form-urlencoded"
+      "Content-Type" : "application/x-www-form-urlencoded",
+      "X-CSRFToken" : this.opts.csrf_token
     }
   };
 
