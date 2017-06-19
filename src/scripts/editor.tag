@@ -166,7 +166,7 @@ submit() {
     /* Refresh the current list of posts */
     self._id = resp.data[0];
     self.listPosts();
-    console.log(self.currentPosts);
+    console.log(Z.toJS(self.currentPosts));
   })
   .catch(function(err) {
     console.log(err);
@@ -197,9 +197,9 @@ deletePost(_id) {
   return function() {
     axios.get(`/blog/deletepost/${self.currentPost()._id}`)
       .then(function(resp) {
-        self.update({"currentPosts" : Z.empty});
         self.newPost();
         self.listPosts();
+        console.log(Z.toJS(self.currentPosts));
     })
     .catch(function(err) {
       console.log(err);
@@ -212,7 +212,7 @@ listPosts() {
   .then(function(resp) {
     self.update(
       {
-        "currentPosts" : Z.extend(self.currentPosts, resp.data)
+        "currentPosts" : Z.extend(Z.empty, resp.data)
       }
     );
   })

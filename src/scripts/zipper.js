@@ -7,6 +7,10 @@ function Zipper(left, right) {
   };
 }
 
+function toJS(z) {
+  return [z.left.toJS(), z.right.toJS()];
+}
+
 function fromList(xs) {
   return Zipper(im.Stack(), im.Stack(xs));
 }
@@ -61,5 +65,6 @@ export default {
   "empty" : empty,
   "fromList" : fromList,
   "extend" : extend,
-  "removeCurrent" : removeCurrent
+  "removeCurrent" : removeCurrent,
+  "toJS" : toJS
 };
