@@ -49,3 +49,6 @@ class Posts:
 
     def getpost(self, _id):
         return jsonify(self.db[_id])
+
+    def delete(self, _id):
+        return self.db[_id].delete()

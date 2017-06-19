@@ -43,6 +43,10 @@ function goLeft(z) {
                 z.right.unshift(z.left.first()));
 }
 
+function extend(z, xs) {
+  return Zipper(z.left, z.right.concat(xs));
+}
+
 var empty = fromList([]);
 
 export default {
@@ -51,5 +55,6 @@ export default {
   "goRight" : goRight,
   "goLeft" : goLeft,
   "empty" : empty,
-  "fromList" : fromList
+  "fromList" : fromList,
+  "extend" : extend
 };

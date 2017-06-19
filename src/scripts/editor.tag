@@ -2,43 +2,56 @@
   <div class="centered container">
     <div class="columns">
       <div class="column col-6">
-        <ul>
-          <li each={this.currentPosts}>
-            <p>
-              {title} by {author}
-            </p>
-            <button
-              class="btn btn-primary"
-              onclick={loadPost(this._id)}>
-                Load it
-            </button>
-          </li>
-        </ul>
+        <div>
+          <span>
+            {this.currentPost().title} by {this.currentPost().author}
+          </span>
+          <button
+            class="btn btn-primary"
+            onclick={loadPost(this.currentPost()._id)}>
+              Load it
+          </button>
+        </div>
         <button
           class="btn btn-primary"
-          onclick={newPost}
+          onclick={goLeft}
         >
-          New Post
+          Prev
         </button>
+        <button
+          class="btn btn-primary"
+          onclick={goRight}
+        >
+          Next
+        </button>
+        <p>
+          <button
+            class="btn btn-primary"
+            onclick={newPost}
+          >
+            New Post
+          </button>
+        </p>
 
-        <span>title</span><input ref="title">
-        <span>author</span><input ref="author"></input>
-        <span>Editing post {_id}</span>
-        <textarea onfocus={clearplaceholder}
-                  onblur={checkplaceholder}
-                  oninput={echo}
-                  rows="30"
-                  cols="10"
-                  __disabled={""}
-                  class="editor form-input centered"
-                  ref="textarea"
-                  maxlength={this.maxlength}>
-          { placeholder }
-        </textarea>
-        <button onclick={submit}
-                class="btn post-submit centered">
-          Submit Post
-        </button>
+        <p>
+          <span>title</span><input ref="title">
+          <span>author</span><input ref="author"></input>
+          <span>Editing post {this.currentPost()._id}</span>
+          <textarea onfocus={clearplaceholder}
+                    onblur={checkplaceholder}
+                    oninput={echo}
+                    rows="10"
+                    cols="10"
+                    __disabled={""}
+                    class="editor form-input centered"
+                    ref="textarea">
+            { placeholder }
+          </textarea>
+          <button onclick={submit}
+                  class="btn post-submit centered">
+            Submit Post
+          </button>
+        </p>
       </div>
 
       <div class="column col-6">
@@ -66,8 +79,27 @@ this.placeholderText = "Write a post!"
 this.placeholder = this.placeholderText;
 this.focused = false;
 
-this.currentPosts = [];
+this.currentPosts = Z.empty;
+
 var self = this;
+
+currentPost() {
+  var defaultPost = {
+    "_id" : "",
+    "title" : "",
+    "author" : ""
+  };
+
+  return Z.focus(self.currentPosts, defaultPost);
+}
+
+goRight() {
+  self.update({"currentPosts" : Z.goRight(self.currentPosts)});
+}
+
+goLeft() {
+  self.update({"currentPosts" : Z.goLeft(self.currentPosts)});
+}
 
 clearplaceholder() {
   if (!this.focused) {
@@ -90,8 +122,7 @@ checkplaceholder() {
 echo(ev) {
   this.update({
       "converted" : this.converter.makeHtml(
-                      this.refs.textarea.value.trim()
-                    )
+                      this.refs.textarea.value.trim())
     });
 }
 
@@ -138,7 +169,7 @@ submit() {
 
 loadPost(_id) {
   return function() {
-    axios.get(`/blog/getpost/${_id}`)
+    axios.get(`/blog/getpost/${self.currentPost()._id}`)
     .then(function(resp) {
 
       self.refs.textarea.value = resp.data.content;
@@ -159,7 +190,11 @@ loadPost(_id) {
 listPosts() {
   axios.get("/blog/allposts")
   .then(function(resp) {
-    self.update({"currentPosts" : resp.data});
+    self.update(
+      {
+        "currentPosts" : Z.extend(self.currentPosts, resp.data)
+      }
+    );
   })
   .catch(function(err) {
     console.log(err);
