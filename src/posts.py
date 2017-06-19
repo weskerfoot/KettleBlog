@@ -1,6 +1,8 @@
 #! /usr/bin/python
 
 import couchdb
+
+from couchdb.http import ResourceConflict, ResourceNotFound
 from flask import jsonify
 from flask_marshmallow import Marshmallow
 
@@ -51,4 +53,11 @@ class Posts:
         return jsonify(self.db[_id])
 
     def delete(self, _id):
-        return self.db[_id].delete()
+        doc = self.db[_id]
+        try:
+            self.db.delete(doc)
+            return jsonify(True)
+        except (ResourceNotFound, ResourceConflict) as e:
+            print(e)
+            return jsonify(False)
+

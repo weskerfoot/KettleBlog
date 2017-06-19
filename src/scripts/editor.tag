@@ -25,6 +25,16 @@
           Next
         </button>
         <p>
+          <span>title</span><input ref="title">
+          <span>author</span><input ref="author"></input>
+          <span>Editing post {this.currentPost()._id}</span>
+        <p>
+          <button
+            class="btn btn-primary"
+            onclick={deletePost(this.currentPost()._id)}
+          >
+            Delete Post
+          </button>
           <button
             class="btn btn-primary"
             onclick={newPost}
@@ -32,11 +42,6 @@
             New Post
           </button>
         </p>
-
-        <p>
-          <span>title</span><input ref="title">
-          <span>author</span><input ref="author"></input>
-          <span>Editing post {this.currentPost()._id}</span>
           <textarea onfocus={clearplaceholder}
                     onblur={checkplaceholder}
                     oninput={echo}
@@ -161,6 +166,7 @@ submit() {
     /* Refresh the current list of posts */
     self._id = resp.data[0];
     self.listPosts();
+    console.log(self.currentPosts);
   })
   .catch(function(err) {
     console.log(err);
@@ -180,6 +186,20 @@ loadPost(_id) {
 
       self.update();
       self.echo();
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+  };
+}
+
+deletePost(_id) {
+  return function() {
+    axios.get(`/blog/deletepost/${self.currentPost()._id}`)
+      .then(function(resp) {
+        self.update({"currentPosts" : Z.empty});
+        self.newPost();
+        self.listPosts();
     })
     .catch(function(err) {
       console.log(err);

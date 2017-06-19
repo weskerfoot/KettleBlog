@@ -47,6 +47,10 @@ function extend(z, xs) {
   return Zipper(z.left, z.right.concat(xs));
 }
 
+function removeCurrent(z) {
+  return Zipper(z.left, z.right.shift());
+}
+
 var empty = fromList([]);
 
 export default {
@@ -56,5 +60,6 @@ export default {
   "goLeft" : goLeft,
   "empty" : empty,
   "fromList" : fromList,
-  "extend" : extend
+  "extend" : extend,
+  "removeCurrent" : removeCurrent
 };
