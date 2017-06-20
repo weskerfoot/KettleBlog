@@ -187,7 +187,6 @@ submit() {
     /* This post has been added, so insert it in the current position */
 
     console.log("the post was successfully added");
-    console.log(Z.toJS(self.currentPosts));
 
     if (self.isNewPost) {
       /* only happen for new posts */
@@ -208,15 +207,12 @@ submit() {
 
 loadPost(_id) {
   return function() {
-    console.log("trying to load a post");
-    console.log(_id);
     if (!_id) {
       console.log("couldn't load the post");
       return false;
     }
     axios.get(`/blog/getpost/${_id}`)
     .then(function(resp) {
-      console.log(resp);
       self.refs.textarea.value = resp.data.content;
       self.refs.title.value = resp.data.title;
       self.refs.author.value = resp.data.author;
@@ -241,7 +237,6 @@ deletePost(_id) {
       .then(function(resp) {
         self.newPost();
         self.listPosts();
-        console.log(Z.toJS(self.currentPosts));
     })
     .catch(function(err) {
       console.log(err);
