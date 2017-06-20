@@ -195,7 +195,8 @@ submit() {
       self.update(
         {
           "currentPosts" : Z.insert(post, self.currentPosts),
-          "isNewPost" : false
+          "isNewPost" : false,
+          "_id" : post["_id"]
         }
       );
     }
@@ -253,12 +254,14 @@ listPosts() {
   .then(function(resp) {
     var postsList = Z.extend(Z.empty, resp.data);
     console.log(`trying to load post with id ${Z.focus(postsList, self.defaultPost)._id}`);
-    self.one("updated", self.loadPost(Z.focus(postsList, self.defaultPost)._id));
+    var currentPost = Z.focus(postsList, self.defaultPost);
+    self.one("updated", self.loadPost(currentPost._id));
 
     self.update(
       {
         "currentPosts" : postsList,
-        "isNewPost" : false
+        "isNewPost" : false,
+        "_id" : currentPost._id
       }
     );
   })
