@@ -235,7 +235,7 @@ deletePost(_id) {
     }
     axios.get(`/blog/deletepost/${self._id}`)
       .then(function(resp) {
-        self.newPost();
+        console.log(resp);
         self.listPosts();
     })
     .catch(function(err) {
@@ -250,12 +250,18 @@ listPosts() {
     var postsList = Z.extend(Z.empty, resp.data);
     console.log(`trying to load post with id ${Z.focus(postsList, self.defaultPost)._id}`);
     var currentPost = Z.focus(postsList, self.defaultPost);
-    self.one("updated", self.loadPost(currentPost._id));
+    var isNewPost;
+
+    if (currentPost == self.defaultPost) {
+      self.newPost();
+    }
+    else {
+      self.one("updated", self.loadPost(currentPost._id));
+    }
 
     self.update(
       {
         "currentPosts" : postsList,
-        "isNewPost" : false,
         "_id" : currentPost._id
       }
     );
