@@ -111,7 +111,7 @@ goRight() {
 
 goLeft() {
   console.log("trying to update with the next post");
-  console.log(this_id);
+  console.log(this.currentPost()._id);
   self.update(
     {
       "currentPosts" : Z.goLeft(self.currentPosts),
