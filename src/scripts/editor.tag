@@ -6,11 +6,6 @@
           <span>
             {this.currentPost().title} by {this.currentPost().author}
           </span>
-          <button
-            class="btn btn-primary"
-            onclick={loadPost(this.currentPost()._id)}>
-              Load it
-          </button>
         </div>
         <button
           class="btn btn-primary"
@@ -78,8 +73,6 @@ this.querystring = querystring;
 this.converter = new showdown.Converter();
 this.converted = "<h3>Nothing here yet</h3>";
 
-this._id = false;
-
 this.placeholderText = "Write a post!"
 this.placeholder = this.placeholderText;
 this.focused = false;
@@ -100,10 +93,12 @@ currentPost() {
 
 goRight() {
   self.update({"currentPosts" : Z.goRight(self.currentPosts)});
+  self.one("updated", self.loadPost(this.currentPost()._id));
 }
 
 goLeft() {
   self.update({"currentPosts" : Z.goLeft(self.currentPosts)});
+  self.one("updated", self.loadPost(this.currentPost()._id));
 }
 
 clearplaceholder() {
@@ -132,7 +127,6 @@ echo(ev) {
 }
 
 newPost() {
-  this._id = false
   this.refs.title.value = "";
   this.refs.author.value = "";
   this.refs.textarea.value = "";
@@ -148,8 +142,8 @@ submit() {
       "csrf_token" : this.opts.csrf_token
   };
 
-  if (this._id) {
-    post["_id"] = this._id;
+  if (this.currentPost()._id) {
+    post["_id"] = this.currentPost()._id;
   }
 
   var postQuery = self.querystring.stringify(post);
@@ -164,7 +158,6 @@ submit() {
   axios.post("/blog/insert/", postQuery, headers)
   .then(function(resp) {
     /* Refresh the current list of posts */
-    self._id = resp.data[0];
     self.listPosts();
     console.log(Z.toJS(self.currentPosts));
   })
@@ -181,7 +174,6 @@ loadPost(_id) {
       self.refs.textarea.value = resp.data.content;
       self.refs.title.value = resp.data.title;
       self.refs.author.value = resp.data.author;
-      self._id = _id;
       self.focused = true;
 
       self.update();
