@@ -250,7 +250,6 @@ listPosts() {
     var postsList = Z.extend(Z.empty, resp.data);
     console.log(`trying to load post with id ${Z.focus(postsList, self.defaultPost)._id}`);
     var currentPost = Z.focus(postsList, self.defaultPost);
-    var isNewPost;
 
     if (currentPost == self.defaultPost) {
       self.newPost();
