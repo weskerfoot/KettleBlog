@@ -55,6 +55,10 @@ function removeCurrent(z) {
   return Zipper(z.left, z.right.shift());
 }
 
+function insert(x, z) {
+  return Zipper(z.left, z.right.unshift(x));
+}
+
 var empty = fromList([]);
 
 export default {
@@ -66,5 +70,6 @@ export default {
   "fromList" : fromList,
   "extend" : extend,
   "removeCurrent" : removeCurrent,
+  "insert" : insert,
   "toJS" : toJS
 };

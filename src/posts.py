@@ -30,6 +30,7 @@ class Posts:
                     "author" : author
                     }
 
+        print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))
 
     def getposts(self, limit, start):

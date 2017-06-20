@@ -4,7 +4,7 @@
       <div class="column col-6">
         <div>
           <span>
-            {this.currentPost().title} by {this.currentPost().author}
+            {!this.isNewPost ? this.currentPost().title : "No Title"} by {!this.isNewPost ? this.currentPost().author : "No Author"}
           </span>
         </div>
         <button
@@ -22,11 +22,11 @@
         <p>
           <span>title</span><input ref="title">
           <span>author</span><input ref="author"></input>
-          <span>Editing post {this.currentPost()._id}</span>
+          <span>Editing post {!this.isNewPost ? this._id : ""}</span>
         <p>
           <button
             class="btn btn-primary"
-            onclick={deletePost(this.currentPost()._id)}
+            onclick={deletePost(!this.isNewPost ? this._id : false)}
           >
             Delete Post
           </button>
@@ -79,25 +79,45 @@ this.focused = false;
 
 this.currentPosts = Z.empty;
 
+this._id = false;
+
+this.isNewPost = false;
+
+this.defaultPost = {
+  "_id" : "",
+  "title" : "",
+  "author" : ""
+};
+
+
 var self = this;
 
-currentPost() {
-  var defaultPost = {
-    "_id" : "",
-    "title" : "",
-    "author" : ""
-  };
 
-  return Z.focus(self.currentPosts, defaultPost);
+currentPost() {
+  return Z.focus(self.currentPosts, self.defaultPost);
 }
 
 goRight() {
-  self.update({"currentPosts" : Z.goRight(self.currentPosts)});
+  console.log("trying to update with the previous post");
+  console.log(this.currentPost()._id);
+  self.update(
+    {
+      "currentPosts" : Z.goRight(self.currentPosts),
+      "isNewPost" : false
+    }
+  );
   self.one("updated", self.loadPost(this.currentPost()._id));
 }
 
 goLeft() {
-  self.update({"currentPosts" : Z.goLeft(self.currentPosts)});
+  console.log("trying to update with the next post");
+  console.log(this_id);
+  self.update(
+    {
+      "currentPosts" : Z.goLeft(self.currentPosts),
+      "isNewPost" : false
+    }
+  );
   self.one("updated", self.loadPost(this.currentPost()._id));
 }
 
@@ -130,6 +150,10 @@ newPost() {
   this.refs.title.value = "";
   this.refs.author.value = "";
   this.refs.textarea.value = "";
+  this._id = false;
+  /* must overwrite the current _id */
+  /* otherwise it overwrites the current post */
+  this.isNewPost = true;
   this.echo();
   this.update();
 }
@@ -142,8 +166,8 @@ submit() {
       "csrf_token" : this.opts.csrf_token
   };
 
-  if (this.currentPost()._id) {
-    post["_id"] = this.currentPost()._id;
+  if (this._id) {
+    post["_id"] = this._id;
   }
 
   var postQuery = self.querystring.stringify(post);
@@ -158,8 +182,23 @@ submit() {
   axios.post("/blog/insert/", postQuery, headers)
   .then(function(resp) {
     /* Refresh the current list of posts */
-    self.listPosts();
+    /* self.listPosts(); */
+
+    /* This post has been added, so insert it in the current position */
+
+    console.log("the post was successfully added");
     console.log(Z.toJS(self.currentPosts));
+
+    if (self.isNewPost) {
+      /* only happen for new posts */
+      post["_id"] = resp.data[0];
+      self.update(
+        {
+          "currentPosts" : Z.insert(post, self.currentPosts),
+          "isNewPost" : false
+        }
+      );
+    }
   })
   .catch(function(err) {
     console.log(err);
@@ -168,13 +207,20 @@ submit() {
 
 loadPost(_id) {
   return function() {
-    axios.get(`/blog/getpost/${self.currentPost()._id}`)
+    console.log("trying to load a post");
+    console.log(_id);
+    if (!_id) {
+      console.log("couldn't load the post");
+      return false;
+    }
+    axios.get(`/blog/getpost/${_id}`)
     .then(function(resp) {
-
+      console.log(resp);
       self.refs.textarea.value = resp.data.content;
       self.refs.title.value = resp.data.title;
       self.refs.author.value = resp.data.author;
       self.focused = true;
+      self.isNewPost = false;
 
       self.update();
       self.echo();
@@ -187,7 +233,10 @@ loadPost(_id) {
 
 deletePost(_id) {
   return function() {
-    axios.get(`/blog/deletepost/${self.currentPost()._id}`)
+    if (!_id) {
+      return false;
+    }
+    axios.get(`/blog/deletepost/${self._id}`)
       .then(function(resp) {
         self.newPost();
         self.listPosts();
@@ -202,9 +251,14 @@ deletePost(_id) {
 listPosts() {
   axios.get("/blog/allposts")
   .then(function(resp) {
+    var postsList = Z.extend(Z.empty, resp.data);
+    console.log(`trying to load post with id ${Z.focus(postsList, self.defaultPost)._id}`);
+    self.one("updated", self.loadPost(Z.focus(postsList, self.defaultPost)._id));
+
     self.update(
       {
-        "currentPosts" : Z.extend(Z.empty, resp.data)
+        "currentPosts" : postsList,
+        "isNewPost" : false
       }
     );
   })
