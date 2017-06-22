@@ -92,7 +92,6 @@ this.defaultPost = {
 
 var self = this;
 
-
 currentPost() {
   return Z.focus(self.currentPosts, self.defaultPost);
 }
@@ -216,6 +215,7 @@ loadPost(_id) {
       self.refs.textarea.value = resp.data.content;
       self.refs.title.value = resp.data.title;
       self.refs.author.value = resp.data.author;
+      self._id = resp.data._id;
       self.focused = true;
       self.isNewPost = false;
 
