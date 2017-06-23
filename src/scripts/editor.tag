@@ -1,6 +1,6 @@
 <editor>
   <loading if={this.loading}></loading>
-  <div if={!this.loading} class="centered container">
+  <div class="centered container">
     <div class="columns">
       <div class="column col-6">
         <div>
@@ -163,6 +163,7 @@ newPost() {
 }
 
 submit() {
+  self.update({"loading" : true});
   var post = {
       "title" : this.refs.title.value,
       "author" : this.refs.author.value,
@@ -191,6 +192,7 @@ submit() {
 
     console.log("the post was successfully added");
 
+    self.update({"loading" : false});
     if (self.isNewPost) {
       /* only happen for new posts */
       post["_id"] = resp.data[0];
@@ -219,18 +221,16 @@ loadPost(_id) {
     axios.get(`/blog/getpost/${_id}`)
     .then(function(resp) {
       self.update({"loading" : false});
-      self.one("updated", function() {
-        self.refs.textarea.value = resp.data.content;
-        self.refs.title.value = resp.data.title;
-        self.refs.author.value = resp.data.author;
-        self._id = resp.data._id;
-        self.focused = true;
-        self.isNewPost = false;
-        console.log("loaded");
+      self.refs.textarea.value = resp.data.content;
+      self.refs.title.value = resp.data.title;
+      self.refs.author.value = resp.data.author;
+      self._id = resp.data._id;
+      self.focused = true;
+      self.isNewPost = false;
+      console.log("loaded");
 
-        self.update();
-        self.echo();
-      });
+      self.update();
+      self.echo();
     })
     .catch(function(err) {
       console.log(err);
