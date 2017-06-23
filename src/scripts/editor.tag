@@ -1,5 +1,6 @@
 <editor>
-  <div class="centered container">
+  <loading if={this.loading}></loading>
+  <div if={!this.loading} class="centered container">
     <div class="columns">
       <div class="column col-6">
         <div>
@@ -60,6 +61,7 @@
     </div>
   </div>
 <script>
+import './loading.tag';
 import './raw.tag';
 import 'whatwg-fetch';
 import { default as showdown } from 'showdown';
@@ -67,6 +69,7 @@ import { default as R } from 'ramda';
 import querystring from 'querystring';
 import Z from './zipper.js';
 
+this.loading = false;
 this.R = R;
 this.querystring = querystring;
 
@@ -149,9 +152,11 @@ newPost() {
   this.refs.title.value = "";
   this.refs.author.value = "";
   this.refs.textarea.value = "";
-  this._id = false;
+
   /* must overwrite the current _id */
   /* otherwise it overwrites the current post */
+  this._id = false;
+
   this.isNewPost = true;
   this.echo();
   this.update();
@@ -166,6 +171,7 @@ submit() {
   };
 
   if (this._id) {
+  /* If the post has an _id then it exists and we are editing it */
     post["_id"] = this._id;
   }
 
@@ -181,8 +187,6 @@ submit() {
   axios.post("/blog/insert/", postQuery, headers)
   .then(function(resp) {
     /* Refresh the current list of posts */
-    /* self.listPosts(); */
-
     /* This post has been added, so insert it in the current position */
 
     console.log("the post was successfully added");
@@ -206,21 +210,27 @@ submit() {
 
 loadPost(_id) {
   return function() {
+    console.log("started loading");
+    self.update({"loading" : true});
     if (!_id) {
       console.log("couldn't load the post");
       return false;
     }
     axios.get(`/blog/getpost/${_id}`)
     .then(function(resp) {
-      self.refs.textarea.value = resp.data.content;
-      self.refs.title.value = resp.data.title;
-      self.refs.author.value = resp.data.author;
-      self._id = resp.data._id;
-      self.focused = true;
-      self.isNewPost = false;
+      self.update({"loading" : false});
+      self.one("updated", function() {
+        self.refs.textarea.value = resp.data.content;
+        self.refs.title.value = resp.data.title;
+        self.refs.author.value = resp.data.author;
+        self._id = resp.data._id;
+        self.focused = true;
+        self.isNewPost = false;
+        console.log("loaded");
 
-      self.update();
-      self.echo();
+        self.update();
+        self.echo();
+      });
     })
     .catch(function(err) {
       console.log(err);
