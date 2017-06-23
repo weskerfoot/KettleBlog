@@ -216,6 +216,7 @@ loadPost(_id) {
     self.update({"loading" : true});
     if (!_id) {
       console.log("couldn't load the post");
+      self.update({"loading" : false});
       return false;
     }
     axios.get(`/blog/getpost/${_id}`)
