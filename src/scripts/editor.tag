@@ -213,12 +213,11 @@ submit() {
 loadPost(_id) {
   return function() {
     console.log("started loading");
-    self.update({"loading" : true});
     if (!_id) {
       console.log("couldn't load the post");
-      self.update({"loading" : false});
       return false;
     }
+    self.update({"loading" : true});
     axios.get(`/blog/getpost/${_id}`)
     .then(function(resp) {
       self.update({"loading" : false});
@@ -244,10 +243,12 @@ deletePost(_id) {
     if (!_id) {
       return false;
     }
+    self.update({"loading" : true});
     axios.get(`/blog/deletepost/${self._id}`)
       .then(function(resp) {
         console.log(resp);
         self.listPosts();
+        self.update({"loading" : false});
     })
     .catch(function(err) {
       console.log(err);
