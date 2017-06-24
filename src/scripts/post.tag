@@ -6,8 +6,8 @@
         if={this.swipe && !this.loading}
         class={`animated ${this.transition}`}
       >
-        <h4>{ this.title }</h4>
-        <h5>Posted by { this.author }</h5>
+        <h4 class="post-title">{ this.title }</h4>
+        <h5 class="post-author">Posted by { this.author }</h5>
         <p class="post-content centered text-break">
           <raw content="{ this.converter.makeHtml(this.content) }"></raw>
         </p>

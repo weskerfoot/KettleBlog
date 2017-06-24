@@ -19,7 +19,7 @@
       </a>
     </li>
   </ul>
-  <div class="content">
+  <div class="projects-content">
     <loading if={!this.state.loaded}></loading>
     <projectsview
       class="animated fadeInDown"
@@ -28,6 +28,8 @@
       ref="projectsview"
     >
     </projectsview>
+  </div>
+  <div class="content">
     <postsview
       state={this.state}
       if={this.active.posts}
