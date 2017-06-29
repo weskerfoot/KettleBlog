@@ -3,8 +3,7 @@
     <div class="text-break animated fadeIn">
       <loading if={this.loading}></loading>
       <div
-        if={this.swipe && !this.loading}
-        class={`animated ${this.transition}`}
+        class={this.loading ? "invisible" : ""}
       >
         <h4 class="post-title">{ this.title }</h4>
         <p class="post-content centered text-break">
