@@ -1,4 +1,57 @@
-$branding: #5764c6;
+$brandingBG: rgba(27, 76, 108, 0.50);
+$branding: #25658f;
+$branding2: #4b93c1;
+
+.branded, button {
+  border-radius: 5px;
+  border-color: $branding2 !important;
+	display: block;
+	margin-top: 0;
+	padding: .6rem 1.2rem .4rem 1.2rem;
+	text-decoration: none;
+  color: $branding !important;
+  background-color: white !important;
+  &:hover {
+    background-color: $brandingBG !important;
+  }
+}
+
+.loader-branded {
+	color: transparent !important;
+	min-height: 1.6rem;
+	pointer-events: none;
+	position: relative;
+
+  &:after {
+    -webkit-animation: loading .5s infinite linear;
+    animation: loading .5s infinite linear;
+    border: .2rem solid $branding;
+    border-radius: .8rem;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: 1.6rem;
+    left: 50%;
+    margin-left: -.8rem;
+    margin-top: -.8rem;
+    position: absolute;
+    top: 50%;
+    width: 1.6rem;
+    z-index: 1;
+  }
+}
+
+.tab-active {
+  border-bottom-color: $branding !important;
+  color: $branding !important;
+}
+
+a {
+  color: $branding2 !important;
+}
+
+.branded-loader {}
 
 .post-text, .title, .post, .postnav {
   text-align: center;
@@ -19,9 +72,6 @@ $branding: #5764c6;
 	color: #3A4145;
 }
 
-.loading {
-}
-
 .navigate {
   width: 20% !important;
   margin-bottom: 25px !important;
@@ -35,11 +85,12 @@ $branding: #5764c6;
   margin-left: 2px;
   margin-right: 2px;
   &:hover {
-    background-color: $branding;
+    background-color: $brandingBG;
   }
 }
 
 .navigate-item {
+  color: $branding !important;
   &:hover {
     color: white !important;
   }

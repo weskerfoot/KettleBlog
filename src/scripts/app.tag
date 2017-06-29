@@ -2,7 +2,7 @@
   <ul class="navigate tab tab-block">
     <li class={"navigate-tab tab-item " + (this.active.posts ? "active" : "")}>
       <a
-        class="navigate-item"
+        class={"navigate-item " + (this.active.posts ? "tab-active" : "")}
         onclick={to(`posts/${this.state.pid}`)}
         href="#"
       >
@@ -11,7 +11,7 @@
     </li>
     <li class={"navigate-tab tab-item animated fadeIn " + (this.active.projects ? "active" : "")}>
       <a
-        class="navigate-item"
+        class={"navigate-item " + (this.active.projects ? "tab-active" : "")}
         onclick={to("projects")}
         href="#"
       >

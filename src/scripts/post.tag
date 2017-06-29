@@ -7,7 +7,6 @@
         class={`animated ${this.transition}`}
       >
         <h4 class="post-title">{ this.title }</h4>
-        <h5 class="post-author">Posted by { this.author }</h5>
         <p class="post-content centered text-break">
           <raw content="{ this.converter.makeHtml(this.content) }"></raw>
         </p>
@@ -56,7 +55,7 @@ prev(ev) {
   if (self.prevloading || self.nextloading) {
     return;
   }
-  self.prevloading = " loading";
+  self.prevloading = " loader-branded";
 
   if (self.opts.state.pid > 1) {
     self.opts.state.pid--;
@@ -71,7 +70,7 @@ next(ev) {
   if (self.nextloading || self.prevloading) {
     return;
   }
-  self.nextloading = " loading";
+  self.nextloading = " loader-branded";
   if (!self.nomore) {
     self.opts.state.pid++;
     self.update();

@@ -1,3 +1,5 @@
 <loading>
-  <div class="loading animated fadeIn"></div>
+  <div class="content-box">
+    <div class="loader-branded animated fadeIn"></div>
+  </div>
 </loading>
