@@ -93,11 +93,15 @@ this.on("mount", () => {
   route.start(true);
 });
 
+function notFork(p) {
+  return !p.fork;
+}
+
 function loaduser() {
   /* https://api.github.com/users/${self.username}/repos?sort=updated&direction=desc */
   axios.get(`/blog/projects`)
     .then(function(resp) {
-      self.state.projects = Z.fromList(resp.data);
+      self.state.projects = Z.fromList(resp.data.filter(notFork));
       self.state.loaded = true;
       self.update();
     });

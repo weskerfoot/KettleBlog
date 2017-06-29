@@ -1,6 +1,7 @@
-$brandingBG: rgba(27, 76, 108, 0.50);
+$brandingBG: rgba(103, 173, 219, 0.40);
 $branding: #25658f;
 $branding2: #4b93c1;
+$branding3: #1b4c6c;
 
 .branded, button {
   border-radius: 5px;
@@ -92,7 +93,7 @@ a {
 .navigate-item {
   color: $branding !important;
   &:hover {
-    color: white !important;
+    color: $branding3 !important;
   }
 }
 

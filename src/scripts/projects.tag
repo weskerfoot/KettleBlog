@@ -13,7 +13,8 @@
               See on github
             </a>
             <p>{ this.project().description }</p>
-            <p>{ this.project().language }</p>
+            <p>Written primarily in { this.project().language }</p>
+            <p>Started on { moment(this.project().created_at).format("MMMM Do YYYY") }</p>
           </div>
         </div>
       </div>
@@ -41,6 +42,7 @@
     </div>
 <script>
 import Z from './zipper.js';
+import moment from 'moment';
 
 var cycle_timeout = 12;
 
@@ -50,6 +52,7 @@ var self = this;
 
 self.transition = "";
 self.swipe = true;
+self.moment = moment;
 
 var empty_project = {
   "name" : "",
@@ -65,6 +68,7 @@ project() {
 next() {
   self.update({"swipe" : false});
   self.opts.state.projects = Z.goRight(self.opts.state.projects);
+  console.log(self.project());
   self.update(
     {
       "transition" : "fadeInRight",
