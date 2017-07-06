@@ -133,6 +133,25 @@ p, h6, h4 {
   }
 }
 
+img, code {
+  margin: auto;
+  max-width: 85%;
+  @media (max-width: 1000px) {
+    max-width: 90%;
+  }
+  @media (max-width: 800px) {
+    max-width: 100%;
+  }
+}
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
 .projects-content {
   margin: auto;
   max-width: 30%;

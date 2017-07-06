@@ -98,6 +98,7 @@ to(name) {
   }).bind(this);
 }
 
+this.route("/", self.to("posts"));
 this.route("posts/*", posts);
 this.route("posts", (() => {posts(self.state.pid)}));
 this.route("projects", projects);
