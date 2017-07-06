@@ -1,12 +1,35 @@
 <app>
   <ul class="navigate tab tab-block">
     <li
-      each="{page in ['posts', 'projects', 'links', 'about']}"
-      class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
+      class={"navigate-tab tab-item animated fadeIn " + (this.active.posts ? "active" : "")}
       data-is="navtab"
-      active={this.parent.active.get(page)}
-      to={this.parent.to(page)}
-      title={page}
+      active={ this.active.posts }
+      to={this.to("posts")}
+      title="Posts"
+    >
+    </li>
+    <li
+      class={"navigate-tab tab-item animated fadeIn " + (this.active.projects ? "active" : "")}
+      data-is="navtab"
+      active={ this.active.projects }
+      to={this.to("projects")}
+      title="Projects"
+    >
+    </li>
+    <li
+      class={"navigate-tab tab-item animated fadeIn " + (this.active.links ? "active" : "")}
+      data-is="navtab"
+      active={ this.active.links }
+      to={this.to("links")}
+      title="Links"
+    >
+    </li>
+    <li
+      class={"navigate-tab tab-item animated fadeIn " + (this.active.about ? "active" : "")}
+      data-is="navtab"
+      active={ this.active.about }
+      to={this.to("about")}
+      title="About"
     >
     </li>
   </ul>
@@ -14,7 +37,7 @@
     <loading if={!this.state.loaded}></loading>
     <projectsview
       class="animated fadeInDown"
-      if={this.active.get("projects") && this.state.loaded}
+      if={this.active.projects && this.state.loaded}
       state={this.state}
       ref="projectsview"
     >
@@ -23,25 +46,15 @@
   <div class="content">
     <postsview
       state={this.state}
-      if={this.active.get("posts")}
+      if={this.active.posts}
       ref="postsview"
     >
     </postsview>
-    <about
-      if={this.active.get("about")}
-    >
-    </about>
-    <links
-      if={this.active.get("links")}
-    >
-    </links>
   </div>
 <script>
 import './navtab.tag';
 import './projectsview.tag';
 import './postsview.tag';
-import './about.tag';
-import './links.tag';
 import './loading.tag';
 
 import Z from './zipper.js';
@@ -59,29 +72,28 @@ this.state = {
   "loaded" : false
 };
 
-this.active = lens.actives({
+this.active = {
   "projects" : false,
   "posts" : false,
   "links" : false,
   "about" : false
-});
+};
 
 var self = this;
 
 function activate(page) {
   return function() {
-    console.log(`activating ${page}`);
-    self.active = lens.setActive(self.active, page);
+    console.log(`trying to activate ${page}`);
+    self.active = lens.setActive(lens.actives(self.active), page).toJS();
     self.update();
   };
 }
 
-var projects = activate("projects");
-var about = activate("about");
-var links = activate("links");
+self.projects = activate("projects");
+self.about = activate("about");
+self.links = activate("links");
 
-function posts(pid) {
-  console.log(self.state);
+self.posts = function(pid) {
   self.state.pid = parseInt(pid, 10);
   activate("posts")();
   self.update();
@@ -98,11 +110,12 @@ to(name) {
   }).bind(this);
 }
 
-this.route("posts/*", posts);
-this.route("posts", (() => {posts(self.state.pid)}));
-this.route("projects", projects);
-this.route("about", about);
-this.route("links", links);
+this.route("posts", self.to(`posts/${self.state.pid}`));
+this.route("posts/*", self.posts);
+this.route("/", self.to("posts"));
+this.route("projects", self.projects);
+this.route("about", self.about);
+this.route("links", self.links);
 
 this.on("mount", () => {
   route.start(true);

@@ -59,6 +59,10 @@ a {
   border: 1px;
 }
 
+p, h6, h4 {
+	font-family: 'Open Sans',sans-serif !important;
+}
+
 .post-title {
 	font-family: 'Open Sans',sans-serif;
 	font-size: 1.6em;
@@ -107,7 +111,7 @@ a {
 
 .projects-box {
   @extend .content-box;
-  height: 350px !important;
+  height: 400px !important;
 }
 
 .posts-box {
@@ -148,6 +152,16 @@ a {
   max-width: 100%;
 	font-family: 'Open Sans',sans-serif;
 	font-size: 1.4em;
+	line-height: 1.6em;
+	color: #3A4145;
+  text-align: left;
+}
+
+.project-content {
+  margin-top: 5px;
+  max-width: 100%;
+	font-family: 'Open Sans',sans-serif;
+	font-size: 1.0em;
 	line-height: 1.6em;
 	color: #3A4145;
   text-align: left;
