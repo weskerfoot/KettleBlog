@@ -28,6 +28,8 @@ import './raw.tag';
 import 'whatwg-fetch';
 import { default as R } from 'ramda';
 import { default as showdown } from 'showdown';
+import { default as jquery } from 'jquery';
+
 import './postcontrols.tag';
 import route from 'riot-route';
 
@@ -43,7 +45,6 @@ self.title = "";
 self.content = "";
 self.prevloading = "";
 self.nextloading = "";
-self.transition = "";
 self.nomore = false;
 self.content = "";
 self.swipe = false;
@@ -72,13 +73,19 @@ next(ev) {
   self.nextPost(self._id, "fadeIn");
 }
 
-updatePost(body, transition) {
+toTop() {
+  jquery('html, body').stop().animate({
+     scrollTop: jquery(".navigate").offset().top-15
+  }, 1000);
+}
+
+updatePost(body) {
   if (body === "false") {
     self.nomore = true;
     self.prevloading = "";
     self.nextloading = "";
     self.loading = false;
-    self.update()
+    self.update();
     return;
   }
   else {
@@ -88,7 +95,6 @@ updatePost(body, transition) {
       self.nextloading = "";
       self.nomore = true;
       self.swipe = !self.swipe;
-      self.transition = "";
       self.loading = false;
       self.update();
       return;
@@ -97,32 +103,33 @@ updatePost(body, transition) {
     self.author = postcontent.author;
     self.content = postcontent.content;
     self.title = postcontent.title;
-    self.transition = transition;
     self.swipe = !self.swipe;
     self.nomore = false;
     self.loading = false;
+    self.one("updated", self.toTop);
     self.update();
   }
 
   self.prevloading = "";
   self.nextloading = "";
   self.route(`/posts/${self._id}`);
+  self.one("updated", self.toTop);
   self.update();
 }
 
-nextPost(_id, transition) {
+nextPost(_id) {
   fetch(`/blog/switchpost/${_id.slice(-8)}`)
   .then((resp) => resp.text())
-  .then((resp) => { self.updatePost(resp, transition) })
+  .then((resp) => { self.updatePost(resp) })
 }
 
-prevPost(_id, transition) {
+prevPost(_id) {
   fetch(`/blog/prevpost/${_id.slice(-8)}`)
   .then((resp) => resp.text())
-  .then((resp) => { self.updatePost(resp, transition) })
+  .then((resp) => { self.updatePost(resp) })
 }
 
-getPost(_id, transition) {
+getPost(_id) {
   var url;
   if (_id !== undefined && _id) {
     url = `/blog/getpost/${_id.slice(-8)}`;
@@ -132,7 +139,7 @@ getPost(_id, transition) {
   }
   fetch(url)
   .then((resp) => resp.text())
-  .then((resp) => {self.updatePost(resp, transition) })
+  .then((resp) => {self.updatePost(resp) })
 }
 
 this.getPost(this.opts.state._id, "fadeIn");

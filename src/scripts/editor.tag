@@ -218,7 +218,7 @@ loadPost(_id) {
       return false;
     }
     self.update({"loading" : true});
-    axios.get(`/blog/getpost/${_id}`)
+    axios.get(`/blog/getpost/${_id.slice(-8)}`)
     .then(function(resp) {
       self.update({"loading" : false});
       self.refs.textarea.value = resp.data.content;
