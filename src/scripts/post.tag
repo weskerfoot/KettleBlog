@@ -14,7 +14,6 @@
     </div>
     <div
       data-is="postcontrols"
-      state={this.opts.state}
       prevloading={this.prevloading}
       prev={this.prev}
       nomore={this.nomore}
@@ -38,6 +37,7 @@ var self = this;
 
 self.route = route;
 
+self._id = "";
 self.author = "";
 self.title = "";
 self.content = "";
@@ -47,7 +47,7 @@ self.transition = "";
 self.nomore = false;
 self.content = "";
 self.swipe = false;
-self.loading = !self.opts.state.loaded;
+self.loading = self.opts.state.loaded;
 
 prev(ev) {
   ev.preventDefault();
@@ -55,13 +55,8 @@ prev(ev) {
     return;
   }
   self.prevloading = " loader-branded";
-
-  if (self.opts.state.pid > 1) {
-    self.opts.state.pid--;
-    self.update();
-  }
   self.update({"swipe" : !self.swipe});
-  self.setPost(self.opts.state.pid, "fadeIn");
+  self.prevPost(self._id, "fadeIn");
 }
 
 next(ev) {
@@ -71,59 +66,76 @@ next(ev) {
   }
   self.nextloading = " loader-branded";
   if (!self.nomore) {
-    self.opts.state.pid++;
     self.update();
   }
   self.update({"swipe" : !self.swipe});
-  self.setPost(self.opts.state.pid, "fadeIn");
+  self.nextPost(self._id, "fadeIn");
 }
 
-setPost(pid, transition) {
-  self.update({"loading" : self.opts.state.loaded});
-  fetch(`/blog/switchpost/${pid-1}`)
-    .then((resp) => resp.text())
-    .then(
-      (body) => {
-        if (body === "false") {
-          self.nomore = true;
-          self.prevloading = "";
-          self.nextloading = "";
-          self.loading = false;
-          self.update()
-          return;
-        }
-        else {
-          var postcontent = JSON.parse(body);
-          if (postcontent.length == 0) {
-            self.prevloading = "";
-            self.nextloading = "";
-            self.nomore = true;
-            self.swipe = !self.swipe;
-            self.transition = "";
-            self.opts.state.pid--;
-            self.loading = false;
-            self.update();
-            return;
-          }
-          self.opts.state.pid = pid;
-          self.author = postcontent[0].doc.author;
-          self.content = postcontent[0].doc.content;
-          self.title = postcontent[0].doc.title;
-          self.transition = transition;
-          self.swipe = !self.swipe;
-          self.nomore = false;
-          self.loading = false;
-          self.update();
-        }
+updatePost(body, transition) {
+  if (body === "false") {
+    self.nomore = true;
+    self.prevloading = "";
+    self.nextloading = "";
+    self.loading = false;
+    self.update()
+    return;
+  }
+  else {
+    var postcontent = JSON.parse(body);
+    if (!postcontent) {
+      self.prevloading = "";
+      self.nextloading = "";
+      self.nomore = true;
+      self.swipe = !self.swipe;
+      self.transition = "";
+      self.loading = false;
+      self.update();
+      return;
+    }
+    self._id = postcontent._id.slice(-8);
+    self.author = postcontent.author;
+    self.content = postcontent.content;
+    self.title = postcontent.title;
+    self.transition = transition;
+    self.swipe = !self.swipe;
+    self.nomore = false;
+    self.loading = false;
+    self.update();
+  }
 
-        self.prevloading = "";
-        self.nextloading = "";
-        self.route(`/posts/${self.opts.state.pid}`);
-        self.update();
-      });
+  self.prevloading = "";
+  self.nextloading = "";
+  self.route(`/posts/${self._id}`);
+  self.update();
 }
 
-this.setPost(this.opts.state.pid);
+nextPost(_id, transition) {
+  fetch(`/blog/switchpost/${_id.slice(-8)}`)
+  .then((resp) => resp.text())
+  .then((resp) => { self.updatePost(resp, transition) })
+}
+
+prevPost(_id, transition) {
+  fetch(`/blog/prevpost/${_id.slice(-8)}`)
+  .then((resp) => resp.text())
+  .then((resp) => { self.updatePost(resp, transition) })
+}
+
+getPost(_id, transition) {
+  var url;
+  if (_id !== undefined && _id) {
+    url = `/blog/getpost/${_id.slice(-8)}`;
+  }
+  else {
+    url = "/blog/switchpost/";
+  }
+  fetch(url)
+  .then((resp) => resp.text())
+  .then((resp) => {self.updatePost(resp, transition) })
+}
+
+this.getPost(this.opts.state._id, "fadeIn");
 
 </script>
 </post>

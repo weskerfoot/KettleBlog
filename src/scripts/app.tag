@@ -54,7 +54,7 @@ this.route = route;
 this.riot = riot;
 
 this.state = {
-  "pid" : 1,
+  "_id" : false,
   "projects" : Z.empty,
   "loaded" : false
 };
@@ -80,9 +80,9 @@ var projects = activate("projects");
 var about = activate("about");
 var links = activate("links");
 
-function posts(pid) {
+function posts(_id) {
   console.log(self.state);
-  self.state.pid = parseInt(pid, 10);
+  self.state._id = _id;
   activate("posts")();
   self.update();
 }
@@ -100,7 +100,7 @@ to(name) {
 
 this.route("/", self.to("posts"));
 this.route("posts/*", posts);
-this.route("posts", (() => {posts(self.state.pid)}));
+this.route("posts", (() => {posts(self.state._id)}));
 this.route("projects", projects);
 this.route("about", about);
 this.route("links", links);

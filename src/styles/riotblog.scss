@@ -77,6 +77,20 @@ p, h6, h4 {
 	color: #3A4145;
 }
 
+.project-title {
+	font-family: 'Open Sans',sans-serif !important;
+	font-size: 1.9em !important;
+	line-height: 1.6em !important;
+	color: #3A4145 !important;
+}
+
+.project-description {
+	font-family: 'Open Sans',sans-serif !important;
+	font-size: 1.2em !important;
+	line-height: 1.2em !important;
+	color: #3A4145 !important;
+}
+
 .navigate {
   width: 20% !important;
   margin-bottom: 25px !important;
@@ -133,7 +147,7 @@ p, h6, h4 {
   }
 }
 
-img, code {
+p > img, code {
   margin: auto;
   max-width: 85%;
   @media (max-width: 1000px) {
@@ -150,11 +164,17 @@ pre {
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    margin: auto;
+}
+
+code {
+  text-indent: 0mm;
+  margin: auto;
 }
 
 .projects-content {
   margin: auto;
-  max-width: 30%;
+  max-width: 22%;
   @media (max-width: 1000px) {
     max-width: 60%;
   }

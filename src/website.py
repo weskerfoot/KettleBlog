@@ -85,22 +85,32 @@ def NeverWhere(configfile=None):
     def send_style(filename):
         return send_from_directory("/srv/http/riotblog/styles", filename)
 
+    # get the next post
     @app.route("/blog/switchpost/<pid>")
-    def getposts(pid):
-        try:
-            index = int(pid)
-        except ValueError:
-            index = 0
-        return posts.getposts(index+1, index)
+    def getpostid(pid):
+        return posts.iterpost(startkey=pid)
 
-    @app.route("/blog/allposts")
-    def allposts():
-        return posts.allposts()
+    # get the first post
+    @app.route("/blog/switchpost/")
+    def nextpost():
+        return posts.iterpost()
 
+    # get the post previous to this one
+    @app.route("/blog/prevpost/<pid>")
+    def prevpost(pid):
+        return posts.iterpost(endkey=pid)
+
+    # get the contents of any post
     @app.route("/blog/getpost/<_id>")
     def getpost(_id):
         return posts.getpost(_id)
 
+    # get the id of every post
+    @app.route("/blog/allposts")
+    def allposts():
+        return posts.allposts()
+
+    # remove a post
     @app.route("/blog/deletepost/<_id>")
     @login_required
     def delete(_id):

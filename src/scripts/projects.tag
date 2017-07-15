@@ -17,20 +17,22 @@
       <div class="text-break">
         <div if={this.swipe} class={`card animated ${this.transition}`}>
           <div class="card-header">
-            <h4 class="card-title post-title">{ this.project().name }</h4>
-            <h6 class="post-author">{ this.project().description }</h6>
+            <h3 class="card-title project-title">{ this.project().name }</h3>
+            <h5 class="project-description">{ this.project().description }</h5>
           </div>
           <div class="card-body">
+            <div class="tile">
+              <div class="tile-content">
+                <p class="tile-title">Written primarily in { this.project().language} </p>
+                <p class="tile-subtitle">Started on {moment(this.project().created_at).format("MMMM Do YYYY") }</p>
+              </div>
+              <div class="tile-action">
               <a
                 target="_blank"
                 href={this.project().html_url}>
-                <button class="btn btn-small">
-                    See on github
-                </button>
+                  <button class="btn btn-primary">See on github</button>
               </a>
-            <div class="project-content">
-              <p>Written primarily in { this.project().language }</p>
-              <p>Started on { moment(this.project().created_at).format("MMMM Do YYYY") }</p>
+              </div>
             </div>
           </div>
         </div>
@@ -63,11 +65,9 @@ import moment from 'moment';
 
 var cycle_timeout = 12;
 
-this.username = "Wes";
-this.avatar_url = "";
-
 var self = this;
 
+self.avatar_url = "";
 self.transition = "";
 self.swipe = true;
 self.moment = moment;

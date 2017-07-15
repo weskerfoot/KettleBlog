@@ -33,9 +33,36 @@ class Posts:
         print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))
 
-    def getposts(self, limit, start):
-        result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True, limit=limit, skip=start)
-        return jsonify(list(result))
+    def getpost(self, _id):
+        results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, key=_id)
+        return jsonify([result.doc for result in results][0])
+
+    def iterpost(self, endkey=False, startkey=False):
+        if startkey and not endkey:
+            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True, startkey=startkey)
+        elif endkey and not startkey:
+            results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, endkey=endkey)
+        else:
+            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True)
+
+        doc_ids = [result.doc for result in results]
+
+        if not doc_ids:
+            return jsonify(False)
+
+        if endkey and not startkey:
+            if len(doc_ids) < 2 or doc_ids[0] == endkey:
+                return jsonify(False)
+            return jsonify(doc_ids[-2])
+
+        if len(doc_ids) == 1:
+            return jsonify(doc_ids[0])
+
+        if doc_ids:
+            # if no startkey or endkey were specified, return the 0th post
+            return jsonify(doc_ids[1 if startkey else 0])
+
+        return jsonify(False)
 
     def allposts(self):
         result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True)
@@ -49,9 +76,6 @@ class Posts:
                         })
 
         return jsonify(posts)
-
-    def getpost(self, _id):
-        return jsonify(self.db[_id])
 
     def delete(self, _id):
         doc = self.db[_id]
