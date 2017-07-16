@@ -74,8 +74,6 @@ def NeverWhere(configfile=None):
     @app.route("/blog/", methods=("GET", "POST"))
     def index():
         print("matched index")
-        if request.args.get("_escaped_fragment_", False):
-            abort(404)
         return render_template("index.html")
 
     @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
