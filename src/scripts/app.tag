@@ -130,8 +130,8 @@ to(name) {
     /* This may or may not be used as an event handler */
     if (e !== undefined) {
       e.preventDefault();
+      this.menuOff(e);
     }
-    this.menuOff(e);
     this.route(name);
     return;
   }).bind(this);
