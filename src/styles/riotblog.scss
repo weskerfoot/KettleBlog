@@ -60,7 +60,6 @@ a {
 
 .post-text, .title, .post, .postnav {
   text-align: center;
-  text-transform: capitalize;
   border: 1px;
 }
 
@@ -120,6 +119,7 @@ p, h6, h4 {
 }
 
 .navigate-item {
+  text-transform: capitalize;
   color: $branding !important;
   &:hover {
     color: $branding3 !important;
