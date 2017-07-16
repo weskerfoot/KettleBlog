@@ -74,6 +74,8 @@ def NeverWhere(configfile=None):
     @app.route("/blog/", methods=("GET", "POST"))
     def index():
         print("matched index")
+        if request.args.get("_escaped_fragment_", False):
+            abort(404)
         return render_template("index.html")
 
     @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
@@ -146,12 +148,6 @@ def NeverWhere(configfile=None):
                 }
 
         return posts.savepost(**post)
-
-    # default, not found error
-
-    @app.route("/<path:path>")
-    def page_not_found(path):
-        return "Oops, couldn't find that :/"
 
     return app
 

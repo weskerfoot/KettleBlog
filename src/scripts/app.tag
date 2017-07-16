@@ -53,6 +53,8 @@ this.R = R;
 this.route = route;
 this.riot = riot;
 
+this.route.base('#!')
+
 this.state = {
   "_id" : false,
   "projects" : Z.empty,

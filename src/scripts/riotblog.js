@@ -6,6 +6,9 @@ import './editor.tag';
 import './projects.tag';
 import './app.tag';
 import './grid.js';
+import { default as promise } from 'es6-promise';
+
+promise.Promise.polyfill()
 
 riot.mount("app");
 riot.mount("editor");
