@@ -43,6 +43,10 @@ $branding3: #1b4c6c;
   }
 }
 
+.bar-menu {
+  font-size: 100% !important;
+}
+
 .tab-active {
   border-bottom-color: $branding !important;
   color: $branding !important;
@@ -109,11 +113,29 @@ p, h6, h4 {
   }
 }
 
+.navigate-tab-mobile {
+  @extend .navigate-tab;
+  margin: auto !important;
+}
+
 .navigate-item {
   color: $branding !important;
   &:hover {
     color: $branding3 !important;
   }
+}
+
+.mobile-navigate {
+  width: 60px;
+  height: 45px !important;
+}
+
+.mobile-menu {
+  left: -100% !important;
+}
+
+.my-avatar {
+  z-index: 0 !important;
 }
 
 .content-box {

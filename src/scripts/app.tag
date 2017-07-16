@@ -1,5 +1,25 @@
 <app>
-  <ul class="navigate tab tab-block">
+  <div class="show-md show-sm show-xs navigate dropdown dropdown-right">
+    <button onclick={this.menuOn} class="mobile-navigate btn btn-link navigate-item dropdown-toggle" tabindex="0">
+      <i class="bar-menu fa fa-bars" aria-hidden="true"></i>
+    </button>
+    <!-- menu component -->
+    <ul
+      if={this.menuActive}
+      class="mobile-menu tab tab-block menu">
+      <li
+        each="{page in ['posts', 'projects', 'links', 'about']}"
+        class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
+        data-is="navtab"
+        active={this.parent.active.get(page)}
+        to={this.parent.to(page)}
+        title={page}
+        onclick={this.menuOff}
+      >
+      </li>
+    </ul>
+  </div>
+  <ul class="hide-md hide-sm hide-xs navigate tab tab-block">
     <li
       each="{page in ['posts', 'projects', 'links', 'about']}"
       class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
@@ -52,6 +72,7 @@ import lens from './lenses.js';
 this.R = R;
 this.route = route;
 this.riot = riot;
+this.menuActive = false;
 
 this.route.base('#!')
 
@@ -69,6 +90,21 @@ this.active = lens.actives({
 });
 
 var self = this;
+
+toggleMenu(ev) {
+  ev.preventDefault();
+  self.update({"menuActive" : !self.menuActive});
+}
+
+menuOn(ev) {
+  ev.preventDefault();
+  self.update({"menuActive" : true});
+}
+
+menuOff(ev) {
+  ev.preventDefault();
+  self.update({"menuActive" : false});
+}
 
 function activate(page) {
   return function() {
@@ -95,6 +131,7 @@ to(name) {
     if (e !== undefined) {
       e.preventDefault();
     }
+    this.menuOff(e);
     this.route(name);
     return;
   }).bind(this);

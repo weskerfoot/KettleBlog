@@ -7,7 +7,7 @@
         <div class="column col-4">
           <figure
             if={this.avatar_url}
-            class="float-left avatar avatar-lg"
+            class="float-left avatar my-avatar avatar-lg"
           >
             <img src={this.avatar_url}></img>
           </figure>
