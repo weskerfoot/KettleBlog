@@ -48,11 +48,11 @@ class Posts:
         doc_ids = [result.doc for result in results]
 
         if not doc_ids:
-            return jsonify(False)
+            return jsonify("end")
 
         if endkey and not startkey:
             if len(doc_ids) < 2 or doc_ids[0] == endkey:
-                return jsonify(False)
+                return jsonify("start")
             return jsonify(doc_ids[-2])
 
         if len(doc_ids) == 1:
@@ -62,7 +62,7 @@ class Posts:
             # if no startkey or endkey were specified, return the 0th post
             return jsonify(doc_ids[1 if startkey else 0])
 
-        return jsonify(False)
+        return jsonify("end")
 
     def allposts(self):
         result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True)

@@ -133,6 +133,9 @@ p, h6, h4 {
 
 .mobile-menu {
   left: -100% !important;
+  border-radius: 5px !important;
+  border: 1px solid !important;
+  border-color: $branding !important;
 }
 
 .my-avatar {

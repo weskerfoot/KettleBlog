@@ -1,5 +1,15 @@
 <post>
   <div class="posts-box post centered">
+    <div
+      data-is="postcontrols"
+      prevloading={this.prevloading}
+      prev={this.prev}
+      atstart={this.start}
+      atend={this.end}
+      nextloading={this.nextloading}
+      next={this.next}
+    >
+    </div>
     <div class="text-break animated fadeIn">
       <loading if={this.loading}></loading>
       <div
@@ -16,7 +26,8 @@
       data-is="postcontrols"
       prevloading={this.prevloading}
       prev={this.prev}
-      nomore={this.nomore}
+      atstart={this.start}
+      atend={this.end}
       nextloading={this.nextloading}
       next={this.next}
     >
@@ -45,13 +56,18 @@ self.title = "";
 self.content = "";
 self.prevloading = "";
 self.nextloading = "";
-self.nomore = false;
 self.content = "";
 self.swipe = false;
 self.loading = self.opts.state.loaded;
 
+this.start = false;
+this.end = false;
+
+const hashLength = 8;
+
 prev(ev) {
   ev.preventDefault();
+  self.end = false;
   if (self.prevloading || self.nextloading) {
     return;
   }
@@ -62,11 +78,12 @@ prev(ev) {
 
 next(ev) {
   ev.preventDefault();
+  self.start = false;
   if (self.nextloading || self.prevloading) {
     return;
   }
   self.nextloading = " loader-branded";
-  if (!self.nomore) {
+  if (!self.end) {
     self.update();
   }
   self.update({"swipe" : !self.swipe});
@@ -79,36 +96,30 @@ toTop() {
   }, 1000);
 }
 
-updatePost(body) {
-  if (body === "false") {
-    self.nomore = true;
+updatePost(postcontent) {
+  if (postcontent == "end" || postcontent == "start") {
     self.prevloading = "";
     self.nextloading = "";
+    self.swipe = !self.swipe;
     self.loading = false;
+    self[postcontent] = true;
+    if (postcontent == "start") {
+      self.start = true;
+    }
+    else if (postcontent == "end") {
+      self.end = true;
+    }
     self.update();
     return;
   }
-  else {
-    var postcontent = JSON.parse(body);
-    if (!postcontent) {
-      self.prevloading = "";
-      self.nextloading = "";
-      self.nomore = true;
-      self.swipe = !self.swipe;
-      self.loading = false;
-      self.update();
-      return;
-    }
-    self._id = postcontent._id.slice(-8);
-    self.author = postcontent.author;
-    self.content = postcontent.content;
-    self.title = postcontent.title;
-    self.swipe = !self.swipe;
-    self.nomore = false;
-    self.loading = false;
-    self.one("updated", self.toTop);
-    self.update();
-  }
+  self._id = postcontent._id.slice(-hashLength);
+  self.author = postcontent.author;
+  self.content = postcontent.content;
+  self.title = postcontent.title;
+  self.swipe = !self.swipe;
+  self.loading = false;
+  self.one("updated", self.toTop);
+  self.update();
 
   self.prevloading = "";
   self.nextloading = "";
@@ -118,28 +129,44 @@ updatePost(body) {
 }
 
 nextPost(_id) {
-  fetch(`/blog/switchpost/${_id.slice(-8)}`)
+  fetch(`/blog/switchpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
-  .then((resp) => { self.updatePost(resp) })
+  .then((resp) => {
+    var content = JSON.parse(resp);
+    if (content._id.slice(-hashLength) == self._id) {
+      /* Reached the end of the iterator */
+      self.update({
+        end : true,
+        loading : false,
+        prevloading : "",
+        nextloading : ""
+      });
+      return;
+    }
+    self.updatePost(content)
+  })
 }
 
 prevPost(_id) {
-  fetch(`/blog/prevpost/${_id.slice(-8)}`)
+  fetch(`/blog/prevpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
-  .then((resp) => { self.updatePost(resp) })
+  .then((resp) => {
+    var content = JSON.parse(resp);
+    self.updatePost(JSON.parse(resp))
+  })
 }
 
 getPost(_id) {
   var url;
   if (_id !== undefined && _id) {
-    url = `/blog/getpost/${_id.slice(-8)}`;
+    url = `/blog/getpost/${_id.slice(-hashLength)}`;
   }
   else {
     url = "/blog/switchpost/";
   }
   fetch(url)
   .then((resp) => resp.text())
-  .then((resp) => {self.updatePost(resp) })
+  .then((resp) => { self.updatePost(JSON.parse(resp)) })
 }
 
 this.getPost(this.opts.state._id, "fadeIn");

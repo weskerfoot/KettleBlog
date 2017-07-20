@@ -2,7 +2,7 @@
     <div class="controls container">
       <div class="columns">
         <div class="column col-6">
-          <button class={"btn btn-lg nav-button float-right " + (false ? "disabled" : " ") + this.opts.prevloading}
+          <button class={"btn btn-lg nav-button float-right " + (this.opts.atstart ? "disabled" : " ") + this.opts.prevloading}
                   onclick={this.opts.prev}
           >
 
@@ -10,7 +10,7 @@
           </button>
         </div>
         <div class="column col-6">
-          <button class={"btn btn-lg nav-button float-left  " + (false ? "disabled" : " ") + this.opts.nextloading}
+          <button class={"btn btn-lg nav-button float-left  " + (this.opts.atend ? "disabled" : " ") + this.opts.nextloading}
                   onclick={this.opts.next}
           >
             <i class="fa fa-arrow-right" aria-hidden="true"></i>
