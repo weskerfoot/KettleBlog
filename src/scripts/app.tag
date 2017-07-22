@@ -76,10 +76,18 @@ this.menuActive = false;
 
 this.route.base('#!')
 
+function PostUpdated() {
+  riot.observable(this);
+  this.on("postupdated", () => { console.log("caught event"); });
+}
+
+var postObserver = new PostUpdated();
+
 this.state = {
   "_id" : false,
   "projects" : Z.empty,
-  "loaded" : false
+  "loaded" : false,
+  "postupdate" : postObserver
 };
 
 this.active = lens.actives({
@@ -90,7 +98,6 @@ this.active = lens.actives({
 });
 
 var self = this;
-
 toggleMenu(ev) {
   ev.preventDefault();
   self.update({"menuActive" : !self.menuActive});
@@ -120,7 +127,9 @@ var links = activate("links");
 
 function posts(_id) {
   console.log(self.state);
-  self.state._id = _id;
+  if (self.state._id != _id) {
+    self.state._id = _id;
+  }
   activate("posts")();
   self.update();
 }

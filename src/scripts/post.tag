@@ -15,6 +15,8 @@
       <div
         class={this.loading ? "invisible" : ""}
       >
+        <social ref="social" postid={this.opts.state._id}>
+        </social>
         <h4 class="post-title">{ this.title }</h4>
         <p class="post-content centered text-break">
           <raw content="{ this.converter.makeHtml(this.content) }"></raw>
@@ -36,6 +38,7 @@
 <script>
 
 import './raw.tag';
+import './social.tag';
 import 'whatwg-fetch';
 import { default as R } from 'ramda';
 import { default as showdown } from 'showdown';
@@ -72,7 +75,6 @@ prev(ev) {
     return;
   }
   self.prevloading = " loader-branded";
-  self.update({"swipe" : !self.swipe});
   self.prevPost(self._id, "fadeIn");
 }
 
@@ -86,7 +88,6 @@ next(ev) {
   if (!self.end) {
     self.update();
   }
-  self.update({"swipe" : !self.swipe});
   self.nextPost(self._id, "fadeIn");
 }
 
@@ -119,11 +120,10 @@ updatePost(postcontent) {
   self.swipe = !self.swipe;
   self.loading = false;
   self.one("updated", self.toTop);
-  self.update();
-
   self.prevloading = "";
   self.nextloading = "";
   self.route(`/posts/${self._id}`);
+
   self.one("updated", self.toTop);
   self.update();
 }
