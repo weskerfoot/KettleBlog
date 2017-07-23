@@ -85,9 +85,6 @@ next(ev) {
     return;
   }
   self.nextloading = " loader-branded";
-  if (!self.end) {
-    self.update();
-  }
   self.nextPost(self._id, "fadeIn");
 }
 
@@ -123,6 +120,8 @@ updatePost(postcontent) {
   self.prevloading = "";
   self.nextloading = "";
   self.route(`/posts/${self._id}`);
+
+  self.refs.social.updateButton(self._id);
 
   self.one("updated", self.toTop);
   self.update();

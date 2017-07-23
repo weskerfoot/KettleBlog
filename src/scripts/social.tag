@@ -4,8 +4,6 @@
 <script>
 
 import './raw.tag';
-import { default as _ } from 'lodash';
-import { default as jquery } from 'jquery';
 var self = this;
 
 self.tweetHtml = "";
@@ -23,11 +21,6 @@ updateButton(_id) {
     self.update();
   }
 }
-
-window.twttr.ready((twttr) => {
-  console.log("initial load");
-  self.updateButton(self.opts.postid);
-});
 
 self.on("updated", () => {
   if (window.twttr.widgets !== undefined) {
