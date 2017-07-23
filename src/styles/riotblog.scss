@@ -3,6 +3,8 @@ $branding: #25658f;
 $branding2: #4b93c1;
 $branding3: #1b4c6c;
 
+$menuWidth: 60px;
+
 .branded, button {
   border-radius: 5px;
   border-color: $branding2 !important;
@@ -97,7 +99,7 @@ p, h6, h4 {
 }
 
 .navigate {
-  width: 20% !important;
+  width: $menuWidth;
   margin-bottom: 25px !important;
   margin: auto !important;
 }
@@ -127,7 +129,7 @@ p, h6, h4 {
 }
 
 .mobile-navigate {
-  width: 60px;
+  width: $menuWidth;
   height: 45px !important;
 }
 
