@@ -1,5 +1,5 @@
 <app>
-  <div class="show-md show-sm show-xs navigate dropdown dropdown-right">
+  <div class="show-md show-sm show-xs navigate-small dropdown dropdown-right">
     <button onclick={this.menuOn} class="mobile-navigate btn btn-link navigate-item dropdown-toggle" tabindex="0">
       <i class="bar-menu fa fa-bars" aria-hidden="true"></i>
     </button>

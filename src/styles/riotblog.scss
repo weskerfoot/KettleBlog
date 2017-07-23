@@ -99,6 +99,12 @@ p, h6, h4 {
 }
 
 .navigate {
+  width: 20%;
+  margin-bottom: 25px !important;
+  margin: auto !important;
+}
+
+.navigate-small {
   width: $menuWidth;
   margin-bottom: 25px !important;
   margin: auto !important;
