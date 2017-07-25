@@ -121,7 +121,7 @@ updatePost(postcontent) {
   self.nextloading = "";
   self.route(`/posts/${self._id}`);
 
-  self.refs.social.updateButton(self._id);
+  self.refs.social.updateButton(self._id, self.title);
 
   self.one("updated", self.toTop);
   self.update();
