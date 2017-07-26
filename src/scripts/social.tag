@@ -16,7 +16,7 @@ updateButton(_id, title) {
   }
   if (_id != self._id) {
 
-    self.tweetHtml = `<a style="display:none;" class="twitter-share-button" data-text="${title} by @weskerfoot" data-show-count="false" data-url="https://primop.me/${_id}" ref="tweet">Tweet ${_id}</a>`;
+    self.tweetHtml = `<a style="display:none;" class="twitter-share-button" data-text="${title}" data-via="weskerfoot" data-show-count="false" data-url="https://primop.me/blog/#!posts/${_id}" ref="tweet">Tweet ${_id}</a>`;
     self._id = _id;
     self.update();
   }

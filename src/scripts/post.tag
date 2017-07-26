@@ -10,16 +10,20 @@
       next={this.next}
     >
     </div>
-    <div class="text-break animated fadeIn">
-      <loading if={this.loading}></loading>
-      <div
-        class={this.loading ? "invisible" : ""}
-      >
-        <social ref="social" postid={this.opts.state._id}>
+    <div class="text-break">
+      <div class={"animated " + (this.loading ? "invisible" : "fadeIn")}>
+        <social
+          show={!this.loading}
+          ref="social"
+          postid={this.opts.state._id}
+        >
         </social>
         <h4 class="post-title">{ this.title }</h4>
         <p class="post-content centered text-break">
-          <raw content="{ this.converter.makeHtml(this.content) }"></raw>
+          <raw
+            content="{ this.converter.makeHtml(this.content) }"
+          >
+          </raw>
         </p>
         <div class="divider"></div>
       </div>
@@ -116,7 +120,6 @@ updatePost(postcontent) {
   self.title = postcontent.title;
   self.swipe = !self.swipe;
   self.loading = false;
-  self.one("updated", self.toTop);
   self.prevloading = "";
   self.nextloading = "";
   self.route(`/posts/${self._id}`);
@@ -128,6 +131,7 @@ updatePost(postcontent) {
 }
 
 nextPost(_id) {
+  self.update({"loading" : true});
   fetch(`/blog/switchpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
@@ -147,6 +151,7 @@ nextPost(_id) {
 }
 
 prevPost(_id) {
+  self.update({"loading" : true});
   fetch(`/blog/prevpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
@@ -156,6 +161,7 @@ prevPost(_id) {
 }
 
 getPost(_id) {
+  self.update({"loading" : true});
   var url;
   if (_id !== undefined && _id) {
     url = `/blog/getpost/${_id.slice(-hashLength)}`;
