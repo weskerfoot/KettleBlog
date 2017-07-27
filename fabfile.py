@@ -56,6 +56,7 @@ def serveUp():
 
 @task(default=True)
 def build():
+    local("rm -rf ./build")
     local("mkdir -p build/{scripts,styles}")
     buildScss()
     buildJS()

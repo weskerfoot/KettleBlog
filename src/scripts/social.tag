@@ -1,6 +1,8 @@
 <social>
-  <raw ref="button" content={this.tweetHtml}>
-  </raw>
+  <div class="social-wrapper">
+    <raw ref="button" content={this.tweetHtml}>
+    </raw>
+  </div>
 <script>
 
 import './raw.tag';
@@ -16,7 +18,7 @@ updateButton(_id, title) {
   }
   if (_id != self._id) {
 
-    self.tweetHtml = `<a style="display:none;" class="twitter-share-button" data-text="${title}" data-via="weskerfoot" data-show-count="false" data-url="https://primop.me/blog/#!posts/${_id}" ref="tweet">Tweet ${_id}</a>`;
+    self.tweetHtml = `<a style="display:none;" data-size="large" class="btn twitter-share-button" data-text="${title}" data-via="weskerfoot" data-show-count="false" data-url="https://primop.me/blog/#!posts/${_id}" ref="tweet">Tweet ${_id}</a>`;
     self._id = _id;
     self.update();
   }

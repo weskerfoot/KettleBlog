@@ -5,10 +5,22 @@ $branding3: #1b4c6c;
 
 $menuWidth: 60px;
 
+.twitter-share-button-rendered {
+  font-size: 1.5em;
+}
+
+.social-wrapper {
+  height: 25px;
+}
+
+.social {
+  margin-top: 25%;
+}
+
 .branded, button {
-  border-radius: 5px;
+  border-radius: 5px !important;
   border-color: $branding2 !important;
-	display: block;
+	display: block !important;
 	margin-top: 0;
 	padding: .6rem 1.2rem .4rem 1.2rem;
 	text-decoration: none;
@@ -75,6 +87,7 @@ p, h6, h4 {
   font-weight: 600;
 	line-height: 1.6em;
 	color: #3A4145;
+  text-align: center;
 }
 
 .post-author {
@@ -170,15 +183,15 @@ p, h6, h4 {
 
 .content {
   margin: auto;
-  max-width: 50%;
+  max-width: 70%;
   @media (max-width: 1000px) {
-    max-width: 70%;
-  }
-  @media (max-width: 800px) {
     max-width: 80%;
   }
-  @media (max-width: 400px) {
+  @media (max-width: 800px) {
     max-width: 90%;
+  }
+  @media (max-width: 400px) {
+    max-width: 100%;
   }
 }
 

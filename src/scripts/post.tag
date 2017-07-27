@@ -10,6 +10,7 @@
       next={this.next}
     >
     </div>
+    <loading if={this.loading && !this.parent.state.loaded}></loading>
     <div class="text-break">
       <div class={"animated " + (this.loading ? "invisible" : "fadeIn")}>
         <social
@@ -94,7 +95,7 @@ next(ev) {
 
 toTop() {
   jquery('html, body').stop().animate({
-     scrollTop: jquery(".navigate").offset().top-15
+     scrollTop: jquery(".blog-title").offset().top-15
   }, 1000);
 }
 
