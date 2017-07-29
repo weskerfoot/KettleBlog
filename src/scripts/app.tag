@@ -115,6 +115,9 @@ menuOff(ev) {
 
 function activate(page) {
   return function() {
+    if (page !== "posts") {
+      document.title = `Wes Kerfoot ${page.slice(0,1).toUpperCase()}${page.slice(1,page.length)}`;
+    }
     console.log(`activating ${page}`);
     self.active = lens.setActive(self.active, page);
     self.update();

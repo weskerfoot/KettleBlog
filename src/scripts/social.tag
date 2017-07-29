@@ -1,10 +1,10 @@
 <social>
   <div class="social-wrapper">
       <div class="btn-group">
-        <raw ref="twitter-button" content={this.tweetHtml}>
-        </raw>
-        <raw ref="facebook-button" content={this.fbHtml}>
-        </raw>
+        <div onmouseover={test} data-is="raw" ref="twitter" content={this.tweetHtml}>
+        </div>
+        <div onmouseover={test} data-is="raw" ref="facebook" content={this.fbHtml}>
+        </div>
       </div>
   </div>
 <script>
@@ -13,11 +13,14 @@ import './raw.tag';
 var self = this;
 
 self.tweetHtml = "";
+self.fbHtml = "";
+self.preview = "https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%2Fblog%2F&ref_src=twsrc%5Etfw&text=My%20first%20Elixir%20program&tw_p=tweetbutton&url=https%3A%2F%2Fprimop.me%2Fblog%2F%23!posts%2F19045cf7&via=weskerfoot";
 
 self._id = "";
 self.old_id = self._id;
 
 updateButton(_id, title) {
+  document.title = title;
   if (_id == undefined) {
     _id = self.opts.postid;
   }
@@ -32,14 +35,20 @@ updateButton(_id, title) {
 
 self.on("updated", () => {
   if (window.twttr.widgets !== undefined) {
-    window.twttr.widgets.load();
+    window.twttr.widgets.load(self.refs.twitter.root);
   }
 
-  if (FB.XFBML.parse !== undefined) {
-    FB.XFBML.parse();
+  if (FB !== undefined) {
+    FB.XFBML.parse(self.refs.facebook.root);
   }
   self.old_id = self._id;
 });
+
+
+test(ev) {
+  ev.preventDefault()
+  console.log(ev.target);
+}
 
 shouldUpdate() {
   return self.old_id != self.parent._id
