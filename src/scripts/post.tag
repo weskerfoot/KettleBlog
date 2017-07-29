@@ -10,7 +10,7 @@
       next={this.next}
     >
     </div>
-    <loading if={this.loading && !this.parent.state.loaded}></loading>
+    <loading if={this.loading && this.opts.state.loaded}></loading>
     <div class="text-break">
       <div class={"animated " + (this.loading ? "invisible" : "fadeIn")}>
         <social
