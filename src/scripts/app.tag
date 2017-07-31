@@ -52,6 +52,7 @@
     >
     </about>
     <links
+      state={this.state}
       if={this.active.get("links")}
     >
     </links>

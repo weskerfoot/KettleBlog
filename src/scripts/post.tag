@@ -156,7 +156,6 @@ prevPost(_id) {
   fetch(`/blog/prevpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
-    var content = JSON.parse(resp);
     self.updatePost(JSON.parse(resp))
   })
 }

@@ -147,6 +147,13 @@ def NeverWhere(configfile=None):
 
         return posts.savepost(**post)
 
+    @app.route("/blog/links/", methods=("GET",))
+    def links():
+        """
+        Get links
+        """
+        return posts.links()
+
     return app
 
 app = NeverWhere()
