@@ -44,7 +44,6 @@
 
 import './raw.tag';
 import './social.tag';
-import 'whatwg-fetch';
 import { default as R } from 'ramda';
 import { default as showdown } from 'showdown';
 import { default as jquery } from 'jquery';
@@ -133,7 +132,7 @@ updatePost(postcontent) {
 
 nextPost(_id) {
   self.update({"loading" : true});
-  fetch(`/blog/switchpost/${_id.slice(-hashLength)}`)
+  self.opts.cached(`/blog/switchpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
     var content = JSON.parse(resp);
@@ -153,7 +152,7 @@ nextPost(_id) {
 
 prevPost(_id) {
   self.update({"loading" : true});
-  fetch(`/blog/prevpost/${_id.slice(-hashLength)}`)
+  self.opts.cached(`/blog/prevpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
     self.updatePost(JSON.parse(resp))
@@ -169,7 +168,7 @@ getPost(_id) {
   else {
     url = "/blog/switchpost/";
   }
-  fetch(url)
+  self.opts.cached(url)
   .then((resp) => resp.text())
   .then((resp) => { self.updatePost(JSON.parse(resp)) })
 }

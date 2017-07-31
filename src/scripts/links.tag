@@ -37,9 +37,6 @@
     </div>
   </div>
 <script>
-import route from 'riot-route';
-import lens from './lenses.js';
-
 var self = this;
 
 self.loading = false;
@@ -48,7 +45,7 @@ self.groups = []
 
 getLinks() {
   self.update({"loading" : true});
-  fetch(`/blog/links/`)
+  self.opts.cached(`/blog/links/`)
   .then((resp) => resp.text())
   .then((resp) => {
     self.update(

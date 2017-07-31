@@ -1,5 +1,9 @@
 <postsview>
   <posts>
-    <post state={this.parent.opts.state}></post>
+    <post
+      cached={this.parent.opts.cached}
+      state={this.parent.opts.state}
+    >
+    </post>
   </posts>
 </postsview>

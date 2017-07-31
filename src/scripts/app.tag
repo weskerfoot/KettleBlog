@@ -42,6 +42,7 @@
   </div>
   <div class="content">
     <postsview
+      cached={this.cached}
       state={this.state}
       if={this.active.get("posts")}
       ref="postsview"
@@ -52,6 +53,7 @@
     >
     </about>
     <links
+      cached={this.cached}
       state={this.state}
       if={this.active.get("links")}
     >
@@ -65,10 +67,31 @@ import './about.tag';
 import './links.tag';
 import './loading.tag';
 
+import fetchCached from 'fetch-cached';
 import Z from './zipper.js';
 import {default as R} from 'ramda';
 import route from 'riot-route';
 import lens from './lenses.js';
+
+var self = this;
+
+self.cache = {};
+
+self.cached = fetchCached({
+  fetch: fetch,
+  cache: {
+    get: ((k) => {
+      return new Promise((resolve, reject) => {
+        var result = self.cache[k];
+        if (result == undefined) {
+          resolve(undefined);
+        }
+        resolve(result);
+      });
+    }),
+    set: (k, v) => { self.cache[k] = v; }
+  }
+});
 
 this.R = R;
 this.route = route;
@@ -98,7 +121,6 @@ this.active = lens.actives({
   "about" : false
 });
 
-var self = this;
 toggleMenu(ev) {
   ev.preventDefault();
   self.update({"menuActive" : !self.menuActive});
