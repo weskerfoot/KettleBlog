@@ -1,15 +1,14 @@
 <app>
-  <div class="container">
-    <div class="columns">
+  <div class="">
+    <div class="">
 
-      <div class="column hide-xs hide-sm hide-md col-1 col-xl-1 col-lg-2">
-        <div
-          data-is="menu"
-          name="Category"
-          items={["Programming", "Books", "Philosophy"]}>
-        </div>
-      </div>
-      <div class="column col-xl-11 col-lg-10 col-md-12 col-sm-12 col-xs-12">
+      <sidebar
+        if={this.active.get("posts")}
+        name="Category"
+        items={["Programming", "Books", "Philosophy"]}>
+      </sidebar>
+
+      <div class="">
         <div class="show-md show-sm show-xs navigate-small dropdown dropdown-right">
           <button onclick={this.menuOn} class="mobile-navigate btn btn-link navigate-item dropdown-toggle" tabindex="0">
             <i class="bar-menu fa fa-bars" aria-hidden="true"></i>
@@ -30,6 +29,7 @@
             </li>
           </ul>
         </div>
+
         <ul class="hide-md hide-sm hide-xs navigate tab tab-block">
           <li
             each="{page in ['posts', 'projects', 'links', 'about']}"
@@ -75,7 +75,7 @@
     </div>
   </div>
 <script>
-import './menu.tag';
+import './sidebar.tag';
 import './navtab.tag';
 import './projectsview.tag';
 import './postsview.tag';
