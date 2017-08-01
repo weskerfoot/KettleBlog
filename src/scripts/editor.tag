@@ -92,7 +92,6 @@ this.defaultPost = {
   "author" : ""
 };
 
-
 var self = this;
 
 currentPost() {

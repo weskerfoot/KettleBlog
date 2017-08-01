@@ -7,12 +7,10 @@ $menuWidth: 60px;
 
 .twitter-share-button-rendered {
   font-size: 1.5em;
-  margin: 2px;
 }
 
 .fb-share-button {
   font-size: 1.5em;
-  margin: 2px;
 }
 
 .social-wrapper {
@@ -21,6 +19,17 @@ $menuWidth: 60px;
 
 .social {
   margin-top: 25%;
+}
+
+.menu-button {
+	display: block !important;
+	margin-top: 0;
+	text-decoration: none;
+  color: $branding !important;
+  background-color: white !important;
+  &:hover {
+    background-color: $brandingBG !important;
+  }
 }
 
 .branded, button {
@@ -195,15 +204,15 @@ p, h6, h4 {
 
 .content {
   margin: auto;
-  max-width: 70%;
+  max-width: 80%;
   @media (max-width: 1000px) {
-    max-width: 80%;
-  }
-  @media (max-width: 800px) {
     max-width: 90%;
   }
+  @media (max-width: 800px) {
+    max-width: 95%;
+  }
   @media (max-width: 400px) {
-    max-width: 93%;
+    max-width: 100%;
   }
 }
 

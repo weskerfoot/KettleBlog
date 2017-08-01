@@ -13,6 +13,7 @@
     <loading if={this.loading && this.opts.state.loaded}></loading>
     <div class="text-break">
       <div class={"animated " + (this.loading ? "invisible" : "fadeIn")}>
+
         <social
           show={!this.loading}
           ref="social"
@@ -20,6 +21,7 @@
         >
         </social>
         <h4 class="post-title">{ this.title }</h4>
+
         <p class="post-content centered text-break">
           <raw
             content="{ this.converter.makeHtml(this.content) }"
@@ -41,7 +43,6 @@
     </div>
   </div>
 <script>
-
 import './raw.tag';
 import './social.tag';
 import { default as R } from 'ramda';

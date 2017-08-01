@@ -27,7 +27,8 @@ class Posts:
             doc = {
                     "title" : title,
                     "content" : content,
-                    "author" : author
+                    "author" : author,
+                    "type" : "post"
                     }
 
         print("post was saved %s" % doc)

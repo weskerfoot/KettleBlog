@@ -1,10 +1,8 @@
 <social>
-  <div class="social-wrapper">
-      <div class="btn-group">
-        <div onmouseover={test} data-is="raw" ref="twitter" content={this.tweetHtml}>
-        </div>
-        <div onmouseover={test} data-is="raw" ref="facebook" content={this.fbHtml}>
-        </div>
+  <div class="social-wrapper btn-group">
+      <div onmouseover={test} data-is="raw" ref="twitter" content={this.tweetHtml}>
+      </div>
+      <div onmouseover={test} data-is="raw" ref="facebook" content={this.fbHtml}>
       </div>
   </div>
 <script>
@@ -38,7 +36,7 @@ self.on("updated", () => {
     window.twttr.widgets.load(self.refs.twitter.root);
   }
 
-  if (FB !== undefined) {
+  if (FB !== undefined && FB.XFBML !== undefined) {
     FB.XFBML.parse(self.refs.facebook.root);
   }
   self.old_id = self._id;
