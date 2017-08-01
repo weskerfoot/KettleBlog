@@ -1,11 +1,17 @@
 <sidebar>
-  <div
+  <button
     if={!open}
-    class="animated fadeIn"
+    class="animated fadeIn btn tooltip tooltip-right"
+    data-tooltip="Filter Categories"
     style={this.closedButton()}
     onclick={swipe}
     >
-  </div>
+      <i
+        class="fa fa-bars"
+        aria-hidden="true"
+      >
+      </i>
+  </button>
   <div show={this.swiped !== undefined} style={ this.styles() } class={`animated ${this.swiped !== undefined ? (this.swiped ? "slideInLeft" : "slideOutLeft") : "" } container`}>
     <div style={{"height" : "100%"}} class="columns col-oneline col-gapless">
 
@@ -60,11 +66,10 @@ self.swipe = lodash.debounce(() => {
       "swiped" : self.swiped == undefined ? true : !self.swiped,
       "open" : !self.open
     });
-  }, 200);
+  }, 100);
 
 self.buttonStyles = (() => {
   return {
-    "background-color" : "black",
     "top": "0",
     "overflow-x": "hidden"
   };
@@ -72,15 +77,15 @@ self.buttonStyles = (() => {
 
 self.closedButton = (() => {
   return {
+    "background-color" : "rgba(103, 173, 219, 0.40)",
+    "font-color" : "black",
     "height": "50px",
     "width": "50px",
+    "font-size" : "40px",
     "position": "fixed",
     "z-index": "1",
     "top": "0",
-    "left": "0",
-    "overflow-x": "hidden",
-    "padding-top": "60px",
-    "background-color" : "black"
+    "left": "0"
   };
 });
 
