@@ -20,8 +20,6 @@
           postid={this.opts.state._id}
         >
         </social>
-        <h4 class="post-title">{ this.title }</h4>
-
         <p class="post-content centered text-break">
           <raw
             content="{ this.converter.makeHtml(this.content) }"
@@ -124,6 +122,10 @@ updatePost(postcontent) {
   self.prevloading = "";
   self.nextloading = "";
   self.route(`/posts/${self._id}`);
+
+  RiotControl.trigger("postswitch", {"title" : self.title});
+
+  self.parent.update();
 
   self.refs.social.updateButton(self._id, self.title);
 

@@ -1,12 +1,18 @@
 <app>
-  <div class="">
+  <div class="header">
+    <section style={{"margin-top" : "0px"}} class="text-center nav navbar centered page-top navbar-section">
+      <h4 class="blog-title">{ currentPage }</h4>
+    </section>
+  </div>
+  <div class="app-body">
     <div class="">
-
+    <section class="text-center nav navbar centered page-top navbar-section">
       <sidebar
         if={this.active.get("posts")}
-        name="Category"
+        name="Filter By Category"
         items={["Programming", "Books", "Philosophy"]}>
       </sidebar>
+    </section>
 
       <div class="">
         <div class="show-md show-sm show-xs navigate-small dropdown dropdown-right">
@@ -105,12 +111,22 @@ self.cached = fetchCached({
   }
 });
 
-this.R = R;
-this.route = route;
-this.riot = riot;
-this.menuActive = false;
+self.R = R;
+self.route = route;
+self.riot = riot;
+self.menuActive = false;
+self.currentPage = "";
 
-this.route.base('#!')
+RiotControl.on("postswitch",
+  (ev) => {
+    self.update(
+      {
+        "currentPage" : ev.title
+      })
+    }
+  );
+
+self.route.base('#!')
 
 function PostUpdated() {
   riot.observable(this);
@@ -151,7 +167,8 @@ menuOff(ev) {
 function activate(page) {
   return function() {
     if (page !== "posts") {
-      document.title = `Wes Kerfoot ${page.slice(0,1).toUpperCase()}${page.slice(1,page.length)}`;
+      document.title = `${page.slice(0,1).toUpperCase()}${page.slice(1,page.length)}`;
+      self.currentPage = `Wes Kerfoot ${document.title}`;
     }
     console.log(`activating ${page}`);
     self.active = lens.setActive(self.active, page);

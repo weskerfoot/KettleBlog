@@ -1,9 +1,43 @@
 $brandingBG: rgba(103, 173, 219, 0.40);
+$brandingBG2: rgba(75, 147, 193, 0.65);
 $branding: #25658f;
 $branding2: #4b93c1;
 $branding3: #1b4c6c;
 
 $menuWidth: 60px;
+
+$navbarHeight: 100px;
+
+.blog-title {
+  text-transform: capitalize;
+  margin-top: 10px;
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  @media (max-width: 600px) {
+    font-size: 1.5em;
+  }
+  @media (max-width: 530px) {
+    font-size: 1.2em;
+  }
+}
+
+.header {
+  background-color: $brandingBG2;
+  color: white;
+  font-weight: 800;
+  height: 70px;
+  margin-top: 0px;
+  padding-top: 0px;
+  top: 0;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
+.app-body {
+  margin-top: 80px;
+}
 
 .twitter-share-button-rendered {
   font-size: 1.5em;
@@ -19,6 +53,24 @@ $menuWidth: 60px;
 
 .social {
   margin-top: 25%;
+}
+
+.sidebar-button {
+	display: block !important;
+	margin-top: 0;
+  border: none;
+  color: black !important;
+	text-decoration: none;
+  &:hover {
+    background-color: $brandingBG !important;
+  }
+}
+
+.sidebar-divider {
+  &:after {
+    background: none !important;
+    color: $branding3 !important;
+  }
 }
 
 .menu-button {
@@ -206,13 +258,13 @@ p, h6, h4 {
   margin: auto;
   max-width: 80%;
   @media (max-width: 1000px) {
-    max-width: 90%;
+    max-width: 85%;
   }
   @media (max-width: 800px) {
-    max-width: 95%;
+    max-width: 87%;
   }
   @media (max-width: 400px) {
-    max-width: 100%;
+    max-width: 90%;
   }
 }
 
