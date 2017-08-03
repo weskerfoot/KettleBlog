@@ -1,8 +1,12 @@
 <social>
   <div class="social-wrapper btn-group">
-      <div onmouseover={test} data-is="raw" ref="twitter" content={this.tweetHtml}>
+      <div style={{"margin-right" : "1px"}}>
+        <div onmouseover={test} data-is="raw" ref="twitter" content={this.tweetHtml}>
+        </div>
       </div>
-      <div onmouseover={test} data-is="raw" ref="facebook" content={this.fbHtml}>
+      <div style={{"margin-left" : "1px"}}>
+        <div onmouseover={test} data-is="raw" ref="facebook" content={this.fbHtml}>
+        </div>
       </div>
   </div>
 <script>
@@ -45,7 +49,6 @@ self.on("updated", () => {
 
 test(ev) {
   ev.preventDefault()
-  console.log(ev.target);
 }
 
 shouldUpdate() {

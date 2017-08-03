@@ -63,14 +63,11 @@
 <script>
 import './loading.tag';
 import './raw.tag';
-import 'whatwg-fetch';
 import { default as showdown } from 'showdown';
-import { default as R } from 'ramda';
 import querystring from 'querystring';
 import Z from './zipper.js';
 
 this.loading = false;
-this.R = R;
 this.querystring = querystring;
 
 this.converter = new showdown.Converter();

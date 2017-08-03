@@ -43,9 +43,7 @@
 <script>
 import './raw.tag';
 import './social.tag';
-import { default as R } from 'ramda';
 import { default as showdown } from 'showdown';
-import { default as jquery } from 'jquery';
 
 import './postcontrols.tag';
 import route from 'riot-route';
@@ -92,9 +90,11 @@ next(ev) {
 }
 
 toTop() {
-  jquery('html, body').stop().animate({
-     scrollTop: jquery(".blog-title").offset().top-15
-  }, 1000);
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth'
+  });
 }
 
 updatePost(postcontent) {

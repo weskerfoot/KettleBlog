@@ -29,13 +29,13 @@
           </div>
         </div>
 
-        <div style={R.merge(panelStyles, nobg)} class="panel-body">
+        <div style={merge(panelStyles, nobg)} class="panel-body">
           <ul style={nobg} class="menu">
 
-            <li style={R.merge(nobg, subtitle)} class="divider sidebar-divider" data-content="Categories">
+            <li style={merge(nobg, subtitle)} class="divider sidebar-divider" data-content="Categories">
             </li>
 
-            <li style={R.merge(menuStyles, nobg)} each={item in opts.items} class="menu-item">
+            <li style={merge(menuStyles, nobg)} each={item in opts.items} class="menu-item">
               <a
                 style={nobg}
                 class="btn btn-primary sidebar-button"
@@ -60,26 +60,24 @@
   </div>
 
 <script>
-
-import { default as jquery } from 'jquery';
-import { default as lodash } from 'lodash';
-import { default as R } from 'ramda';
+import { debounce } from 'lodash-es';
+import merge from 'ramda/src/merge';
 var self = this;
 
-self.R = R;
+self.merge = merge;
 
 var background = "rgba(255, 255, 255, 0.95)";
 
 self.open = false;
 self.swiped = undefined;
 
-self.swipe = lodash.debounce(() => {
+self.swipe = debounce(() => {
     console.log("clicked");
     self.update({
       "swiped" : self.swiped == undefined ? true : !self.swiped,
       "open" : !self.open
     });
-  }, 100);
+  }, 10);
 
 self.buttonStyles = (() => {
   return {
@@ -114,7 +112,8 @@ self.styles = (() => {
     "left": "0",
     "overflow-x": "hidden",
     "padding-top": "60px",
-    "border" : "1px solid",
+    "border-right" : "1px solid",
+    "border-bottom" : "1px solid",
     "background-color" : background
   };
 });
@@ -145,9 +144,8 @@ self.subtitle = {
 
 self.one("updated",
   () => {
-      jquery(document).click(function(event) {
-          if(!jquery(event.target).closest('#sidebar').length) {
-            console.log("clicked outside of the sidebar");
+      document.addEventListener("click", function(event) {
+          if(!event.target.closest('#sidebar')) {
             if (self.open) {
               self.swipe();
             }

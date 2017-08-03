@@ -15,7 +15,7 @@ def buildScss():
 @task
 def buildJS():
     local("rollup -c rollup.config.js")
-    local("uglifyjs build/bundle.js > build/scripts/riotblog.min.js")
+    local("uglifyjs build/bundle.js -c > build/scripts/riotblog.min.js")
 
 @task
 def buildVenv():

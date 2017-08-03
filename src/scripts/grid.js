@@ -1,14 +1,17 @@
 import './grid.tag';
 import './row.tag';
 import './column.tag';
-import { default as R } from 'ramda';
+import unfold from 'ramda/src/unfold';
+import take from 'ramda/src/take';
+import drop from 'ramda/src/drop';
+import length from 'ramda/src/length';
 
 function chunk(n, xs) {
   /* Chunk a list into groups of n size */
-  return R.unfold(
+  return unfold(
     (xs) => {
-      if (R.length(xs) > 0) {
-        return [{"row" : R.take(n, xs)}, R.drop(n, xs)];
+      if (length(xs) > 0) {
+        return [{"row" : take(n, xs)}, drop(n, xs)];
       }
       return false;
     }, xs);

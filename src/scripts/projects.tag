@@ -61,7 +61,7 @@
     </div>
 <script>
 import Z from './zipper.js';
-import moment from 'moment';
+import moment from 'moment/min/moment.min';
 
 var cycle_timeout = 12;
 

@@ -1,12 +1,15 @@
 <app>
-  <div class="header">
-    <section style={{"margin-top" : "0px"}} class="text-center nav navbar centered page-top navbar-section">
+  <div
+    style={{"border-bottom" : showBorder ? "solid 1px" : "none" }}
+    class="header"
+  >
+    <section style={{"margin-top" : "0px"}} class="text-center nav navbar centered navbar-section">
       <h4 class="blog-title">{ currentPage }</h4>
     </section>
   </div>
   <div class="app-body">
-    <div class="">
-    <section class="text-center nav navbar centered page-top navbar-section">
+
+    <section class="text-center nav navbar centered navbar-section">
       <sidebar
         if={this.active.get("posts")}
         name="Filter By Category"
@@ -14,70 +17,67 @@
       </sidebar>
     </section>
 
-      <div class="">
-        <div class="show-md show-sm show-xs navigate-small dropdown dropdown-right">
-          <button onclick={this.menuOn} class="mobile-navigate btn btn-link navigate-item dropdown-toggle" tabindex="0">
-            <i class="bar-menu fa fa-bars" aria-hidden="true"></i>
-          </button>
-          <!-- menu component -->
-          <ul
-            if={this.menuActive}
-            class="mobile-menu tab tab-block menu">
-            <li
-              each="{page in ['posts', 'projects', 'links', 'about']}"
-              class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
-              data-is="navtab"
-              active={this.parent.active.get(page)}
-              to={this.parent.to(page)}
-              title={page}
-              onclick={this.menuOff}
-            >
-            </li>
-          </ul>
-        </div>
+    <div class={"show-md show-sm show-xs navigate-small dropdown dropdown-right " + (menuActive ? "active" : "")}>
+      <button onclick={menuOn} class="mobile-navigate btn btn-link navigate-item dropdown-toggle" tabindex="0">
+        <i class="bar-menu fa fa-bars" aria-hidden="true"></i>
+      </button>
+      <!-- menu component -->
+      <ul
+        show={menuActive}
+        class="mobile-menu tab tab-block menu">
+        <li
+          each="{page in ['posts', 'projects', 'links', 'about']}"
+          class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
+          data-is="navtab"
+          active={this.parent.active.get(page)}
+          to={this.parent.to(page)}
+          title={page}
+          onclick={this.parent.menuOff}
+        >
+        </li>
+      </ul>
+    </div>
 
-        <ul class="hide-md hide-sm hide-xs navigate tab tab-block">
-          <li
-            each="{page in ['posts', 'projects', 'links', 'about']}"
-            class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
-            data-is="navtab"
-            active={this.parent.active.get(page)}
-            to={this.parent.to(page)}
-            title={page}
-          >
-          </li>
-        </ul>
-        <div class="projects-content">
-          <loading if={!this.state.loaded}></loading>
-          <projectsview
-            class="animated fadeInDown"
-            if={this.active.get("projects") && this.state.loaded}
-            state={this.state}
-            ref="projectsview"
-          >
-          </projectsview>
-        </div>
+    <ul class="hide-md hide-sm hide-xs navigate tab tab-block">
+      <li
+        each="{page in ['posts', 'projects', 'links', 'about']}"
+        class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
+        data-is="navtab"
+        active={this.parent.active.get(page)}
+        to={this.parent.to(page)}
+        title={page}
+      >
+      </li>
+    </ul>
+    <div class="projects-content">
+      <loading if={!this.state.loaded}></loading>
+      <projectsview
+        class="animated fadeInDown"
+        if={this.active.get("projects") && this.state.loaded}
+        state={this.state}
+        ref="projectsview"
+      >
+      </projectsview>
+    </div>
 
-        <div class="content">
-          <postsview
-            cached={this.cached}
-            state={this.state}
-            if={this.active.get("posts")}
-            ref="postsview"
-          >
-          </postsview>
-          <about
-            if={this.active.get("about")}
-          >
-          </about>
-          <links
-            cached={this.cached}
-            state={this.state}
-            if={this.active.get("links")}
-          >
-          </links>
-        </div>
-      </div>
+    <div class="content">
+      <postsview
+        cached={this.cached}
+        state={this.state}
+        if={this.active.get("posts")}
+        ref="postsview"
+      >
+      </postsview>
+      <about
+        if={this.active.get("about")}
+      >
+      </about>
+      <links
+        cached={this.cached}
+        state={this.state}
+        if={this.active.get("links")}
+      >
+      </links>
     </div>
   </div>
 <script>
@@ -91,13 +91,25 @@ import './loading.tag';
 
 import fetchCached from 'fetch-cached';
 import Z from './zipper.js';
-import {default as R} from 'ramda';
+import pathEq from 'ramda/src/pathEq';
 import route from 'riot-route';
 import lens from './lenses.js';
+import { throttle } from 'lodash-es';
 
 var self = this;
 
 self.cache = {};
+
+self.throttle = throttle;
+
+self.showBorder = false;
+
+window.addEventListener("scroll",
+  throttle((ev) => {
+    self.update({"showBorder" : ev.pageY != 0});
+  },
+  500)
+);
 
 self.cached = fetchCached({
   fetch: fetch,
@@ -111,7 +123,6 @@ self.cached = fetchCached({
   }
 });
 
-self.R = R;
 self.route = route;
 self.riot = riot;
 self.menuActive = false;
@@ -128,18 +139,10 @@ RiotControl.on("postswitch",
 
 self.route.base('#!')
 
-function PostUpdated() {
-  riot.observable(this);
-  this.on("postupdated", () => { console.log("caught event"); });
-}
-
-var postObserver = new PostUpdated();
-
 this.state = {
   "_id" : false,
   "projects" : Z.empty,
-  "loaded" : false,
-  "postupdate" : postObserver
+  "loaded" : false
 };
 
 this.active = lens.actives({
@@ -149,26 +152,25 @@ this.active = lens.actives({
   "about" : false
 });
 
-toggleMenu(ev) {
-  ev.preventDefault();
-  self.update({"menuActive" : !self.menuActive});
-}
-
 menuOn(ev) {
   ev.preventDefault();
-  self.update({"menuActive" : true});
+  console.log("clicked it");
+  self.menuActive = true;
+  self.update();
 }
 
 menuOff(ev) {
   ev.preventDefault();
-  self.update({"menuActive" : false});
+  console.log("trying to close it");
+  self.menuActive = false;
+  self.update();
 }
 
 function activate(page) {
   return function() {
     if (page !== "posts") {
       document.title = `${page.slice(0,1).toUpperCase()}${page.slice(1,page.length)}`;
-      self.currentPage = `Wes Kerfoot ${document.title}`;
+      self.currentPage = document.title;
     }
     console.log(`activating ${page}`);
     self.active = lens.setActive(self.active, page);
@@ -214,11 +216,12 @@ this.on("mount", () => {
 
 function loaduser() {
   /* https://api.github.com/users/${self.username}/repos?sort=updated&direction=desc */
-  axios.get(`/blog/projects`)
-    .then(function(resp) {
+  self.cached(`/blog/projects`)
+    .then((resp) => resp.json())
+    .then((resp) => {
       self.state.projects = Z.fromList(
-                              resp.data.filter(
-                                R.pathEq(["fork"], false)));
+                              resp.filter(
+                                pathEq(["fork"], false)));
 
       self.state.loaded = true;
       self.update();

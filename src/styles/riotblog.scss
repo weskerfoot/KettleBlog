@@ -10,22 +10,23 @@ $navbarHeight: 100px;
 
 .blog-title {
   text-transform: capitalize;
-  margin-top: 10px;
+  margin-top: 15px;
   max-width: 70%;
   margin-left: auto;
   margin-right: auto;
+  font-size: 1.75em;
+  font-weight: 400;
+  color: black;
   @media (max-width: 600px) {
-    font-size: 1.5em;
+    font-size: 1.6em;
   }
   @media (max-width: 530px) {
-    font-size: 1.2em;
+    font-size: 1.3em;
   }
 }
 
 .header {
-  background-color: $brandingBG2;
-  color: white;
-  font-weight: 800;
+  background-color: white;
   height: 70px;
   margin-top: 0px;
   padding-top: 0px;

@@ -2,6 +2,7 @@ import riot from 'rollup-plugin-riot'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import buble from 'rollup-plugin-buble'
+import uglify from 'rollup-plugin-uglify';
 
 export default {
   entry: 'src/scripts/riotblog.js',
@@ -10,7 +11,8 @@ export default {
     riot(),
     nodeResolve({ jsnext: true, preferBuiltins: false}),
     commonjs(),
-    buble()
+    buble(),
+    uglify()
   ],
   format: 'iife'
 }
