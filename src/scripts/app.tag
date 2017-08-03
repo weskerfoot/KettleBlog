@@ -106,9 +106,9 @@ self.showBorder = false;
 
 window.addEventListener("scroll",
   throttle((ev) => {
-    self.update({"showBorder" : ev.pageY != 0});
+    self.update({"showBorder" : window.pageYOffset != 0});
   },
-  500)
+  400)
 );
 
 self.cached = fetchCached({
