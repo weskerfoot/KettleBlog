@@ -1,5 +1,5 @@
 <menu>
-  <div class="dropdown">
+  <div id="menu" class="dropdown">
     <a href="#" class="btn btn-primary menu-button dropdown-toggle" tabindex="0">
       { opts.name }<i class="icon icon-caret"></i>
     </a>

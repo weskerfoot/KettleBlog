@@ -17,7 +17,7 @@
       </sidebar>
     </section>
 
-    <div class={"show-md show-sm show-xs navigate-small dropdown dropdown-right " + (menuActive ? "active" : "")}>
+    <div id="menu" class={"show-md show-sm show-xs navigate-small dropdown dropdown-right " + (menuActive ? "active" : "")}>
       <button onclick={menuOn} class="mobile-navigate btn btn-link navigate-item dropdown-toggle" tabindex="0">
         <i class="bar-menu fa fa-bars" aria-hidden="true"></i>
       </button>
@@ -100,8 +100,6 @@ var self = this;
 
 self.cache = {};
 
-self.throttle = throttle;
-
 self.showBorder = false;
 
 window.addEventListener("scroll",
@@ -160,11 +158,20 @@ menuOn(ev) {
 }
 
 menuOff(ev) {
-  ev.preventDefault();
-  console.log("trying to close it");
+  if (ev !== undefined) {
+    ev.preventDefault();
+  }
   self.menuActive = false;
   self.update();
 }
+
+document.addEventListener("click", function(event) {
+  if(!event.target.closest('#menu')) {
+    if (self.menuActive) {
+      self.menuOff();
+    }
+  }
+});
 
 function activate(page) {
   return function() {
