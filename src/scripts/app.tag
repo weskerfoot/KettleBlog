@@ -101,6 +101,10 @@ var self = this;
 self.cache = {};
 
 self.showBorder = false;
+self.route = route;
+self.riot = riot;
+self.menuActive = false;
+self.currentPage = "";
 
 window.addEventListener("scroll",
   throttle((ev) => {
@@ -108,6 +112,14 @@ window.addEventListener("scroll",
   },
   400)
 );
+
+document.addEventListener("click", function(event) {
+  if(!event.target.closest('#menu')) {
+    if (self.menuActive) {
+      self.menuOff();
+    }
+  }
+});
 
 self.cached = fetchCached({
   fetch: fetch,
@@ -121,11 +133,6 @@ self.cached = fetchCached({
   }
 });
 
-self.route = route;
-self.riot = riot;
-self.menuActive = false;
-self.currentPage = "";
-
 RiotControl.on("postswitch",
   (ev) => {
     self.update(
@@ -137,13 +144,13 @@ RiotControl.on("postswitch",
 
 self.route.base('#!')
 
-this.state = {
+self.state = {
   "_id" : false,
   "projects" : Z.empty,
   "loaded" : false
 };
 
-this.active = lens.actives({
+self.active = lens.actives({
   "projects" : false,
   "posts" : false,
   "links" : false,
@@ -164,14 +171,6 @@ menuOff(ev) {
   self.menuActive = false;
   self.update();
 }
-
-document.addEventListener("click", function(event) {
-  if(!event.target.closest('#menu')) {
-    if (self.menuActive) {
-      self.menuOff();
-    }
-  }
-});
 
 function activate(page) {
   return function() {
@@ -210,14 +209,14 @@ to(name) {
   }).bind(this);
 }
 
-this.route("/", self.to("posts"));
-this.route("posts/*", posts);
-this.route("posts", (() => {posts(self.state._id)}));
-this.route("projects", projects);
-this.route("about", about);
-this.route("links", links);
+self.route("/", self.to("posts"));
+self.route("posts/*", posts);
+self.route("posts", (() => {posts(self.state._id)}));
+self.route("projects", projects);
+self.route("about", about);
+self.route("links", links);
 
-this.on("mount", () => {
+self.on("mount", () => {
   route.start(true);
 });
 
@@ -235,7 +234,7 @@ function loaduser() {
     });
 }
 
-this.on("mount", loaduser);
+self.on("mount", loaduser);
 
 </script>
 </app>

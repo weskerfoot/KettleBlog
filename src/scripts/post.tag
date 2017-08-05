@@ -2,27 +2,27 @@
   <div class="posts-box post centered">
     <div
       data-is="postcontrols"
-      prevloading={this.prevloading}
-      prev={this.prev}
-      atstart={this.start}
-      atend={this.end}
-      nextloading={this.nextloading}
-      next={this.next}
+      prevloading={prevloading}
+      prev={prev}
+      atstart={start}
+      atend={end}
+      nextloading={nextloading}
+      next={next}
     >
     </div>
-    <loading if={this.loading && this.opts.state.loaded}></loading>
+    <loading if={loading && opts.state.loaded}></loading>
     <div class="text-break">
-      <div class={"animated " + (this.loading ? "invisible" : "fadeIn")}>
+      <div class={"animated " + (loading ? "invisible" : "fadeIn")}>
 
         <social
-          show={!this.loading}
+          show={!loading}
           ref="social"
-          postid={this.opts.state._id}
+          postid={opts.state._id}
         >
         </social>
         <p class="post-content centered text-break">
           <raw
-            content="{ this.converter.makeHtml(this.content) }"
+            content="{ converter.makeHtml(content) }"
           >
           </raw>
         </p>
@@ -31,12 +31,12 @@
     </div>
     <div
       data-is="postcontrols"
-      prevloading={this.prevloading}
-      prev={this.prev}
-      atstart={this.start}
-      atend={this.end}
-      nextloading={this.nextloading}
-      next={this.next}
+      prevloading={prevloading}
+      prev={prev}
+      atstart={start}
+      atend={end}
+      nextloading={nextloading}
+      next={next}
     >
     </div>
   </div>
@@ -64,8 +64,8 @@ self.content = "";
 self.swipe = false;
 self.loading = self.opts.state.loaded;
 
-this.start = false;
-this.end = false;
+self.start = false;
+self.end = false;
 
 const hashLength = 8;
 
@@ -176,7 +176,7 @@ getPost(_id) {
   .then((resp) => { self.updatePost(JSON.parse(resp)) })
 }
 
-this.getPost(this.opts.state._id, "fadeIn");
+self.getPost(self.opts.state._id, "fadeIn");
 
 </script>
 </post>
