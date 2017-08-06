@@ -17,12 +17,13 @@ class Posts:
 
         self.db = self.client["blog"]
 
-    def savepost(self, title="", content="", author="", _id=False):
+    def savepost(self, title="", content="", author="", category="programming", _id=False):
         if _id:
             doc = self.db[_id]
             doc["title"] = title
             doc["content"] = content
             doc["author"] = author
+            doc["category"] = category
         else:
             doc = {
                     "title" : title,
@@ -34,15 +35,15 @@ class Posts:
         print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))
 
-    def getpost(self, _id):
-        results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, key=_id)
+    def getpost(self, _id, category="programming"):
+        results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=[category, _id])
         return jsonify([result.doc for result in results][0])
 
-    def iterpost(self, endkey=False, startkey=False):
+    def iterpost(self, endkey=False, startkey=False, category="programming"):
         if startkey and not endkey:
-            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True, startkey=startkey)
+            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True, startkey=[category, startkey])
         elif endkey and not startkey:
-            results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, endkey=endkey)
+            results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, endkey=[category, endkey])
         else:
             results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True)
 

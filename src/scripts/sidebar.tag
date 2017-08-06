@@ -32,14 +32,23 @@
         <div style={merge(panelStyles, nobg)} class="panel-body">
           <ul style={nobg} class="menu">
 
-            <li style={merge(nobg, subtitle)} class="divider sidebar-divider" data-content="Categories">
+            <li
+              style={merge(nobg, subtitle)}
+              class="divider sidebar-divider"
+              data-content="Categories"
+            >
             </li>
 
-            <li style={merge(menuStyles, nobg)} each={item in opts.items} class="menu-item">
+            <li
+              style={merge(menuStyles, nobg)}
+              each={item in opts.items}
+              class="menu-item"
+            >
               <a
                 style={nobg}
                 class="btn btn-primary sidebar-button"
                 href="#"
+                onclick={filterCategory(item)}
               >
                 { item }
               </a>
@@ -104,7 +113,7 @@ self.styles = (() => {
     "box-shadow" : "6px 8px 16px -4px rgba(0,0,0,0.75)",
     "-webkit-box-shadow" : "6px 8px 16px -4px rgba(0,0,0,0.75)",
     "-moz-box-shadow" : "6px 8px 16px -4px rgba(0,0,0,0.75)",
-    "height": "80%",
+    "height": "100%",
     "width": "250px",
     "position": "fixed",
     "z-index": "1",
@@ -152,6 +161,13 @@ self.one("updated",
           }
       });
   });
+
+filterCategory(item) {
+  return ((ev) => {
+    ev.preventDefault();
+    RiotControl.trigger("filtercategory", {"category" : item });
+  });
+}
 
 </script>
 </sidebar>

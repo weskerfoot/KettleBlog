@@ -54,6 +54,7 @@ var self = this;
 
 self.route = route;
 
+self.category = "programming";
 self._id = "";
 self.author = "";
 self.title = "";
@@ -63,6 +64,12 @@ self.nextloading = "";
 self.content = "";
 self.swipe = false;
 self.loading = self.opts.state.loaded;
+
+RiotControl.on("filtercategory",
+  (ev) => {
+    let category = ev.category.toLowerCase();
+    self.update({"category" : category});
+  });
 
 self.start = false;
 self.end = false;
@@ -76,7 +83,7 @@ prev(ev) {
     return;
   }
   self.prevloading = " loader-branded";
-  self.prevPost(self._id, "fadeIn");
+  self.prevPost(self._id);
 }
 
 next(ev) {
@@ -86,7 +93,7 @@ next(ev) {
     return;
   }
   self.nextloading = " loader-branded";
-  self.nextPost(self._id, "fadeIn");
+  self.nextPost(self._id);
 }
 
 toTop() {
@@ -135,7 +142,7 @@ updatePost(postcontent) {
 
 nextPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached(`/blog/switchpost/${_id.slice(-hashLength)}`)
+  self.opts.cached(`/blog/switchpost/${_id.slice(-hashLength)}/${self.category}`)
   .then((resp) => resp.text())
   .then((resp) => {
     var content = JSON.parse(resp);
@@ -155,7 +162,7 @@ nextPost(_id) {
 
 prevPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached(`/blog/prevpost/${_id.slice(-hashLength)}`)
+  self.opts.cached(`/blog/prevpost/${_id.slice(-hashLength)}/${self.category}`)
   .then((resp) => resp.text())
   .then((resp) => {
     self.updatePost(JSON.parse(resp))
@@ -166,7 +173,7 @@ getPost(_id) {
   self.update({"loading" : true});
   var url;
   if (_id !== undefined && _id) {
-    url = `/blog/getpost/${_id.slice(-hashLength)}`;
+    url = `/blog/getpost/${_id.slice(-hashLength)}/${self.category}`;
   }
   else {
     url = "/blog/switchpost/";
@@ -176,7 +183,7 @@ getPost(_id) {
   .then((resp) => { self.updatePost(JSON.parse(resp)) })
 }
 
-self.getPost(self.opts.state._id, "fadeIn");
+self.getPost(self.opts.state._id);
 
 </script>
 </post>
