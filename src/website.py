@@ -21,7 +21,6 @@ import os
 from posts import Posts
 from projects import getProjects
 
-posts = Posts()
 login_manager = LoginManager()
 
 def cacheit(key, thunk):
@@ -47,6 +46,10 @@ def NeverWhere(configfile=None):
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+    print(os.environ["RIOTBLOG_SETTINGS"])
+    app.config.from_envvar('RIOTBLOG_SETTINGS')
+
+    posts = Posts(app.config["COUCHDB_USER"], app.config["COUCHDB_PASSWORD"])
     @login_manager.user_loader
     def load_user(user_id):
         return Admin
@@ -110,6 +113,10 @@ def NeverWhere(configfile=None):
     def allposts():
         return posts.allposts()
 
+    @app.route("/blog/categories")
+    def categories():
+        return posts.categories()
+
     # remove a post
     @app.route("/blog/deletepost/<_id>")
     @login_required
@@ -157,8 +164,6 @@ def NeverWhere(configfile=None):
     return app
 
 app = NeverWhere()
-
-app.config.from_envvar('RIOTBLOG_SETTINGS')
 
 login_manager.init_app(app)
 

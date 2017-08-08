@@ -13,7 +13,7 @@
       <sidebar
         if={this.active.get("posts")}
         name="Filter By Category"
-        items={["Programming", "Books", "Philosophy"]}>
+        items={categories}>
       </sidebar>
     </section>
 
@@ -234,7 +234,17 @@ function loaduser() {
     });
 }
 
+function getcategories() {
+  self.cached(`/blog/categories`)
+    .then((resp) => resp.json())
+    .then((resp) => {
+      self.categories = resp;
+      self.update();
+    });
+}
+
 self.on("mount", loaduser);
+self.on("mount", getcategories);
 
 </script>
 </app>

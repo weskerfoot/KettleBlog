@@ -7,13 +7,17 @@ from flask import jsonify
 from flask_marshmallow import Marshmallow
 
 class Posts:
-    def __init__(self, host=None, port=None):
+    def __init__(self, user, password, host=None, port=None):
         if host is None:
             host = "localhost"
         if port is None:
             port = "5984"
 
         self.client = couchdb.Server("http://%s:%s" % (host, port))
+
+        self.client.credentials = (user, password)
+
+        # FIXME check for pooling / concurrency issues
 
         self.db = self.client["blog"]
 
@@ -36,14 +40,14 @@ class Posts:
         return jsonify(self.db.save(doc))
 
     def getpost(self, _id, category="programming"):
-        results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=[category, _id])
+        results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=_id)
         return jsonify([result.doc for result in results][0])
 
     def iterpost(self, endkey=False, startkey=False, category="programming"):
         if startkey and not endkey:
-            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True, startkey=[category, startkey])
+            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True, startkey=startkey)
         elif endkey and not startkey:
-            results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, endkey=[category, endkey])
+            results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, endkey=endkey)
         else:
             results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True)
 
@@ -93,4 +97,17 @@ class Posts:
         except (ResourceNotFound, ResourceConflict) as e:
             print(e)
             return jsonify(False)
+
+    def categories(self):
+        return jsonify(
+                [
+                    c["key"][1] for c in
+                        self.db.view("blogPosts/categories",
+                                     startkey=["category"],
+                                     endkey=["category", {}],
+                                     inclusive_end=False,
+                                     group_level=2,
+                                     group=True)
+                ]
+            )
 

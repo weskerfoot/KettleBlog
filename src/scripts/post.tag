@@ -68,7 +68,7 @@ self.loading = self.opts.state.loaded;
 RiotControl.on("filtercategory",
   (ev) => {
     let category = ev.category.toLowerCase();
-    self.update({"category" : category});
+    console.log(category);
   });
 
 self.start = false;
