@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 from functools import partial
 
-from flask import abort, Flask, render_template, flash, request, send_from_directory, jsonify
+from flask import abort, Flask, render_template, flash, request, send_from_directory, jsonify, g
 from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
 from flask_login import LoginManager, login_required, login_user
@@ -37,6 +37,12 @@ def cacheit(key, thunk):
         return result
     return cached
 
+def get_posts():
+    posts = getattr(g, "posts", None)
+    if posts is None:
+        posts = g._posts = Posts(app.config["COUCHDB_USER"], app.config["COUCHDB_PASSWORD"])
+    return posts
+
 def NeverWhere(configfile=None):
     app = Flask(__name__)
     app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -49,7 +55,6 @@ def NeverWhere(configfile=None):
     print(os.environ["RIOTBLOG_SETTINGS"])
     app.config.from_envvar('RIOTBLOG_SETTINGS')
 
-    posts = Posts(app.config["COUCHDB_USER"], app.config["COUCHDB_PASSWORD"])
     @login_manager.user_loader
     def load_user(user_id):
         return Admin
@@ -164,6 +169,8 @@ def NeverWhere(configfile=None):
     return app
 
 app = NeverWhere()
+
+posts = LocalProxy(get_posts)
 
 login_manager.init_app(app)
 

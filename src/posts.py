@@ -106,6 +106,7 @@ class Posts:
                                      startkey=["category"],
                                      endkey=["category", {}],
                                      inclusive_end=False,
+                                     reduce=True,
                                      group_level=2,
                                      group=True)
                 ]
