@@ -1,14 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-  <link rel="stylesheet" href="/styles/primop.me.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="fragment" content="!">
 </head>
 <html>
   <body>
-    <app csrf_token="{{ csrf_token() }}"></app>
+    <div data-is="app" csrf_token="{{ csrf_token() }}"></div>
   </body>
   <footer>
     <script>
@@ -18,9 +16,9 @@
       if (d.getElementById(id)) return t;
       js = d.createElement(s);
       js.id = id;
+      js.async = true;
       js.src = "https://platform.twitter.com/widgets.js";
       fjs.parentNode.insertBefore(js, fjs);
-
       t._e = [];
       t.ready = function(f) {
         t._e.push(f);
@@ -29,15 +27,34 @@
       return t;
     }(document, "script", "twitter-wjs"));
     </script>
+
     <div id="fb-root"></div>
+
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s); js.id = id;
+      js.async = true;
       js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     </script>
-    <script type="text/javascript" src="/scripts/riotblog.min.js"></script>
+
+    <script type="text/javascript">
+      (function() {
+        function loadCSS(href) {
+          var css = document.createElement('link');
+          css.href = href;
+          css.rel = 'stylesheet';
+          css.type = 'text/css';
+          document.getElementsByTagName('head')[0].appendChild(css);
+        }
+        var hrefs = ['/styles/primop.me.min.css', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'];
+        for (var i = 0, l = hrefs.length; i < l; i++) {
+          loadCSS(hrefs[i]);
+        }
+      })();
+    </script>
+    <script async type="text/javascript" src="/scripts/riotblog.min.js"></script>
   </footer>
 </html>

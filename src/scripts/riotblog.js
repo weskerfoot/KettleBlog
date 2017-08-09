@@ -10,18 +10,20 @@ import { default as promise } from 'es6-promise';
 import { default as smooth } from 'smoothscroll-polyfill';
 import 'element-closest';
 
-promise.Promise.polyfill();
-smooth.polyfill();
+window.addEventListener("load", () => {
 
-window.RiotControl = RiotControl;
+  promise.Promise.polyfill();
+  smooth.polyfill();
 
-RiotControl.addStore(new riot.observable());
+  window.RiotControl = RiotControl;
 
-riot.mount("app");
-riot.mount("post",
-  {
-    "creator" : "author"
-  });
+  RiotControl.addStore(new riot.observable());
+  riot.mount("app");
+  riot.mount("post",
+    {
+      "creator" : "author"
+    });
 
-riot.mount("bbutton");
-riot.mount("projects");
+  riot.mount("bbutton");
+  riot.mount("projects");
+});

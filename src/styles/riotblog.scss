@@ -62,6 +62,7 @@ $navbarHeight: 100px;
   border: none;
   color: black !important;
 	text-decoration: none;
+  text-transform: capitalize;
   &:hover {
     background-color: $brandingBG !important;
   }

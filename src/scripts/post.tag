@@ -63,7 +63,10 @@ self.prevloading = "";
 self.nextloading = "";
 self.content = "";
 self.swipe = false;
-self.loading = self.opts.state.loaded;
+
+self.on("mount", () => {
+  self.loading = self.opts.state.loaded;
+});
 
 RiotControl.on("filtercategory",
   (ev) => {
@@ -183,7 +186,9 @@ getPost(_id) {
   .then((resp) => { self.updatePost(JSON.parse(resp)) })
 }
 
-self.getPost(self.opts.state._id);
+self.on("mount", () => {
+  self.getPost(self.opts.state._id);
+});
 
 </script>
 </post>

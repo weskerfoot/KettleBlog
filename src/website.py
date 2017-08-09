@@ -170,6 +170,12 @@ def NeverWhere(configfile=None):
 
 app = NeverWhere()
 
+@app.teardown_appcontext
+def teardown_couchdb(exception):
+    posts = getattr(g, 'posts', None)
+    if posts is not None:
+        del posts.db
+
 posts = LocalProxy(get_posts)
 
 login_manager.init_app(app)
@@ -179,4 +185,4 @@ csrf = CSRFProtect()
 csrf.init_app(app)
 
 if __name__ == "__main__":
-    NeverWhere("./appconfig").run(host="localhost", port=8001, debug=True)
+    NeverWhere().run(host="localhost", port=8001, debug=True)

@@ -1,8 +1,8 @@
 <postsview>
   <posts>
     <post
-      cached={this.parent.opts.cached}
-      state={this.parent.opts.state}
+      cached={parent.opts.cached}
+      state={parent.opts.state}
     >
     </post>
   </posts>

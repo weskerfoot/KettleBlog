@@ -27,12 +27,12 @@
         class="mobile-menu tab tab-block menu">
         <li
           each="{page in ['posts', 'projects', 'links', 'about']}"
-          class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
+          class={"navigate-tab tab-item animated fadeIn " + (parent.active.get(page) ? "active" : "")}
           data-is="navtab"
-          active={this.parent.active.get(page)}
-          to={this.parent.to(page)}
+          active={parent.active.get(page)}
+          to={parent.to(page)}
           title={page}
-          onclick={this.parent.menuOff}
+          onclick={parent.menuOff}
         >
         </li>
       </ul>
@@ -41,20 +41,20 @@
     <ul class="hide-md hide-sm hide-xs navigate tab tab-block">
       <li
         each="{page in ['posts', 'projects', 'links', 'about']}"
-        class={"navigate-tab tab-item animated fadeIn " + (this.parent.active.get(page) ? "active" : "")}
+        class={"navigate-tab tab-item animated fadeIn " + (parent.active.get(page) ? "active" : "")}
         data-is="navtab"
-        active={this.parent.active.get(page)}
-        to={this.parent.to(page)}
+        active={parent.active.get(page)}
+        to={parent.to(page)}
         title={page}
       >
       </li>
     </ul>
     <div class="projects-content">
-      <loading if={!this.state.loaded}></loading>
+      <loading if={!state.loaded}></loading>
       <projectsview
         class="animated fadeInDown"
-        if={this.active.get("projects") && this.state.loaded}
-        state={this.state}
+        if={active.get("projects") && state.loaded}
+        state={state}
         ref="projectsview"
       >
       </projectsview>
@@ -62,20 +62,20 @@
 
     <div class="content">
       <postsview
-        cached={this.cached}
-        state={this.state}
-        if={this.active.get("posts")}
+        cached={cached}
+        state={state}
+        if={active.get("posts")}
         ref="postsview"
       >
       </postsview>
       <about
-        if={this.active.get("about")}
+        if={active.get("about")}
       >
       </about>
       <links
-        cached={this.cached}
-        state={this.state}
-        if={this.active.get("links")}
+        cached={cached}
+        state={state}
+        if={active.get("links")}
       >
       </links>
     </div>
@@ -90,6 +90,7 @@ import './links.tag';
 import './loading.tag';
 
 import fetchCached from 'fetch-cached';
+import 'whatwg-fetch';
 import Z from './zipper.js';
 import pathEq from 'ramda/src/pathEq';
 import route from 'riot-route';
@@ -189,7 +190,6 @@ var about = activate("about");
 var links = activate("links");
 
 function posts(_id) {
-  console.log(self.state);
   if (self.state._id != _id) {
     self.state._id = _id;
   }
@@ -216,7 +216,7 @@ self.route("projects", projects);
 self.route("about", about);
 self.route("links", links);
 
-self.on("mount", () => {
+self.one("updated", () => {
   route.start(true);
 });
 
