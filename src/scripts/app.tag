@@ -176,10 +176,9 @@ menuOff(ev) {
 function activate(page) {
   return function() {
     if (page !== "posts") {
-      document.title = `${page.slice(0,1).toUpperCase()}${page.slice(1,page.length)}`;
+      document.title = page.slice(0,1).toUpperCase()+" "+page.slice(1,page.length);
       self.currentPage = document.title;
     }
-    console.log(`activating ${page}`);
     self.active = lens.setActive(self.active, page);
     self.update();
   };
@@ -222,7 +221,7 @@ self.one("updated", () => {
 
 function loaduser() {
   /* https://api.github.com/users/${self.username}/repos?sort=updated&direction=desc */
-  self.cached(`/blog/projects`)
+  self.cached("/blog/projects")
     .then((resp) => resp.json())
     .then((resp) => {
       self.state.projects = Z.fromList(
@@ -235,7 +234,7 @@ function loaduser() {
 }
 
 function getcategories() {
-  self.cached(`/blog/categories`)
+  self.cached("/blog/categories")
     .then((resp) => resp.json())
     .then((resp) => {
       self.categories = resp;

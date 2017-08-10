@@ -214,7 +214,7 @@ loadPost(_id) {
       return false;
     }
     self.update({"loading" : true});
-    axios.get(`/blog/getpost/${_id.slice(-8)}`)
+    axios.get("/blog/getpost/"+_id.slice(-8))
     .then(function(resp) {
       self.update({"loading" : false});
       self.refs.textarea.value = resp.data.content;
@@ -240,7 +240,7 @@ deletePost(_id) {
       return false;
     }
     self.update({"loading" : true});
-    axios.get(`/blog/deletepost/${self._id}`)
+    axios.get("/blog/deletepost/"+self._id)
       .then(function(resp) {
         console.log(resp);
         self.listPosts();
@@ -256,7 +256,6 @@ listPosts() {
   axios.get("/blog/allposts")
   .then(function(resp) {
     var postsList = Z.extend(Z.empty, resp.data);
-    console.log(`trying to load post with id ${Z.focus(postsList, self.defaultPost)._id}`);
     var currentPost = Z.focus(postsList, self.defaultPost);
 
     if (currentPost == self.defaultPost) {

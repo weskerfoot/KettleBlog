@@ -131,7 +131,7 @@ updatePost(postcontent) {
   self.loading = false;
   self.prevloading = "";
   self.nextloading = "";
-  self.route(`/posts/${self._id}`);
+  self.route("/posts/"+self._id);
 
   RiotControl.trigger("postswitch", {"title" : self.title});
 
@@ -145,7 +145,7 @@ updatePost(postcontent) {
 
 nextPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached(`/blog/switchpost/${_id.slice(-hashLength)}/${self.category}`)
+  self.opts.cached("/blog/switchpost/"+_id.slice(-hashLength)+"/"+self.category)
   .then((resp) => resp.text())
   .then((resp) => {
     var content = JSON.parse(resp);
@@ -165,7 +165,7 @@ nextPost(_id) {
 
 prevPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached(`/blog/prevpost/${_id.slice(-hashLength)}/${self.category}`)
+  self.opts.cached("/blog/prevpost/"+_id.slice(-hashLength)+"/"+self.category)
   .then((resp) => resp.text())
   .then((resp) => {
     self.updatePost(JSON.parse(resp))
@@ -176,7 +176,7 @@ getPost(_id) {
   self.update({"loading" : true});
   var url;
   if (_id !== undefined && _id) {
-    url = `/blog/getpost/${_id.slice(-hashLength)}/${self.category}`;
+    url = "/blog/getpost/"+_id.slice(-hashLength)+"/"+self.category;
   }
   else {
     url = "/blog/switchpost/";

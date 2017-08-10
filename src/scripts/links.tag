@@ -45,7 +45,7 @@ self.groups = []
 
 getLinks() {
   self.update({"loading" : true});
-  self.opts.cached(`/blog/links/`)
+  self.opts.cached("/blog/links/")
   .then((resp) => resp.text())
   .then((resp) => {
     self.update(

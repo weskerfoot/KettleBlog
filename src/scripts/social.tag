@@ -28,8 +28,8 @@ updateButton(_id, title) {
   }
   if (_id != self._id) {
 
-    self.tweetHtml = `<a style="display:none;" data-size="small" class="twitter-share-button btn" data-text="${title}" data-via="weskerfoot" data-show-count="false" data-url="https://primop.me/blog/#!posts/${_id}" ref="tweet">Tweet ${_id}</a>`;
-    self.fbHtml = `<div class="fb-share-button" data-href="https://primop.me/blog/#!posts/${_id}" data-layout="button_count"></div>`;
+    self.tweetHtml = '<a style="display:none;" data-size="small" class="twitter-share-button btn" data-text="'+title+'" data-via="weskerfoot" data-show-count="false" data-url="https://primop.me/blog/#!posts/'+_id+'" ref="tweet">Tweet '+_id+'</a>';
+    self.fbHtml = '<div class="fb-share-button" data-href="https://primop.me/blog/#!posts/'+_id+'" data-layout="button_count"></div>';
     self._id = _id;
     self.update();
   }
