@@ -173,22 +173,7 @@ prevPost(_id) {
   })
 }
 
-getPost(_id) {
-  self.update({"loading" : true});
-  var url;
-  if (_id !== undefined && _id) {
-    url = "/blog/getpost/"+_id.slice(-hashLength)+"/"+self.category;
-  }
-  else {
-    url = "/blog/switchpost/";
-  }
-  self.opts.cached(url)
-  .then((resp) => resp.text())
-  .then((resp) => { self.updatePost(JSON.parse(resp)) })
-}
-
 self.on("mount", () => {
-  //self.getPost(self.opts.state._id);
   self.update({
     "loading" : false
   });

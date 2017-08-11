@@ -145,8 +145,6 @@ RiotControl.on("postswitch",
     }
   );
 
-self.route.base('/blog/')
-
 self.state = {
   "_id" : self.opts.postid.slice(-hashLength),
   "author" : self.opts.author,
@@ -197,8 +195,6 @@ var about = activate("about");
 var links = activate("links");
 
 function posts(_id) {
-  console.log("XXX");
-  console.log(_id);
   if (self.state._id != _id) {
     self.state._id = _id;
   }
@@ -224,6 +220,7 @@ to(name) {
   }).bind(this);
 }
 
+self.route.base('/blog/')
 self.route("/", () => { self.route(`/posts/${self.state._id}`); });
 self.route("/posts", () => { self.route(`/posts/${self.state._id}`); });
 self.route("posts/*", posts);

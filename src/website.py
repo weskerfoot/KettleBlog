@@ -79,6 +79,7 @@ def NeverWhere(configfile=None):
     def stuff():
         return render_template("projects.html")
 
+    # blog post routes
     @app.route("/blog/posts/", methods=("GET",))
     def renderInitial():
         post_content = posts.getinitial()
@@ -93,24 +94,10 @@ def NeverWhere(configfile=None):
     def index():
         return renderInitial()
 
-    @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
-    def send_script(filename):
-        print("matched scripts route")
-        return send_from_directory("/srv/http/riotblog/scripts", filename)
-
-    @app.route("/blog/styles/<filename>", methods=("GET", "POST"))
-    def send_style(filename):
-        return send_from_directory("/srv/http/riotblog/styles", filename)
-
     # get the next post
     @app.route("/blog/switchpost/<pid>/<category>")
     def getpostid(pid, category):
         return posts.iterpost(startkey=pid, category=category)
-
-    # get the first post
-    @app.route("/blog/switchpost/")
-    def nextpost():
-        return posts.iterpost()
 
     # get the post previous to this one
     @app.route("/blog/prevpost/<pid>/<category>")
