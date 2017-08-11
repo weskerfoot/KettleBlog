@@ -3,10 +3,11 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="fragment" content="!">
+  <title>{{ postcontent["title"] }}</title>
 </head>
 <html>
   <body>
-    <div data-is="app" initial_post="{{ initial_post }}" csrf_token="{{ csrf_token() }}"></div>
+    <div data-is="app" author="{{ postcontent['author'] }}" postid="{{ postcontent['_id'] }}" title="{{ postcontent['title'] }}" initial_post="{{ quote(postcontent['content']) }}" csrf_token="{{ csrf_token() }}"></div>
   </body>
   <footer>
     <script>

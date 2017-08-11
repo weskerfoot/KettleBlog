@@ -52,21 +52,18 @@ this.converter = new showdown.Converter();
 
 var self = this;
 
+const hashLength = 8;
+
 self.route = route;
 
 self.category = "programming";
-self._id = "";
-self.author = "";
-self.title = "";
-self.content = "";
+self._id = self.opts.state._id.slice(-hashLength);
+self.author = self.opts.state.author;
+self.title = self.opts.state.title;
+self.content = self.opts.state.initial;
 self.prevloading = "";
 self.nextloading = "";
-self.content = "";
 self.swipe = false;
-
-self.on("mount", () => {
-  self.loading = self.opts.state.loaded;
-});
 
 RiotControl.on("filtercategory",
   (ev) => {
@@ -76,8 +73,6 @@ RiotControl.on("filtercategory",
 
 self.start = false;
 self.end = false;
-
-const hashLength = 8;
 
 prev(ev) {
   ev.preventDefault();
@@ -127,6 +122,12 @@ updatePost(postcontent) {
   self.author = postcontent.author;
   self.content = postcontent.content;
   self.title = postcontent.title;
+
+  self.opts.state._id = self._id;
+  self.opts.state.title = self.title;
+  self.opts.state.initial = self.content;
+  self.opts.state.author = self.author;
+
   self.swipe = !self.swipe;
   self.loading = false;
   self.prevloading = "";
@@ -187,7 +188,10 @@ getPost(_id) {
 }
 
 self.on("mount", () => {
-  self.getPost(self.opts.state._id);
+  //self.getPost(self.opts.state._id);
+  self.update({
+    "loading" : false
+  });
 });
 
 </script>

@@ -39,9 +39,15 @@ class Posts:
         print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))
 
-    def getpost(self, _id, category="programming"):
+    def getpost(self, _id, category="programming", json=True):
         results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=_id)
-        return jsonify([result.doc for result in results][0])
+
+        post = [result.doc for result in results][0]
+        return jsonify(post) if json else post
+
+    def getinitial(self):
+        results = list(self.db.iterview("blogPosts/blog-posts", 2, include_docs=True))
+        return [result.doc for result in results][0]
 
     def iterpost(self, endkey=False, startkey=False, category="programming"):
         if startkey and not endkey:

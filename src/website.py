@@ -79,10 +79,19 @@ def NeverWhere(configfile=None):
     def stuff():
         return render_template("projects.html")
 
+    @app.route("/blog/posts/", methods=("GET",))
+    def renderInitial():
+        post_content = posts.getinitial()
+        return render_template("index.html", quote=quote, postcontent=dict(post_content))
+
+    @app.route("/blog/posts/<_id>", methods=("GET",))
+    def renderPost(_id):
+        post_content = posts.getpost(_id, json=False)
+        return render_template("index.html", quote=quote, postcontent=dict(post_content))
+
     @app.route("/blog/", methods=("GET", "POST"))
     def index():
-        print("matched index")
-        return render_template("index.html")
+        return renderInitial()
 
     @app.route("/blog/scripts/<filename>", methods=("GET", "POST"))
     def send_script(filename):

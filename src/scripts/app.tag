@@ -97,6 +97,8 @@ import route from 'riot-route';
 import lens from './lenses.js';
 import { throttle } from 'lodash-es';
 
+const hashLength = 8;
+
 var self = this;
 
 self.cache = {};
@@ -105,7 +107,7 @@ self.showBorder = false;
 self.route = route;
 self.riot = riot;
 self.menuActive = false;
-self.currentPage = "";
+self.currentPage = self.opts.title;
 
 window.addEventListener("scroll",
   throttle((ev) => {
@@ -143,12 +145,15 @@ RiotControl.on("postswitch",
     }
   );
 
-self.route.base('#!')
+self.route.base('/blog/')
 
 self.state = {
-  "_id" : false,
+  "_id" : self.opts.postid.slice(-hashLength),
+  "author" : self.opts.author,
+  "title" : self.opts.title,
   "projects" : Z.empty,
-  "loaded" : false
+  "loaded" : false,
+  "initial" : decodeURIComponent(self.opts.initial_post)
 };
 
 self.active = lens.actives({
@@ -176,8 +181,11 @@ menuOff(ev) {
 function activate(page) {
   return function() {
     if (page !== "posts") {
-      document.title = page.slice(0,1).toUpperCase()+" "+page.slice(1,page.length);
+      document.title = page.slice(0,1).toUpperCase()+page.slice(1,page.length);
       self.currentPage = document.title;
+    }
+    else {
+      self.currentPage = self.state.title;
     }
     self.active = lens.setActive(self.active, page);
     self.update();
@@ -189,6 +197,8 @@ var about = activate("about");
 var links = activate("links");
 
 function posts(_id) {
+  console.log("XXX");
+  console.log(_id);
   if (self.state._id != _id) {
     self.state._id = _id;
   }
@@ -203,12 +213,19 @@ to(name) {
       e.preventDefault();
       this.menuOff(e);
     }
-    this.route(name);
+    console.log("routing to " + name);
+    if (name == "posts") {
+      this.route(`${name}/${self.state._id}`);
+    }
+    else {
+      this.route(name);
+    }
     return;
   }).bind(this);
 }
 
-self.route("/", self.to("posts"));
+self.route("/", () => { self.route(`/posts/${self.state._id}`); });
+self.route("/posts", () => { self.route(`/posts/${self.state._id}`); });
 self.route("posts/*", posts);
 self.route("posts", (() => {posts(self.state._id)}));
 self.route("projects", projects);
@@ -244,6 +261,10 @@ function getcategories() {
 
 self.on("mount", loaduser);
 self.on("mount", getcategories);
+
+self.on("mount", () => {
+  console.log(decodeURIComponent(self.opts.initial_post));
+});
 
 </script>
 </app>
