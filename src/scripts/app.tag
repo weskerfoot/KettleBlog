@@ -52,7 +52,7 @@
     <div class="projects-content">
       <loading if={!state.loaded}></loading>
       <projectsview
-        class="animated fadeInDown"
+        class=""
         if={active.get("projects") && state.loaded}
         state={state}
         ref="projectsview"
@@ -235,7 +235,7 @@ self.one("updated", () => {
 
 function loaduser() {
   /* https://api.github.com/users/${self.username}/repos?sort=updated&direction=desc */
-  self.cached("/blog/projects")
+  self.cached("/blog/ghprojects")
     .then((resp) => resp.json())
     .then((resp) => {
       self.state.projects = Z.fromList(

@@ -12,11 +12,13 @@
     </div>
     <loading if={loading && opts.state.loaded}></loading>
     <div class="text-break">
-      <div class={"animated " + (loading ? "invisible" : "fadeIn")}>
+      <div class={"" + (loading ? "invisible" : "fadeIn")}>
 
         <social
+          if={false}
           show={!loading}
           ref="social"
+          title={opts.state.title}
           postid={opts.state._id}
         >
         </social>
@@ -146,7 +148,7 @@ updatePost(postcontent) {
 
 nextPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached("/blog/switchpost/"+_id.slice(-hashLength)+"/"+self.category)
+  self.opts.cached(`/blog/switchpost/${_id.slice(-hashLength)}/${self.category}`)
   .then((resp) => resp.text())
   .then((resp) => {
     var content = JSON.parse(resp);
@@ -166,7 +168,7 @@ nextPost(_id) {
 
 prevPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached("/blog/prevpost/"+_id.slice(-hashLength)+"/"+self.category)
+  self.opts.cached(`/blog/prevpost/${_id.slice(-hashLength)}/${self.category}`)
   .then((resp) => resp.text())
   .then((resp) => {
     self.updatePost(JSON.parse(resp))

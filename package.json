@@ -31,6 +31,8 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "axios": "^0.16.2",
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-es2015-template-literals": "^6.22.0",
     "closest": "^0.0.1",
     "element-closest": "^2.0.2",
     "es6-promise": "^4.1.1",
@@ -43,6 +45,7 @@
     "moment": "^2.18.1",
     "querystring": "^0.2.0",
     "riotcontrol": "^0.0.3",
+    "rollup-plugin-babel": "^3.0.1",
     "rollup-plugin-json": "^2.1.1",
     "rollup-plugin-uglify": "^2.0.1",
     "showdown": "^1.6.4",

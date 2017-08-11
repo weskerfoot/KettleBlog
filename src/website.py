@@ -71,7 +71,7 @@ def NeverWhere(configfile=None):
             print("did not log in successfully")
         return render_template("login.html", success=success)
 
-    @app.route("/blog/projects", methods=("GET",))
+    @app.route("/blog/ghprojects", methods=("GET",))
     def projects():
         return jsonify(cacheit("projects", getProjects))
 
