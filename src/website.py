@@ -27,14 +27,15 @@ def cacheit(key, thunk):
     """
     Tries to find a cached version of ``key''
     If there is no cached version then it will
-    evaluate thunk (which must be a generator)
-    and cache that, then return the result
+    evaluate thunk and cache that
     """
     cached = cache.get(quote(key))
     if cached is None:
-        result = list(thunk())
+        print("cache miss for %s" % key)
+        result = thunk()
         cache.set(quote(key), result)
         return result
+    print("cache hit for %s" % key)
     return cached
 
 def get_posts():
@@ -42,6 +43,12 @@ def get_posts():
     if posts is None:
         posts = g._posts = Posts(app.config["COUCHDB_USER"], app.config["COUCHDB_PASSWORD"])
     return posts
+
+def get_initial():
+    initial_post = getattr(g, "initial_post", None)
+    if initial_post is None:
+        initial_post = g._initial_post = posts.getinitial()
+    return initial_post
 
 def NeverWhere(configfile=None):
     app = Flask(__name__)
@@ -73,7 +80,7 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/ghprojects", methods=("GET",))
     def projects():
-        return jsonify(cacheit("projects", getProjects))
+        return jsonify(loads(cacheit("projects", getProjects)))
 
     @app.route("/blog/stuff", methods=("GET",))
     def stuff():
@@ -82,12 +89,11 @@ def NeverWhere(configfile=None):
     # blog post routes
     @app.route("/blog/posts/", methods=("GET",))
     def renderInitial():
-        post_content = posts.getinitial()
-        return render_template("index.html", quote=quote, postcontent=dict(post_content))
+        return render_template("index.html", quote=quote, postcontent=dict(initial_post))
 
     @app.route("/blog/posts/<_id>", methods=("GET",))
     def renderPost(_id):
-        post_content = posts.getpost(_id, json=False)
+        post_content = loads(cacheit(_id, lambda: dumps(posts.getpost(_id, json=False))))
         return render_template("index.html", quote=quote, postcontent=dict(post_content))
 
     @app.route("/blog/", methods=("GET", "POST"))
@@ -173,6 +179,7 @@ def teardown_couchdb(exception):
         del posts.db
 
 posts = LocalProxy(get_posts)
+initial_post = LocalProxy(get_initial)
 
 login_manager.init_app(app)
 

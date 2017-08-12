@@ -17,8 +17,6 @@ class Posts:
 
         self.client.credentials = (user, password)
 
-        # FIXME check for pooling / concurrency issues
-
         self.db = self.client["blog"]
 
     def savepost(self, title="", content="", author="", category="programming", _id=False):
