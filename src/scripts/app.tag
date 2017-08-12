@@ -124,11 +124,11 @@ RiotControl.on("postswitch",
   );
 
 self.state = {
-  "_id" : self.opts.postid.slice(-hashLength),
-  "author" : self.opts.author,
-  "title" : self.opts.title,
-  "loaded" : false,
-  "initial" : decodeURIComponent(self.opts.initial_post)
+    "_id" : self.opts.postid.slice(-hashLength),
+    "author" : self.opts.author,
+    "title" : self.opts.title,
+    "loaded" : false,
+    "initial" : decodeURIComponent(self.opts.initial_post)
 };
 
 self.active = lens.actives({
@@ -197,19 +197,6 @@ to(name) {
   }).bind(this);
 }
 
-self.route.base('/blog/')
-self.route("/", () => { self.route(`/posts/${self.state._id}`); });
-self.route("/posts", () => { self.route(`/posts/${self.state._id}`); });
-self.route("posts/*", posts);
-self.route("posts", (() => {posts(self.state._id)}));
-self.route("projects", projects);
-self.route("about", about);
-self.route("links", links);
-
-self.one("updated", () => {
-  route.start(true);
-});
-
 function getcategories() {
   window.cached("/blog/categories")
     .then((resp) => resp.json())
@@ -219,10 +206,17 @@ function getcategories() {
     });
 }
 
-self.on("mount", getcategories);
-
 self.on("mount", () => {
-  console.log(decodeURIComponent(self.opts.initial_post));
+  self.route.base('/blog/')
+  self.route("/", () => { self.route(`/posts/${self.state._id}`); });
+  self.route("/posts", () => { self.route(`/posts/${self.state._id}`); });
+  self.route("posts/*", posts);
+  self.route("posts", (() => {posts(self.state._id)}));
+  self.route("projects", projects);
+  self.route("about", about);
+  self.route("links", links);
+  route.start(true);
+  getcategories();
 });
 
 </script>

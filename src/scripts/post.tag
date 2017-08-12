@@ -17,13 +17,13 @@
         <social
           show={!loading}
           ref="social"
-          title={opts.state.title}
-          postid={opts.state._id}
+          title={title}
+          postid={_id}
         >
         </social>
         <p class="post-content centered text-break">
           <raw
-            content="{ converter.makeHtml(content) }"
+            content="{ window.converter.makeHtml(content) }"
           >
           </raw>
         </p>
@@ -44,12 +44,8 @@
 <script>
 import './raw.tag';
 import './social.tag';
-import { default as showdown } from 'showdown';
-
 import './postcontrols.tag';
 import route from 'riot-route';
-
-this.converter = new showdown.Converter();
 
 var self = this;
 
@@ -57,7 +53,9 @@ const hashLength = 8;
 
 self.route = route;
 
+self.loading = false;
 self.category = "programming";
+
 self._id = self.opts.state._id.slice(-hashLength);
 self.author = self.opts.state.author;
 self.title = self.opts.state.title;
@@ -71,7 +69,6 @@ self.end = false;
 RiotControl.on("filtercategory",
   (ev) => {
     let category = ev.category.toLowerCase();
-    console.log(category);
   });
 
 prev(ev) {
@@ -172,12 +169,5 @@ prevPost(_id) {
     self.updatePost(JSON.parse(resp))
   })
 }
-
-self.on("mount", () => {
-  self.update({
-    "loading" : false
-  });
-});
-
 </script>
 </post>
