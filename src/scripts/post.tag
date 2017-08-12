@@ -10,12 +10,11 @@
       next={next}
     >
     </div>
-    <loading if={loading && opts.state.loaded}></loading>
+    <loading if={loading}></loading>
     <div class="text-break">
       <div class={"" + (loading ? "invisible" : "fadeIn")}>
 
         <social
-          if={false}
           show={!loading}
           ref="social"
           title={opts.state.title}
@@ -66,15 +65,14 @@ self.content = self.opts.state.initial;
 self.prevloading = "";
 self.nextloading = "";
 self.swipe = false;
+self.start = false;
+self.end = false;
 
 RiotControl.on("filtercategory",
   (ev) => {
     let category = ev.category.toLowerCase();
     console.log(category);
   });
-
-self.start = false;
-self.end = false;
 
 prev(ev) {
   ev.preventDefault();
@@ -148,7 +146,7 @@ updatePost(postcontent) {
 
 nextPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached(`/blog/switchpost/${_id.slice(-hashLength)}/${self.category}`)
+  window.cached(`/blog/switchpost/${_id.slice(-hashLength)}/${self.category}`)
   .then((resp) => resp.text())
   .then((resp) => {
     var content = JSON.parse(resp);
@@ -168,7 +166,7 @@ nextPost(_id) {
 
 prevPost(_id) {
   self.update({"loading" : true});
-  self.opts.cached(`/blog/prevpost/${_id.slice(-hashLength)}/${self.category}`)
+  window.cached(`/blog/prevpost/${_id.slice(-hashLength)}/${self.category}`)
   .then((resp) => resp.text())
   .then((resp) => {
     self.updatePost(JSON.parse(resp))

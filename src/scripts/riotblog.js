@@ -9,6 +9,23 @@ import './grid.js';
 import { default as promise } from 'es6-promise';
 import { default as smooth } from 'smoothscroll-polyfill';
 import 'element-closest';
+import fetchCached from 'fetch-cached';
+import 'whatwg-fetch';
+
+
+window.cache = {};
+
+window.cached = fetchCached({
+  fetch: fetch,
+  cache: {
+    get: ((k) => {
+      return new Promise((resolve, reject) => {
+        resolve(window.cache[k]);
+      });
+    }),
+    set: (k, v) => { window.cache[k] = v; }
+  }
+});
 
 window.addEventListener("load", () => {
 

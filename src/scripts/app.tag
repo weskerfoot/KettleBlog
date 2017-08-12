@@ -50,10 +50,9 @@
       </li>
     </ul>
     <div class="projects-content">
-      <loading if={!state.loaded}></loading>
       <projectsview
         class=""
-        if={active.get("projects") && state.loaded}
+        if={active.get("projects")}
         state={state}
         ref="projectsview"
       >
@@ -62,7 +61,6 @@
 
     <div class="content">
       <postsview
-        cached={cached}
         state={state}
         if={active.get("posts")}
         ref="postsview"
@@ -73,7 +71,6 @@
       >
       </about>
       <links
-        cached={cached}
         state={state}
         if={active.get("links")}
       >
@@ -87,12 +84,7 @@ import './projectsview.tag';
 import './postsview.tag';
 import './about.tag';
 import './links.tag';
-import './loading.tag';
 
-import fetchCached from 'fetch-cached';
-import 'whatwg-fetch';
-import Z from './zipper.js';
-import pathEq from 'ramda/src/pathEq';
 import route from 'riot-route';
 import lens from './lenses.js';
 import { throttle } from 'lodash-es';
@@ -100,8 +92,6 @@ import { throttle } from 'lodash-es';
 const hashLength = 8;
 
 var self = this;
-
-self.cache = {};
 
 self.showBorder = false;
 self.route = route;
@@ -124,18 +114,6 @@ document.addEventListener("click", function(event) {
   }
 });
 
-self.cached = fetchCached({
-  fetch: fetch,
-  cache: {
-    get: ((k) => {
-      return new Promise((resolve, reject) => {
-        resolve(self.cache[k]);
-      });
-    }),
-    set: (k, v) => { self.cache[k] = v; }
-  }
-});
-
 RiotControl.on("postswitch",
   (ev) => {
     self.update(
@@ -149,7 +127,6 @@ self.state = {
   "_id" : self.opts.postid.slice(-hashLength),
   "author" : self.opts.author,
   "title" : self.opts.title,
-  "projects" : Z.empty,
   "loaded" : false,
   "initial" : decodeURIComponent(self.opts.initial_post)
 };
@@ -233,22 +210,8 @@ self.one("updated", () => {
   route.start(true);
 });
 
-function loaduser() {
-  /* https://api.github.com/users/${self.username}/repos?sort=updated&direction=desc */
-  self.cached("/blog/ghprojects")
-    .then((resp) => resp.json())
-    .then((resp) => {
-      self.state.projects = Z.fromList(
-                              resp.filter(
-                                pathEq(["fork"], false)));
-
-      self.state.loaded = true;
-      self.update();
-    });
-}
-
 function getcategories() {
-  self.cached("/blog/categories")
+  window.cached("/blog/categories")
     .then((resp) => resp.json())
     .then((resp) => {
       self.categories = resp;
@@ -256,7 +219,6 @@ function getcategories() {
     });
 }
 
-self.on("mount", loaduser);
 self.on("mount", getcategories);
 
 self.on("mount", () => {
