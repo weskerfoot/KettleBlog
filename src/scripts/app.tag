@@ -124,6 +124,7 @@ RiotControl.on("postswitch",
   );
 
 self.state = {
+    "page" : self.opts.page,
     "_id" : self.opts.postid.slice(-hashLength),
     "author" : self.opts.author,
     "title" : self.opts.title,

@@ -141,6 +141,15 @@ updatePost(postcontent) {
   self.update();
 }
 
+getPost(_id) {
+  self.update({"loading" : true});
+  window.cached(`/blog/getpost/${_id.slice(-hashLength)}/${self.category}`)
+  .then((resp) => resp.text())
+  .then((resp) => {
+    self.updatePost(JSON.parse(resp))
+  })
+}
+
 nextPost(_id) {
   self.update({"loading" : true});
   window.cached(`/blog/switchpost/${_id.slice(-hashLength)}/${self.category}`)
@@ -169,5 +178,12 @@ prevPost(_id) {
     self.updatePost(JSON.parse(resp))
   })
 }
+
+self.on("mount", () => {
+  if (self.opts.state.page !== "posts") {
+    self.getPost(self._id);
+  }
+});
+
 </script>
 </post>
