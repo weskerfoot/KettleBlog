@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 from functools import partial
 from collections import defaultdict
+from os import environ
 
 from flask import abort, Flask, render_template, flash, request, send_from_directory, jsonify, g
 from werkzeug.local import Local, LocalProxy, LocalManager
@@ -12,26 +13,20 @@ from flask.ext.cache import Cache
 from urllib.parse import unquote
 from urllib.parse import quote, unquote
 from json import dumps, loads
-
 from admin import Admin
-
 from werkzeug.contrib.cache import MemcachedCache
-memcache = MemcachedCache(['127.0.0.1:11211'])
-
-import os
 
 from posts import Posts
 from projects import getProjects
 
+memcache = MemcachedCache(['127.0.0.1:11211'])
 cache = Cache(config={'CACHE_TYPE': 'memcached'})
 
 login_manager = LoginManager()
 
 def cacheit(key, thunk):
     """
-    Tries to find a cached version of ``key''
-    If there is no cached version then it will
-    evaluate thunk and cache that
+    Explicit memcached caching
     """
     cached = memcache.get(quote(key))
     if cached is None:
@@ -63,8 +58,13 @@ def NeverWhere(configfile=None):
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-    print(os.environ["RIOTBLOG_SETTINGS"])
+    print(environ["RIOTBLOG_SETTINGS"])
     app.config.from_envvar('RIOTBLOG_SETTINGS')
+
+    # Set template variables to be injected
+    @app.context_processor
+    def inject_variables():
+        return dict(quote=quote, postid=initial_post["_id"])
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -91,17 +91,24 @@ def NeverWhere(configfile=None):
     @cache.cached(timeout=50)
     @app.route("/blog/posts/", methods=("GET",))
     def renderInitial():
-        return render_template("index.html", postid=initial_post["_id"], page="posts", quote=quote, postcontent=dict(initial_post))
+        return render_template("index.html",
+                               postid=initial_post["_id"],
+                               page="posts",
+                               postcontent=dict(initial_post))
 
     @app.route("/blog/posts/<_id>", methods=("GET",))
     def renderPost(_id):
-        post_content = loads(cacheit(_id, lambda: dumps(posts.getpost(_id, json=False))))
-        return render_template("index.html", postid=initial_post["_id"], page="posts", quote=quote, postcontent=dict(post_content))
+        post_content = loads(
+                            cacheit(_id,
+                                    lambda: dumps(posts.getpost(_id, json=False)))
+                            )
+
+        return render_template("index.html", page="posts", postcontent=dict(post_content))
 
     @cache.cached(timeout=50)
     @app.route("/blog/projects", methods=("GET",))
     def showProjects():
-        return render_template("index.html", postid=initial_post["_id"], page="projects", quote=quote, postcontent=defaultdict(str))
+        return render_template("index.html", page="projects", postcontent=defaultdict(str))
 
     @cache.cached(timeout=50)
     @app.route("/blog/", methods=("GET", "POST"))
