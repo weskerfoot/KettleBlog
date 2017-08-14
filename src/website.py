@@ -96,6 +96,27 @@ def NeverWhere(configfile=None):
                                page="posts",
                                postcontent=dict(initial_post))
 
+    @cache.cached(timeout=50)
+    @app.route("/blog/projects", methods=("GET",))
+    def showProjects():
+        return render_template("index.html", page="projects", postcontent=defaultdict(str))
+
+    @cache.cached(timeout=50)
+    @app.route("/blog/links", methods=("GET",))
+    def showLinks():
+        return render_template("index.html", page="links", postcontent=defaultdict(str))
+
+    @cache.cached(timeout=50)
+    @app.route("/blog/about", methods=("GET",))
+    def showAbout():
+        return render_template("index.html", page="about", postcontent=defaultdict(str))
+
+    @cache.cached(timeout=50)
+    @app.route("/blog/", methods=("GET", "POST"))
+    def index():
+        return renderInitial()
+
+    # get the next post
     @app.route("/blog/posts/<_id>", methods=("GET",))
     def renderPost(_id):
         post_content = loads(
@@ -105,17 +126,6 @@ def NeverWhere(configfile=None):
 
         return render_template("index.html", page="posts", postcontent=dict(post_content))
 
-    @cache.cached(timeout=50)
-    @app.route("/blog/projects", methods=("GET",))
-    def showProjects():
-        return render_template("index.html", page="projects", postcontent=defaultdict(str))
-
-    @cache.cached(timeout=50)
-    @app.route("/blog/", methods=("GET", "POST"))
-    def index():
-        return renderInitial()
-
-    # get the next post
 
     @cache.cached(timeout=50)
     @app.route("/blog/switchpost/<pid>/<category>")
@@ -181,7 +191,7 @@ def NeverWhere(configfile=None):
 
         return posts.savepost(**post)
 
-    @app.route("/blog/links/", methods=("GET",))
+    @app.route("/blog/glinks/", methods=("GET",))
     def links():
         """
         Get links

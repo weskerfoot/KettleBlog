@@ -1,6 +1,5 @@
 <links>
   <div class="links-content container animated fadeIn">
-    <loading if={this.loading && this.opts.state.loaded}></loading>
     <div class="columns">
       <div class="column col-12">
         <h3 class="text-center">
@@ -8,6 +7,7 @@
         </h3>
       </div>
     </div>
+    <loading if={loading}></loading>
     <div class="columns">
       <div each={links in groups} class="column col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
         <h5 class="text-center">{links.title}</h5>
@@ -45,9 +45,10 @@ self.groups = []
 
 getLinks() {
   self.update({"loading" : true});
-  window.cached("/blog/links/")
+  window.cached("/blog/glinks/")
   .then((resp) => resp.text())
   .then((resp) => {
+    console.log(resp);
     self.update(
     {
       "groups" : JSON.parse(resp),
