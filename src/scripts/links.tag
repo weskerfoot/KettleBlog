@@ -7,8 +7,10 @@
         </h3>
       </div>
     </div>
-    <loading if={loading}></loading>
     <div class="columns">
+      <div class="column col-12">
+        <loading if={loading}></loading>
+      </div>
       <div each={links in groups} class="column col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
         <h5 class="text-center">{links.title}</h5>
         <div each={item in links.items} class="tile link-box">
