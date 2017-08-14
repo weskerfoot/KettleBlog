@@ -14,6 +14,8 @@ import 'whatwg-fetch';
 
 window.converter = new showdown.Converter();
 window.cache = {};
+window.riot = riot;
+window.RiotControl = RiotControl;
 
 window.cached = fetchCached({
   fetch: fetch,
@@ -28,12 +30,7 @@ window.cached = fetchCached({
 });
 
 window.addEventListener("load", () => {
-
   promise.Promise.polyfill();
   smooth.polyfill();
-
-  window.RiotControl = RiotControl;
-
-  RiotControl.addStore(new riot.observable());
-  riot.mount("app");
+  window.RiotControl.addStore(new riot.observable());
 });

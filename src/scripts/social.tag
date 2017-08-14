@@ -16,8 +16,6 @@ var self = this;
 
 self.tweetHtml = "";
 self.fbHtml = "";
-self.preview = "https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%2Fblog%2F&ref_src=twsrc%5Etfw&text=My%20first%20Elixir%20program&tw_p=tweetbutton&url=https%3A%2F%2Fprimop.me%2Fblog%2F%23!posts%2F19045cf7&via=weskerfoot";
-
 self._id = self.opts.postid;
 self.title = self.opts.title;
 self.old_id = false;
