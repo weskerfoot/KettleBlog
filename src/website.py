@@ -65,10 +65,12 @@ def NeverWhere(configfile=None):
     # Set template variables to be injected
     @app.context_processor
     def inject_variables():
+        postcontent = defaultdict(str)
+        postcontent["title"] = initial_post["title"]
         return {
                 "quote" : quote,
                 "postid" : initial_post["_id"],
-                "postcontent" : defaultdict(str),
+                "postcontent" : postcontent,
                 "links" : dumps([]),
                 "projects" : dumps([])
         }
