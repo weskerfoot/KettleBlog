@@ -43,14 +43,13 @@ var self = this;
 
 self.loading = false;
 
-self.groups = []
+self.groups = self.opts.state.links;
 
 getLinks() {
   self.update({"loading" : true});
   window.cached("/blog/glinks/")
   .then((resp) => resp.text())
   .then((resp) => {
-    console.log(resp);
     self.update(
     {
       "groups" : JSON.parse(resp),
@@ -59,7 +58,11 @@ getLinks() {
   })
 }
 
-self.on("mount", self.getLinks);
+self.on("mount", () => {
+  if (self.opts.state.page != "links") {
+    self.getLinks();
+  }
+});
 
 </script>
 </links>

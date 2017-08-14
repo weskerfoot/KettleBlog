@@ -87,10 +87,11 @@ class Posts:
 
         return jsonify(posts)
 
-    def links(self):
+    def links(self, json=True):
         result = list(self.db.iterview("blogPosts/links", 1, include_docs=True))
         if len(result) >= 1:
-            return jsonify(result[0].doc.get("links", []))
+            xs = result[0].doc.get("links", [])
+            return jsonify(xs) if json else xs
         return []
 
     def delete(self, _id):

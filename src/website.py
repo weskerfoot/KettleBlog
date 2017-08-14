@@ -40,7 +40,8 @@ def cacheit(key, thunk):
 def get_posts():
     posts = getattr(g, "posts", None)
     if posts is None:
-        posts = g._posts = Posts(app.config["COUCHDB_USER"], app.config["COUCHDB_PASSWORD"])
+        posts = g._posts = Posts(app.config["COUCHDB_USER"],
+                                 app.config["COUCHDB_PASSWORD"])
     return posts
 
 def get_initial():
@@ -64,11 +65,13 @@ def NeverWhere(configfile=None):
     # Set template variables to be injected
     @app.context_processor
     def inject_variables():
-        return dict(
-                quote=quote,
-                postid=initial_post["_id"],
-                postcontent=defaultdict(str)
-                )
+        return {
+                "quote" : quote,
+                "postid" : initial_post["_id"],
+                "postcontent" : defaultdict(str),
+                "links" : dumps([]),
+                "projects" : dumps([])
+        }
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -85,10 +88,6 @@ def NeverWhere(configfile=None):
         else:
             print("did not log in successfully")
         return render_template("login.html", success=success)
-
-    @app.route("/blog/ghprojects", methods=("GET",))
-    def projects():
-        return jsonify(loads(cacheit("projects", getProjects)))
 
     # page routes
     @cache.cached(timeout=50)
@@ -107,7 +106,12 @@ def NeverWhere(configfile=None):
     @cache.cached(timeout=50)
     @app.route("/blog/links", methods=("GET",))
     def showLinks():
-        return render_template("index.html", page="links")
+        return render_template("index.html",
+                               links=dumps(
+                                        list(
+                                            posts.links(json=False))),
+                                            page="links"
+                                        )
 
     @cache.cached(timeout=50)
     @app.route("/blog/about", methods=("GET",))
@@ -127,7 +131,9 @@ def NeverWhere(configfile=None):
                                     lambda: dumps(posts.getpost(_id, json=False)))
                             )
 
-        return render_template("index.html", page="posts", postcontent=dict(post_content))
+        return render_template("index.html",
+                               page="posts",
+                               postcontent=dict(post_content))
 
 
     @cache.cached(timeout=50)
@@ -200,6 +206,10 @@ def NeverWhere(configfile=None):
         Get links
         """
         return posts.links()
+
+    @app.route("/blog/ghprojects", methods=("GET",))
+    def projects():
+        return jsonify(loads(cacheit("projects", getProjects)))
 
     return app
 

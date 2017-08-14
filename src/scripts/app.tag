@@ -129,7 +129,8 @@ self.state = {
     "author" : self.opts.author,
     "title" : self.opts.title,
     "loaded" : false,
-    "initial" : decodeURIComponent(self.opts.initial_post)
+    "initial" : decodeURIComponent(self.opts.initial_post),
+    "links" : JSON.parse(decodeURIComponent(self.opts.links))
 };
 
 self.active = lens.actives({
