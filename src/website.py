@@ -64,7 +64,11 @@ def NeverWhere(configfile=None):
     # Set template variables to be injected
     @app.context_processor
     def inject_variables():
-        return dict(quote=quote, postid=initial_post["_id"])
+        return dict(
+                quote=quote,
+                postid=initial_post["_id"],
+                postcontent=defaultdict(str)
+                )
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -86,7 +90,6 @@ def NeverWhere(configfile=None):
     def projects():
         return jsonify(loads(cacheit("projects", getProjects)))
 
-
     # page routes
     @cache.cached(timeout=50)
     @app.route("/blog/posts/", methods=("GET",))
@@ -99,17 +102,17 @@ def NeverWhere(configfile=None):
     @cache.cached(timeout=50)
     @app.route("/blog/projects", methods=("GET",))
     def showProjects():
-        return render_template("index.html", page="projects", postcontent=defaultdict(str))
+        return render_template("index.html", page="projects")
 
     @cache.cached(timeout=50)
     @app.route("/blog/links", methods=("GET",))
     def showLinks():
-        return render_template("index.html", page="links", postcontent=defaultdict(str))
+        return render_template("index.html", page="links")
 
     @cache.cached(timeout=50)
     @app.route("/blog/about", methods=("GET",))
     def showAbout():
-        return render_template("index.html", page="about", postcontent=defaultdict(str))
+        return render_template("index.html", page="about")
 
     @cache.cached(timeout=50)
     @app.route("/blog/", methods=("GET", "POST"))

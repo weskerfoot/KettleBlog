@@ -7,6 +7,7 @@
 </head>
 <html>
   <body>
+    <h4>{{ test }}</h4>
     <div data-is="app" page="{{ page }}" author="{{ postcontent['author'] }}" postid="{{ postid }}" title="{{ postcontent['title'] }}" initial_post="{{ quote(postcontent['content']) }}" csrf_token="{{ csrf_token() }}"></div>
   </body>
   <footer>
