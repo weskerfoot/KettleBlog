@@ -23,7 +23,7 @@
         </social>
         <p class="post-content centered text-break">
           <raw
-            content="{ window.converter.makeHtml(content) }"
+            content="{ content }"
           >
           </raw>
         </p>

@@ -95,10 +95,11 @@ def NeverWhere(configfile=None):
     @cache.cached(timeout=50)
     @app.route("/blog/posts/", methods=("GET",))
     def renderInitial():
+        post = dict(initial_post)
         return render_template("index.html",
                                postid=initial_post["_id"],
                                page="posts",
-                               postcontent=dict(initial_post))
+                               postcontent=post)
 
     @cache.cached(timeout=50)
     @app.route("/blog/projects", methods=("GET",))
@@ -126,16 +127,18 @@ def NeverWhere(configfile=None):
         return renderInitial()
 
     # get the next post
+    @cache.cached(timeout=50)
     @app.route("/blog/posts/<_id>", methods=("GET",))
     def renderPost(_id):
-        post_content = loads(
+        post_content = dict(loads(
                             cacheit(_id,
                                     lambda: dumps(posts.getpost(_id, json=False)))
-                            )
+                            ))
+
 
         return render_template("index.html",
                                page="posts",
-                               postcontent=dict(post_content))
+                               postcontent=post_content)
 
 
     @cache.cached(timeout=50)
@@ -160,7 +163,7 @@ def NeverWhere(configfile=None):
     def allposts():
         return posts.allposts()
 
-    @cache.cached(timeout=50)
+    @cache.cached(timeout=10000)
     @app.route("/blog/categories")
     def categories():
         return posts.categories()

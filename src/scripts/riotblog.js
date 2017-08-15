@@ -6,13 +6,11 @@ import './projects.tag';
 import './app.tag';
 import './grid.js';
 import { default as promise } from 'es6-promise';
-import { default as showdown } from 'showdown';
 import { default as smooth } from 'smoothscroll-polyfill';
 import 'element-closest';
 import fetchCached from 'fetch-cached';
 import 'whatwg-fetch';
 
-window.converter = new showdown.Converter();
 window.cache = {};
 window.riot = riot;
 window.RiotControl = RiotControl;

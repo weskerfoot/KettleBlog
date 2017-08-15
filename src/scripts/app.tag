@@ -27,7 +27,7 @@
         class="mobile-menu tab tab-block menu">
         <li
           each="{page in ['posts', 'projects', 'links', 'about']}"
-          class={"navigate-tab tab-item animated fadeIn " + (parent.active.get(page) ? "active" : "")}
+          class={"navigate-tab tab-item " + (parent.active.get(page) ? "active" : "")}
           data-is="navtab"
           active={parent.active.get(page)}
           to={parent.to(page)}
@@ -41,7 +41,7 @@
     <ul class="hide-md hide-sm hide-xs navigate tab tab-block">
       <li
         each="{page in ['posts', 'projects', 'links', 'about']}"
-        class={"navigate-tab tab-item animated fadeIn " + (parent.active.get(page) ? "active" : "")}
+        class={"navigate-tab tab-item " + (parent.active.get(page) ? "active" : "")}
         data-is="navtab"
         active={parent.active.get(page)}
         to={parent.to(page)}
@@ -129,7 +129,7 @@ self.state = {
     "author" : self.opts.author,
     "title" : self.opts.title,
     "loaded" : false,
-    "initial" : decodeURIComponent(self.opts.initial_post),
+    "initial" : document.getElementsByTagName("noscript")[0].textContent,
     "links" : JSON.parse(decodeURIComponent(self.opts.links))
 };
 

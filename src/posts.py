@@ -1,10 +1,20 @@
 #! /usr/bin/python
 
 import couchdb
+import mistune
 
+from werkzeug.local import Local, LocalProxy, LocalManager
 from couchdb.http import ResourceConflict, ResourceNotFound
-from flask import jsonify
+from flask import jsonify, g
 from flask_marshmallow import Marshmallow
+
+def get_mistune():
+    markdown = getattr(g, "markdown", None)
+    if markdown is None:
+        markdown = g._markdown = mistune.Markdown()
+    return markdown
+
+markdown = LocalProxy(get_mistune)
 
 class Posts:
     def __init__(self, user, password, host=None, port=None):
@@ -41,11 +51,19 @@ class Posts:
         results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=_id)
 
         post = [result.doc for result in results][0]
+
+        post["content"] = markdown(post["content"])
+
         return jsonify(post) if json else post
 
     def getinitial(self):
         results = list(self.db.iterview("blogPosts/blog-posts", 2, include_docs=True))
-        return [result.doc for result in results][0]
+
+        post = [result.doc for result in results][0]
+
+        post["content"] = markdown(post["content"])
+
+        return post
 
     def iterpost(self, endkey=False, startkey=False, category="programming"):
         if startkey and not endkey:
@@ -55,22 +73,25 @@ class Posts:
         else:
             results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True)
 
-        doc_ids = [result.doc for result in results]
+        docs = [result.doc for result in results]
 
-        if not doc_ids:
+        for doc in docs:
+            doc["content"] = markdown(doc["content"])
+
+        if not docs:
             return jsonify("end")
 
         if endkey and not startkey:
-            if len(doc_ids) < 2 or doc_ids[0] == endkey:
+            if len(docs) < 2 or docs[0] == endkey:
                 return jsonify("start")
-            return jsonify(doc_ids[-2])
+            return jsonify(docs[-2])
 
-        if len(doc_ids) == 1:
-            return jsonify(doc_ids[0])
+        if len(docs) == 1:
+            return jsonify(docs[0])
 
-        if doc_ids:
+        if docs:
             # if no startkey or endkey were specified, return the 0th post
-            return jsonify(doc_ids[1 if startkey else 0])
+            return jsonify(docs[1 if startkey else 0])
 
         return jsonify("end")
 
