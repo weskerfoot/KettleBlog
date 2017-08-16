@@ -15,7 +15,7 @@ def buildScss():
 @task
 def buildJS():
     local("rollup -c rollup.config.js")
-    local("uglifyjs build/bundle.js -c > build/scripts/riotblog.min.js")
+    local("uglifyjs build/bundle.js -c > build/scripts/primop.min.js")
     local("uglifyjs build/editor.bundle.js -c > build/scripts/editor.min.js")
 
 @task
@@ -38,7 +38,7 @@ def copyFiles():
     local("cp ./src/*py ./build/")
     local("cp *.cfg ./build/")
     local("cp ./src/styles/*.css ./build/styles/")
-    local("uglifycss ./build/styles/*css > ./build/styles/primop.me.min.css")
+    local("uglifycss ./build/styles/*css > ./build/styles/primop.min.css")
     local("cp -r ./src/templates ./build/templates")
 
 @task
