@@ -153,6 +153,7 @@ self.subtitle = {
 
 self.one("updated",
   () => {
+      /* Detects clicks outside of the sidebar */
       document.addEventListener("click", function(event) {
           if(!event.target.closest('#sidebar')) {
             if (self.open) {
@@ -165,7 +166,8 @@ self.one("updated",
 filterCategory(item) {
   return ((ev) => {
     ev.preventDefault();
-    RiotControl.trigger("filtercategory", {"category" : item });
+    RiotControl.trigger("filtercategory",
+                       {"category" : item });
   });
 }
 

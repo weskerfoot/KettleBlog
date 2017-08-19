@@ -36,13 +36,16 @@ class Posts:
             doc["content"] = content
             doc["author"] = author
             doc["category"] = category
+            doc["_id"] = _id
         else:
             doc = {
                     "title" : title,
                     "content" : content,
                     "author" : author,
+                    "category" : category,
                     "type" : "post"
                     }
+
 
         print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))

@@ -60,7 +60,7 @@
       </div>
     </div>
   </div>
-<script>
+<script type="es6">
 import './loading.tag';
 import './raw.tag';
 import { default as showdown } from 'showdown';
@@ -70,10 +70,9 @@ import Z from './zipper.js';
 this.loading = false;
 this.querystring = querystring;
 
-this.converter = new showdown.Converter();
-this.converted = "<h3>Nothing here yet</h3>";
+this.converted = "<h3>Nothing here </h3>";
 
-this.placeholderText = "Write a post!"
+this.placeholderText = "Write a post!";
 this.placeholder = this.placeholderText;
 this.focused = false;
 
@@ -91,11 +90,11 @@ this.defaultPost = {
 
 var self = this;
 
-currentPost() {
+self.currentPost = () => {
   return Z.focus(self.currentPosts, self.defaultPost);
 }
 
-goRight() {
+self.goRight = () => {
   console.log("trying to update with the previous post");
   console.log(this.currentPost()._id);
   self.update(
@@ -107,7 +106,7 @@ goRight() {
   self.one("updated", self.loadPost(this.currentPost()._id));
 }
 
-goLeft() {
+self.goLeft = () => {
   console.log("trying to update with the next post");
   console.log(this.currentPost()._id);
   self.update(
@@ -119,7 +118,7 @@ goLeft() {
   self.one("updated", self.loadPost(this.currentPost()._id));
 }
 
-clearplaceholder() {
+self.clearplaceholder = () => {
   if (!this.focused) {
     this.update({
       "placeholder" : "",
@@ -128,7 +127,7 @@ clearplaceholder() {
   }
 }
 
-checkplaceholder() {
+self.checkplaceholder = () => {
   if (this.refs.textarea.value.trim().length == 0) {
     this.update({
       "placeholder" : this.placeholderText,
@@ -137,14 +136,13 @@ checkplaceholder() {
   }
 }
 
-echo(ev) {
+self.echo = (ev) => {
   this.update({
-      "converted" : this.converter.makeHtml(
-                      this.refs.textarea.value.trim())
+      "converted" : this.refs.textarea.value.trim()
     });
 }
 
-newPost() {
+self.newPost = () => {
   this.refs.title.value = "";
   this.refs.author.value = "";
   this.refs.textarea.value = "";
@@ -158,7 +156,7 @@ newPost() {
   this.update();
 }
 
-submit() {
+self.submit = () => {
   self.update({"loading" : true});
   var post = {
       "title" : this.refs.title.value,
@@ -181,7 +179,7 @@ submit() {
     }
   };
 
-  axios.post("/blog/insert/", postQuery, headers)
+  axios.post(`/blog/insert/programming`, postQuery, headers)
   .then(function(resp) {
     /* Refresh the current list of posts */
     /* This post has been added, so insert it in the current position */
@@ -206,7 +204,7 @@ submit() {
   })
 }
 
-loadPost(_id) {
+self.loadPost = (_id) => {
   return function() {
     console.log("started loading");
     if (!_id) {
@@ -214,7 +212,7 @@ loadPost(_id) {
       return false;
     }
     self.update({"loading" : true});
-    axios.get("/blog/getpost/"+_id.slice(-8))
+    axios.get(`/blog/getpost/${_id.slice(-8)}/programming`)
     .then(function(resp) {
       self.update({"loading" : false});
       self.refs.textarea.value = resp.data.content;
@@ -223,10 +221,10 @@ loadPost(_id) {
       self._id = resp.data._id;
       self.focused = true;
       self.isNewPost = false;
-      console.log("loaded");
+      console.log("loaded")
 
+      self.converted = resp.data.content
       self.update();
-      self.echo();
     })
     .catch(function(err) {
       console.log(err);
@@ -234,13 +232,13 @@ loadPost(_id) {
   };
 }
 
-deletePost(_id) {
+self.deletePost = (_id) => {
   return function() {
     if (!_id) {
       return false;
     }
     self.update({"loading" : true});
-    axios.get("/blog/deletepost/"+self._id)
+    axios.get(`/blog/deletepost/${self._id}`)
       .then(function(resp) {
         console.log(resp);
         self.listPosts();
@@ -252,11 +250,14 @@ deletePost(_id) {
   };
 }
 
-listPosts() {
+self.listPosts = () => {
+  console.log("trying to get a list of all posts");
   axios.get("/blog/allposts")
   .then(function(resp) {
     var postsList = Z.extend(Z.empty, resp.data);
     var currentPost = Z.focus(postsList, self.defaultPost);
+
+    console.log(resp);
 
     if (currentPost == self.defaultPost) {
       self.newPost();
@@ -277,7 +278,7 @@ listPosts() {
   })
 }
 
-self.listPosts();
+self.on("mount", self.listPosts);
 
 </script>
 </editor>

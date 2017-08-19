@@ -158,6 +158,12 @@ def NeverWhere(configfile=None):
     def getpost(_id, category):
         return posts.getpost(_id, category=category)
 
+    # get the first post of a given category
+    @cache.cached(timeout=50)
+    @app.route("/blog/getpost/<category>")
+    def getbycategory(category):
+        return posts.getbycategory(category)
+
     # get the id of every post
     @app.route("/blog/allposts")
     def allposts():
@@ -184,9 +190,9 @@ def NeverWhere(configfile=None):
         """
         return render_template("write.html")
 
-    @app.route("/blog/insert/", methods=("POST",))
+    @app.route("/blog/insert/<category>", methods=("POST",))
     @login_required
-    def insert():
+    def insert(category):
         """
         Insert a post, requires auth
         """
@@ -194,12 +200,14 @@ def NeverWhere(configfile=None):
         author = request.form.get("author", "no author")
         title = request.form.get("title", "no title")
         content = request.form.get("content", "no content")
+        category = request.form.get("category", "programming")
         postid = request.form.get("_id", False)
 
         post = {
                 "author" : author,
                 "title" : title,
                 "content" : content,
+                "category" : category,
                 "_id" : postid
                 }
 
