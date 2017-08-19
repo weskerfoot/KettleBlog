@@ -153,10 +153,11 @@ def NeverWhere(configfile=None):
         return posts.iterpost(endkey=pid, category=category)
 
     # get the contents of any post
+    # rendered in JSON
     @cache.cached(timeout=50)
-    @app.route("/blog/getpost/<_id>/<category>")
-    def getpost(_id, category):
-        return posts.getpost(_id, category=category)
+    @app.route("/blog/getpost/<_id>/")
+    def getpost(_id):
+        return posts.getpost(_id)
 
     # get the first post of a given category
     @cache.cached(timeout=50)

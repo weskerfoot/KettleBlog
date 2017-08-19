@@ -143,7 +143,7 @@ updatePost(postcontent) {
 
 getPost(_id) {
   self.update({"loading" : true});
-  window.cached(`/blog/getpost/${_id.slice(-hashLength)}/${self.category}`)
+  window.cached(`/blog/getpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
     self.updatePost(JSON.parse(resp))

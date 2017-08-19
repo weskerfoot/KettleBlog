@@ -50,12 +50,12 @@ class Posts:
         print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))
 
-    def getpost(self, _id, category="programming", json=True):
+    def getpost(self, _id, json=True, convert=True):
         results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=_id)
 
         post = [result.doc for result in results][0]
 
-        post["content"] = markdown(post["content"])
+        post["content"] = markdown(post["content"]) if convert else post["content"]
 
         return jsonify(post) if json else post
 
