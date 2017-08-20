@@ -23,7 +23,9 @@
       </sidebar>
     </section>
 
-    <div id="menu" class={"show-md show-sm show-xs navigate-small dropdown dropdown-right " + (menuActive ? "active" : "")}>
+    <div id="menu"
+      class={"show-md show-sm show-xs navigate-small dropdown dropdown-right " + (menuActive ? "active" : "")}
+    >
       <button onclick={menuOn} class="mobile-navigate btn btn-link navigate-item dropdown-toggle" tabindex="0">
         <i class="bar-menu fa fa-bars" aria-hidden="true"></i>
       </button>

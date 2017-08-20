@@ -159,6 +159,11 @@ def NeverWhere(configfile=None):
     def getpost(_id):
         return posts.getpost(_id)
 
+    @cache.cached(timeout=50)
+    @app.route("/blog/getrawpost/<_id>")
+    def getrawpost(_id):
+        return posts.getpost(_id, convert=False)
+
     # get the first post of a given category
     @cache.cached(timeout=50)
     @app.route("/blog/getpost/<category>")

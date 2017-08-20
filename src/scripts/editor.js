@@ -6,7 +6,6 @@ import { default as smooth } from 'smoothscroll-polyfill';
 import { default as showdown } from 'showdown';
 import 'element-closest';
 
-console.log("yeeeeaaaaah");
 promise.Promise.polyfill();
 smooth.polyfill();
 
@@ -15,5 +14,4 @@ window.RiotControl = RiotControl;
 
 RiotControl.addStore(new riot.observable());
 
-console.log(`adfdsddf`);
 riot.mount("editor");

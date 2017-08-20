@@ -56,7 +56,7 @@
       </div>
 
       <div class="column col-6">
-        <raw content="{this.converted}"></raw>
+        <raw content="{this.converter.makeHtml(this.converted)}"></raw>
       </div>
     </div>
   </div>
@@ -71,6 +71,7 @@ this.loading = false;
 this.querystring = querystring;
 
 this.converted = "<h3>Nothing here </h3>";
+this.converter = new showdown.Converter();
 
 this.placeholderText = "Write a post!";
 this.placeholder = this.placeholderText;
@@ -212,7 +213,7 @@ self.loadPost = (_id) => {
       return false;
     }
     self.update({"loading" : true});
-    axios.get(`/blog/getpost/${_id.slice(-8)}`)
+    axios.get(`/blog/getrawpost/${_id.slice(-8)}`)
     .then(function(resp) {
       self.update({"loading" : false});
       self.refs.textarea.value = resp.data.content;

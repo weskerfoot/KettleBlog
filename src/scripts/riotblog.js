@@ -1,13 +1,14 @@
 import riot from 'riot';
 import { default as RiotControl } from 'riotcontrol';
+import { default as promise } from 'es6-promise';
+import { default as smooth } from 'smoothscroll-polyfill';
 import './post.tag';
 import './posts.tag';
 import './projects.tag';
 import './app.tag';
 import './grid.js';
-import { default as promise } from 'es6-promise';
-import { default as smooth } from 'smoothscroll-polyfill';
 import 'element-closest';
+
 import fetchCached from 'fetch-cached';
 import 'whatwg-fetch';
 
