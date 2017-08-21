@@ -72,7 +72,8 @@ def NeverWhere(configfile=None):
                 "postid" : initial_post["_id"],
                 "postcontent" : postcontent,
                 "links" : dumps([]),
-                "projects" : dumps([])
+                "projects" : dumps([]),
+                "categories" : dumps(posts.categories())
         }
 
     @login_manager.user_loader
@@ -174,11 +175,6 @@ def NeverWhere(configfile=None):
     @app.route("/blog/allposts")
     def allposts():
         return posts.allposts()
-
-    @cache.cached(timeout=10000)
-    @app.route("/blog/categories")
-    def categories():
-        return posts.categories()
 
     # remove a post
     @app.route("/blog/deletepost/<_id>")

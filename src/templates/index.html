@@ -23,6 +23,7 @@
       window.addEventListener("load", function() {
         window.riot.mount("app",
           {
+            categories: "{{ quote(categories) }}",
             links : "{{ quote(links) }}",
             page : "{{ page }}",
             author : "{{ postcontent['author'] }}",

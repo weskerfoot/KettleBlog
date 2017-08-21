@@ -29,6 +29,7 @@
         </p>
         <div class="divider"></div>
       </div>
+      <categories></categories>
     </div>
     <div
       data-is="postcontrols"
@@ -45,6 +46,7 @@
 import './raw.tag';
 import './social.tag';
 import './postcontrols.tag';
+import './categories.tag';
 import route from 'riot-route';
 
 var self = this;

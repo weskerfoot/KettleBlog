@@ -7,6 +7,7 @@ from werkzeug.local import Local, LocalProxy, LocalManager
 from couchdb.http import ResourceConflict, ResourceNotFound
 from flask import jsonify, g
 from flask_marshmallow import Marshmallow
+from itertools import chain
 
 def get_mistune():
     markdown = getattr(g, "markdown", None)
@@ -128,16 +129,14 @@ class Posts:
             return jsonify(False)
 
     def categories(self):
-        return jsonify(
-                [
+        return list(set(chain.from_iterable([
                     c["key"][1] for c in
                         self.db.view("blogPosts/categories",
-                                     startkey=["category"],
-                                     endkey=["category", {}],
+                                     startkey=["categories"],
+                                     endkey=["categories", {}],
                                      inclusive_end=False,
                                      reduce=True,
                                      group_level=2,
                                      group=True)
-                ]
-            )
+                ])))
 

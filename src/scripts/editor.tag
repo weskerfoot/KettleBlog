@@ -8,18 +8,28 @@
             {!this.isNewPost ? this.currentPost().title : "No Title"} by {!this.isNewPost ? this.currentPost().author : "No Author"}
           </span>
         </div>
-        <button
-          class="btn btn-primary"
-          onclick={goLeft}
-        >
-          Prev
-        </button>
-        <button
-          class="btn btn-primary"
-          onclick={goRight}
-        >
-          Next
-        </button>
+        <div class="centered container">
+          <div class="columns">
+            <div class="column col-6">
+              <button
+                style={{"float" : "right"}}
+                class="btn btn-primary"
+                onclick={goLeft}
+              >
+                Prev
+              </button>
+            </div>
+            <div class="column col-6">
+              <button
+               style={{"float" : "left"}}
+               class="btn btn-primary"
+               onclick={goRight}
+              >
+               Next
+              </button>
+            </div>
+          </div>
+        </div>
         <p>
           <span>title</span><input ref="title">
           <span>author</span><input ref="author"></input>
@@ -42,7 +52,7 @@
                     onblur={checkplaceholder}
                     oninput={echo}
                     rows="10"
-                    cols="10"
+                    cols="30"
                     __disabled={""}
                     class="editor form-input centered"
                     ref="textarea">

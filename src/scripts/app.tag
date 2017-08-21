@@ -19,7 +19,7 @@
       <sidebar
         if={this.active.get("posts")}
         name="Filter By Category"
-        items={categories}>
+        items={state.categories}>
       </sidebar>
     </section>
 
@@ -138,7 +138,8 @@ self.state = {
     "title" : self.opts.title,
     "loaded" : false,
     "initial" : document.getElementsByTagName("noscript")[0].textContent,
-    "links" : JSON.parse(decodeURIComponent(self.opts.links))
+    "links" : JSON.parse(decodeURIComponent(self.opts.links)),
+    "categories" : JSON.parse(decodeURIComponent(self.opts.categories))
 };
 
 self.active = lens.actives({
@@ -207,15 +208,6 @@ to(name) {
   }).bind(this);
 }
 
-function getcategories() {
-  window.cached("/blog/categories")
-    .then((resp) => resp.json())
-    .then((resp) => {
-      self.categories = resp;
-      self.update();
-    });
-}
-
 self.on("mount", () => {
   self.route.base('/blog/')
   self.route("/", () => { self.route(`/posts/${self.state._id}`); });
@@ -226,7 +218,6 @@ self.on("mount", () => {
   self.route("about", about);
   self.route("links", links);
   route.start(true);
-  getcategories();
 });
 
 </script>
