@@ -5,7 +5,7 @@ function(head, req) {
   while (row = getRow()) {
     if (categories.length == 0 ||
         categories.some(function(c) { return row.key.indexOf(c) !== -1; })) {
-      results.push([row.key, row.id]);
+      results.push([row.key, row.value]);
     }
   }
   return JSON.stringify({q : req.query.categories, results : results});

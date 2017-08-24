@@ -226,6 +226,14 @@ def NeverWhere(configfile=None):
     def projects():
         return jsonify(loads(cacheit("projects", getProjects)))
 
+    @app.route("/blog/browse/<start>")
+    def browse(start):
+        return posts.browse(10, start*10, categories=[])
+
+    @app.route("/blog/browse/<category>/<start>")
+    def bycategory(category, start):
+        return posts.browse(10, start*10, categories=[category])
+
     return app
 
 app = NeverWhere()
