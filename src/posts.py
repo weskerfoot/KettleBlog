@@ -2,7 +2,7 @@
 
 import couchdb
 import mistune
-import json
+from json import dumps
 
 from werkzeug.local import Local, LocalProxy, LocalManager
 from couchdb.http import ResourceConflict, ResourceNotFound
@@ -145,10 +145,12 @@ class Posts:
                                      group=True)
                 ])))
 
-    def browse(self, count, skip, categories=[]):
-        return jsonify(self.db.list(
-                            "blogPosts/categories",
-                            "blogPosts/format",
-                            count=count,
-                            skip=skip,
-                            categories=json.dumps(categories))[1].get("results", []))
+    def browse(self, count, skip, categories=[], json=True):
+        result = self.db.list(
+                    "blogPosts/categories",
+                    "blogPosts/format",
+                    count=count,
+                    skip=skip,
+                    categories=dumps(categories))[1].get("results", [])
+
+        return jsonify(result) if json else result

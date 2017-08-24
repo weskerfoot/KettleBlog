@@ -23,6 +23,9 @@
       window.addEventListener("load", function() {
         window.riot.mount("app",
           {
+            category_filter: "{{ quote(category_filter) }}",
+            start: "{{ start }}",
+            results: "{{ quote(results) }}",
             categories: "{{ quote(categories) }}",
             links : "{{ quote(links) }}",
             page : "{{ page }}",

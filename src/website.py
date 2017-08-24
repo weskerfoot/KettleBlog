@@ -69,10 +69,13 @@ def NeverWhere(configfile=None):
         postcontent["title"] = initial_post["title"]
         return {
                 "quote" : quote,
+                "start" : 0,
+                "results" : dumps([]),
                 "postid" : initial_post["_id"],
                 "postcontent" : postcontent,
                 "links" : dumps([]),
                 "projects" : dumps([]),
+                "category_filter" : dumps([]),
                 "categories" : cacheit("categories", lambda : dumps(posts.categories()))
         }
 
@@ -142,6 +145,23 @@ def NeverWhere(configfile=None):
                                postcontent=post_content)
 
 
+    @app.route("/blog/browse/<start>")
+    def browse(start):
+        results = posts.browse(10, start*10, categories=[], json=False)
+        return render_template("index.html",
+                                page="browse",
+                                start=start,
+                                results=dumps(results))
+
+    @app.route("/blog/browse/<category>/<start>")
+    def browse_categories(category, start):
+        results = posts.browse(10, start*10, categories=[category], json=False)
+        return render_template("index.html",
+                                page="browse",
+                                start=start,
+                                category_filter=dumps([category]),
+                                results=dumps(results))
+
     @cache.cached(timeout=50)
     @app.route("/blog/switchpost/<pid>/<category>")
     def getpostid(pid, category):
@@ -168,7 +188,7 @@ def NeverWhere(configfile=None):
     # get the first post of a given category
     @cache.cached(timeout=50)
     @app.route("/blog/getpost/<category>")
-    def getbycategory(category):
+    def bycategory(category):
         return posts.getbycategory(category)
 
     # get the id of every post
@@ -226,12 +246,12 @@ def NeverWhere(configfile=None):
     def projects():
         return jsonify(loads(cacheit("projects", getProjects)))
 
-    @app.route("/blog/browse/<start>")
-    def browse(start):
+    @app.route("/blog/getbrowse/<start>")
+    def getbrowse(start):
         return posts.browse(10, start*10, categories=[])
 
-    @app.route("/blog/browse/<category>/<start>")
-    def bycategory(category, start):
+    @app.route("/blog/getbrowse/<category>/<start>")
+    def getbycategory(category, start):
         return posts.browse(10, start*10, categories=[category])
 
     return app

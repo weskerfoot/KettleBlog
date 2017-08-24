@@ -83,6 +83,11 @@
         if={active.get("links")}
       >
       </links>
+      <browse
+        state={state}
+        if={active.get("browse")}
+      >
+      </browse>
     </div>
   </div>
 <script>
@@ -92,6 +97,7 @@ import './projectsview.tag';
 import './postsview.tag';
 import './about.tag';
 import './links.tag';
+import './browse.tag';
 
 import route from 'riot-route';
 import lens from './lenses.js';
@@ -106,6 +112,8 @@ self.route = route;
 self.riot = riot;
 self.menuActive = false;
 self.currentPage = self.opts.title;
+
+self.decode = (x) => JSON.parse(decodeURIComponent(x));
 
 window.addEventListener("scroll",
   throttle((ev) => {
@@ -133,20 +141,24 @@ RiotControl.on("postswitch",
 
 self.state = {
     "page" : self.opts.page,
+    "results" : self.decode(self.opts.results),
+    "start" : self.opts.start,
+    "category_filter" : self.decode(self.opts.category_filter),
     "_id" : self.opts.postid.slice(-hashLength),
     "author" : self.opts.author,
     "title" : self.opts.title,
     "loaded" : false,
     "initial" : document.getElementsByTagName("noscript")[0].textContent,
-    "links" : JSON.parse(decodeURIComponent(self.opts.links)),
-    "categories" : JSON.parse(decodeURIComponent(self.opts.categories))
+    "links" : self.decode(self.opts.links),
+    "categories" : self.decode(self.opts.categories)
 };
 
 self.active = lens.actives({
   "projects" : false,
   "posts" : false,
   "links" : false,
-  "about" : false
+  "about" : false,
+  "browse" : false
 });
 
 menuOn(ev) {
@@ -181,6 +193,7 @@ function activate(page) {
 var projects = activate("projects");
 var about = activate("about");
 var links = activate("links");
+var browse = activate("browse");
 
 function posts(_id) {
   if (self.state._id != _id) {
@@ -217,6 +230,8 @@ self.on("mount", () => {
   self.route("projects", projects);
   self.route("about", about);
   self.route("links", links);
+  self.route("browse/*", browse);
+  self.route("browse/*/*", browse);
   route.start(true);
 });
 
