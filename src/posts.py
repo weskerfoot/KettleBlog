@@ -146,11 +146,16 @@ class Posts:
                 ])))
 
     def browse(self, count, skip, categories=[], json=True):
-        result = self.db.list(
+        results = self.db.list(
                     "blogPosts/categories",
                     "blogPosts/format",
                     count=count,
                     skip=skip,
                     categories=dumps(categories))[1].get("results", [])
 
-        return jsonify(result) if json else result
+        posts = []
+        for categories, post in results:
+            post["content"] = markdown(post["content"])
+            posts.append([categories, post])
+
+        return jsonify(posts) if json else posts

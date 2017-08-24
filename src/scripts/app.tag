@@ -230,6 +230,7 @@ self.on("mount", () => {
   self.route("projects", projects);
   self.route("about", about);
   self.route("links", links);
+  self.route("browse", browse);
   self.route("browse/*", browse);
   self.route("browse/*/*", browse);
   route.start(true);
