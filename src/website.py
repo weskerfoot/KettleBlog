@@ -73,7 +73,7 @@ def NeverWhere(configfile=None):
                 "postcontent" : postcontent,
                 "links" : dumps([]),
                 "projects" : dumps([]),
-                "categories" : dumps(posts.categories())
+                "categories" : cacheit("categories", lambda : dumps(posts.categories()))
         }
 
     @login_manager.user_loader
@@ -145,13 +145,13 @@ def NeverWhere(configfile=None):
     @cache.cached(timeout=50)
     @app.route("/blog/switchpost/<pid>/<category>")
     def getpostid(pid, category):
-        return posts.iterpost(startkey=pid, category=category)
+        return posts.iterpost(startkey=pid)
 
     # get the post previous to this one
     @cache.cached(timeout=50)
     @app.route("/blog/prevpost/<pid>/<category>")
     def prevpost(pid, category):
-        return posts.iterpost(endkey=pid, category=category)
+        return posts.iterpost(endkey=pid)
 
     # get the contents of any post
     # rendered in JSON

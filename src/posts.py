@@ -30,20 +30,22 @@ class Posts:
 
         self.db = self.client["blog"]
 
-    def savepost(self, title="", content="", author="", category="programming", _id=False):
+        self.iterpost = self.postIterator("blogPosts/blog-posts")
+
+    def savepost(self, title="", content="", author="", categories=[], _id=False):
         if _id:
             doc = self.db[_id]
             doc["title"] = title
             doc["content"] = content
             doc["author"] = author
-            doc["category"] = category
+            doc["categories"] = categories
             doc["_id"] = _id
         else:
             doc = {
                     "title" : title,
                     "content" : content,
                     "author" : author,
-                    "category" : category,
+                    "categories" : categories,
                     "type" : "post"
                     }
 
@@ -69,35 +71,37 @@ class Posts:
 
         return post
 
-    def iterpost(self, endkey=False, startkey=False, category="programming"):
-        if startkey and not endkey:
-            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True, startkey=startkey)
-        elif endkey and not startkey:
-            results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, endkey=endkey)
-        else:
-            results = self.db.iterview("blogPosts/blog-posts", 2, include_docs=True)
+    def postIterator(self, viewname):
+        def inner(endkey=False, startkey=False):
+            if startkey and not endkey:
+                results = self.db.iterview(viewname, 2, include_docs=True, startkey=startkey)
+            elif endkey and not startkey:
+                results = self.db.iterview(viewname, 1, include_docs=True, endkey=endkey)
+            else:
+                results = self.db.iterview(viewname, 2, include_docs=True)
 
-        docs = [result.doc for result in results]
+            docs = [result.doc for result in results]
 
-        for doc in docs:
-            doc["content"] = markdown(doc["content"])
+            for doc in docs:
+                doc["content"] = markdown(doc["content"])
 
-        if not docs:
+            if not docs:
+                return jsonify("end")
+
+            if endkey and not startkey:
+                if len(docs) < 2 or docs[0] == endkey:
+                    return jsonify("start")
+                return jsonify(docs[-2])
+
+            if len(docs) == 1:
+                return jsonify(docs[0])
+
+            if docs:
+                # if no startkey or endkey were specified, return the 0th post
+                return jsonify(docs[1 if startkey else 0])
+
             return jsonify("end")
-
-        if endkey and not startkey:
-            if len(docs) < 2 or docs[0] == endkey:
-                return jsonify("start")
-            return jsonify(docs[-2])
-
-        if len(docs) == 1:
-            return jsonify(docs[0])
-
-        if docs:
-            # if no startkey or endkey were specified, return the 0th post
-            return jsonify(docs[1 if startkey else 0])
-
-        return jsonify("end")
+        return inner
 
     def allposts(self):
         result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True)

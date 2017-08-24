@@ -16,7 +16,8 @@
     show={this.swiped !== undefined}
     style={ this.styles() }
     id="sidebar"
-    class={"animated "+(this.swiped !== undefined ? (this.swiped ? "fadeInLeft" : "fadeOutLeft") : "" ) +" container"}
+    class={"animated " + (this.swiped !== undefined ?
+            (this.swiped ? "fadeInLeft" : "fadeOutLeft") : "" ) + " container"}
   >
     <div
       style={{"height" : "100%", "overflow-x" : "hidden"}}
