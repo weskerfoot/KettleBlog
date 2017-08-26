@@ -1,6 +1,10 @@
 <menu>
   <div id="menu" class="dropdown">
-    <a href="#" class="btn btn-primary menu-button dropdown-toggle" tabindex="0">
+    <a
+      class="btn btn-primary menu-button dropdown-toggle"
+      tabindex="0"
+      onclick={preventDefault}
+    >
       { opts.name }<i class="icon icon-caret"></i>
     </a>
     <ul class="menu">
@@ -11,7 +15,7 @@
       <div each={item in opts.items} class="menu-item">
         <a
           class="btn btn-primary menu-button"
-          href="#"
+          style={styles}
         >
           { item }
         </a>
@@ -20,4 +24,14 @@
       </div>
     </ul>
   </div>
+<script>
+preventDefault(ev) {
+  ev.preventDefault;
+}
+
+this.styles = {
+  "text-transform" : "capitalize"
+};
+
+</script>
 </menu>

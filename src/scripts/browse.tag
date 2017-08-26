@@ -1,4 +1,9 @@
 <browse>
+  <menu
+    name="Categories"
+    items={opts.state.categories}
+  >
+  </menu>
   <div
     style={cardStyle}
     class="card content"
@@ -19,6 +24,7 @@
 
 <script type="es6">
 import './raw.tag';
+import './menu.tag';
 import route from 'riot-route';
 import { default as RiotControl } from 'riotcontrol';
 
