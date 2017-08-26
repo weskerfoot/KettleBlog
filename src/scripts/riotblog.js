@@ -31,5 +31,4 @@ window.cached = fetchCached({
 window.addEventListener("load", () => {
   promise.Promise.polyfill();
   smooth.polyfill();
-  window.RiotControl.addStore(new riot.observable());
 });

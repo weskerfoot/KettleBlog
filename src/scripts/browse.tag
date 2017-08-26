@@ -20,6 +20,7 @@
 <script type="es6">
 import './raw.tag';
 import route from 'riot-route';
+import { default as RiotControl } from 'riotcontrol';
 
 var self = this;
 
@@ -28,16 +29,10 @@ self.route = route;
 self.openPost = (id) => {
   return ((ev) => {
     console.log(id);
-    console.log(window.RiotControl.trigger);
+    console.log(RiotControl.trigger);
+    RiotControl.trigger("openpost", id);
   });
 };
-
-window.RiotControl.on("openpost",
-  (ev) => {
-    console.log("caught the event");
-  }
-);
-
 
 self.cardStyle = {
   "margin" : "auto"

@@ -222,6 +222,15 @@ to(name) {
 }
 
 self.on("mount", () => {
+  window.RiotControl.addStore(new riot.observable());
+  RiotControl.on("openpost",
+    (id) => {
+      console.log("caught the event in the app tag");
+      console.log(`the id is ${id}`);
+      posts(id);
+    }
+  );
+
   self.route.base('/blog/')
   self.route("/", () => { self.route(`/posts/${self.state._id}`); });
   self.route("/posts", () => { self.route(`/posts/${self.state._id}`); });
