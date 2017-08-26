@@ -130,14 +130,14 @@ document.addEventListener("click", function(event) {
   }
 });
 
-RiotControl.on("postswitch",
+window.RiotControl.on("postswitch",
   (ev) => {
     self.update(
       {
         "currentPage" : ev.title
       })
     }
-  );
+);
 
 self.state = {
     "page" : self.opts.page,

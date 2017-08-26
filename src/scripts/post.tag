@@ -68,10 +68,15 @@ self.swipe = false;
 self.start = false;
 self.end = false;
 
-RiotControl.on("filtercategory",
+window.RiotControl.on("filtercategory",
   (ev) => {
     let category = ev.category.toLowerCase();
   });
+
+self.on("unmount", () => {
+  window.RiotControl.off("filtercategory");
+  window.RiotControl.off("postswitch");
+});
 
 prev(ev) {
   ev.preventDefault();
@@ -133,7 +138,7 @@ updatePost(postcontent) {
   self.nextloading = "";
   self.route("/posts/"+self._id);
 
-  RiotControl.trigger("postswitch", {"title" : self.title});
+  window.RiotControl.trigger("postswitch", {"title" : self.title});
 
   self.parent.update();
 
