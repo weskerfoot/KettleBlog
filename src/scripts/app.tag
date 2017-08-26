@@ -245,5 +245,10 @@ self.on("mount", () => {
   route.start(true);
 });
 
+self.on("unmount", () => {
+  RiotControl.off("openpost");
+  RiotControl.off("postswitch");
+})
+
 </script>
 </app>
