@@ -16,6 +16,7 @@
         <a
           class="btn btn-primary menu-button"
           style={styles}
+          onclick={parent.opts.onfilter(item)}
         >
           { item }
         </a>
@@ -25,6 +26,7 @@
     </ul>
   </div>
 <script>
+
 preventDefault(ev) {
   ev.preventDefault;
 }

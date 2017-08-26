@@ -68,13 +68,7 @@ self.swipe = false;
 self.start = false;
 self.end = false;
 
-window.RiotControl.on("filtercategory",
-  (ev) => {
-    let category = ev.category.toLowerCase();
-  });
-
 self.on("unmount", () => {
-  window.RiotControl.off("filtercategory");
   window.RiotControl.off("postswitch");
 });
 

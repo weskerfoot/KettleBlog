@@ -2,6 +2,7 @@
   <menu
     name="Categories"
     items={opts.state.categories}
+    onfilter={filterCategories}
   >
   </menu>
   <div
@@ -42,6 +43,13 @@ self.openPost = (id) => {
 
 self.cardStyle = {
   "margin" : "auto"
+};
+
+self.filterCategories = (category) => {
+  return ((ev) => {
+    ev.preventDefault();
+    return self.route(`browse/${category}`);
+  });
 };
 
 </script>
