@@ -43,6 +43,7 @@
     </div>
   </div>
 <script>
+import './loading.tag';
 import './raw.tag';
 import './social.tag';
 import './postcontrols.tag';
