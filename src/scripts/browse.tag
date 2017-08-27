@@ -8,7 +8,7 @@
   <div
     style={cardStyle}
     class="card content"
-    each={result in opts.state.results}
+    each={result in results}
   >
     <div class="card-header">
       <a
@@ -32,6 +32,7 @@ import { default as RiotControl } from 'riotcontrol';
 var self = this;
 
 self.route = route;
+self.results = self.opts.state.results;
 
 self.openPost = (id) => {
   return ((ev) => {
@@ -48,9 +49,14 @@ self.cardStyle = {
 self.filterCategories = (category) => {
   return ((ev) => {
     ev.preventDefault();
-    return self.route(`browse/${category}`);
-  });
-};
+    self.route(`browse/${category}`);
+    window.cached(`/blog/getbrowse/${category}/0`)
+    .then((resp) => { return resp.json() })
+    .then((results) => {
+      self.update({"results" : results});
+    });
+  })
+}
 
 </script>
 </browse>
