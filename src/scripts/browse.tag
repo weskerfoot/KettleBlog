@@ -1,38 +1,45 @@
 <browse>
-  <div class="content">
-    <menu
-      name="Categories"
-      items={opts.state.categories}
-      onfilter={filterCategories}
-    >
-    </menu>
-    <loading if={loading}></loading>
-    <div
-      if={!loading}
-      style={cardStyle}
-      class="card"
-      each={result in opts.state.results}
-    >
-      <div class="card-header">
-        <h3 class="card-title">
-          { result[1].title } by { result[1].author }
-        </h3>
-      </div>
-      <div class="card-body">
-        <raw content="{ converter.makeHtml(result[1].content) }"></raw>
-        <a
-          style={linkStyle}
-          onclick={openPost(result[1].id)}
+  <div class="content container">
+    <div class="columns">
+      <div class="column col-2">
+        <categoryfilter
+          name="Categories"
+          category={category}
+          items={opts.state.categories}
+          onfilter={filterCategories}
         >
-          Read More
-        </a>
+        </categoryfilter>
+      </div>
+      <div class="column col-10">
+        <loading if={loading}></loading>
+        <div
+          if={!loading}
+          style={cardStyle}
+          class="card"
+          each={result in opts.state.results}
+        >
+          <div class="card-header">
+            <h3 class="card-title">
+              { result[1].title } by { result[1].author }
+            </h3>
+          </div>
+          <div class="card-body">
+            <raw content="{ converter.makeHtml(result[1].content) }"></raw>
+            <a
+              style={linkStyle}
+              onclick={openPost(result[1].id)}
+            >
+              Read More
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
 <script type="es6">
 import './raw.tag';
-import './menu.tag';
+import './categoryfilter.tag';
 import './loading.tag';
 import route from 'riot-route';
 import { default as RiotControl } from 'riotcontrol';
@@ -42,6 +49,7 @@ var self = this;
 
 self.route = route;
 self.loading = false;
+self.category = false;
 self.converter = new showdown.Converter();
 
 self.openPost = (id) => {
@@ -63,7 +71,11 @@ self.filterCategories = (category) => {
   return ((ev) => {
     ev.preventDefault();
 
-    self.update({"loading" : true});
+    self.update({
+      "loading" : true,
+      "category" : category
+    });
+
     self.route(`browse/${category}`);
     window.cached(`/blog/getbrowse/${category}/0`)
     .then((resp) => { return resp.json() })

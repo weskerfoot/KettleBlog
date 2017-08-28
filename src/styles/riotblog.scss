@@ -79,6 +79,24 @@ $navbarHeight: 100px;
   }
 }
 
+.menu-element {
+  padding-bottom: 2px !important;
+  padding-top: 2px !important;
+}
+
+.category-button {
+  border-radius: 5px !important;
+  border-color: $branding2 !important;
+	display: block !important;
+	margin-top: 0;
+	padding: .6rem 1.2rem .4rem 1.2rem;
+  color: $branding !important;
+	text-decoration: none;
+  &:hover {
+    background-color: $brandingBG !important;
+  }
+}
+
 .menu-button {
 	display: block !important;
 	margin-top: 0;
@@ -90,7 +108,7 @@ $navbarHeight: 100px;
   }
 }
 
-.branded, button {
+.branded {
   border-radius: 5px !important;
   border-color: $branding2 !important;
 	display: block !important;

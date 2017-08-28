@@ -9,10 +9,10 @@
     </a>
     <ul class="menu">
       <!-- menu header text -->
-      <li class="divider" data-content="LINKS">
+      <li class="divider">
       </li>
       <!-- menu item -->
-      <div each={item in opts.items} class="menu-item">
+      <div each={item in opts.items} class="menu-item menu-element">
         <a
           class="btn btn-primary menu-button"
           style={styles}
@@ -21,7 +21,6 @@
           { item }
         </a>
         <yield/>
-        <li class="divider"></li>
       </div>
     </ul>
   </div>
@@ -32,7 +31,8 @@ preventDefault(ev) {
 }
 
 this.styles = {
-  "text-transform" : "capitalize"
+  "text-transform" : "capitalize",
+  "border-color" : "#4b93c1"
 };
 
 </script>

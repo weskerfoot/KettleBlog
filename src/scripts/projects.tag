@@ -31,7 +31,9 @@
               <a
                 target="_blank"
                 href={this.project().html_url}>
-                  <button class="btn btn-primary">See on github</button>
+                  <button class="btn btn-primary branded">
+                    See on github
+                  </button>
               </a>
               </div>
             </div>
@@ -43,7 +45,7 @@
           <div class="column col-6">
             <button
               onclick={this.prev}
-              class="btn btn-lg nav-button float-right"
+              class="btn btn-lg nav-button float-right branded"
             >
               <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </button>
@@ -51,7 +53,7 @@
           <div class="column col-6">
             <button
               onclick={this.next}
-              class="btn btn-lg nav-button float-left"
+              class="btn btn-lg nav-button float-left branded"
             >
               <i class="fa fa-arrow-right" aria-hidden="true"></i>
             </button>

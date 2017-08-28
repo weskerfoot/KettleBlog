@@ -28,7 +28,7 @@
 
           <div class="tile-action">
             <a target="_blank" href={ item.href }>
-              <button class="btn btn-primary">
+              <button class="btn btn-primary branded">
                 Link
               </button>
             </a>
