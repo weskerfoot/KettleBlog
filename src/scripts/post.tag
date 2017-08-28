@@ -117,6 +117,10 @@ updatePost(postcontent) {
   self.content = postcontent.content;
   self.title = postcontent.title;
 
+  if (self.opts.state._id !== self._id) {
+    self.route(`/posts/${self._id}`);
+  }
+
   self.opts.state._id = self._id;
   self.opts.state.title = self.title;
   self.opts.state.initial = self.content;
