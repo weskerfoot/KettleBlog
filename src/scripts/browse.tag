@@ -4,7 +4,7 @@
       <div class="column hide-xs hide-sm hide-md col-3">
         <categoryfilter
           name="Categories"
-          category={category}
+          category={opts.state.category_filter}
           items={opts.state.categories}
           onfilter={filterCategories}
         >
@@ -73,9 +73,9 @@ self.filterCategories = (category) => {
     ev.preventDefault();
 
     self.update({
-      "loading" : true,
-      "category" : category
+      "loading" : true
     });
+    self.opts.state.category_filter = category;
 
     self.route(`browse/${category}`);
     window.cached(`/blog/getbrowse/${category}/0`)
