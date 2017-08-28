@@ -1,7 +1,7 @@
 <browse>
-  <div class="content container">
+  <div class="browse-content container">
     <div class="columns">
-      <div class="column hide-xs hide-sm hide-md col-2">
+      <div class="column hide-xs hide-sm hide-md col-3">
         <categoryfilter
           name="Categories"
           category={category}
@@ -10,7 +10,7 @@
         >
         </categoryfilter>
       </div>
-      <div class="column col-sm-12 col-10">
+      <div class="column col-sm-12 col-9">
         <loading if={loading}></loading>
         <div
           if={!loading}
@@ -54,7 +54,7 @@ self.converter = new showdown.Converter();
 
 self.openPost = (id) => {
   return ((ev) => {
-    RiotControl.trigger("openpost", id);
+    self.route(`/posts/${id}`);
   });
 };
 
@@ -87,6 +87,26 @@ self.filterCategories = (category) => {
     });
   })
 }
+
+self.getInitial = () => {
+    self.update({"loading" : true});
+    window.cached(`/blog/getbrowse/0`)
+    .then((resp) => { return resp.json() })
+    .then((results) => {
+      self.opts.state.results = results;
+      self.update({
+        "loading" : false
+      });
+    });
+}
+
+self.on("mount", () => {
+  console.log("XXX");
+  console.log(self.opts.state.category_filter);
+  if (!self.opts.state.category_filter) {
+    self.getInitial();
+  }
+});
 
 </script>
 </browse>

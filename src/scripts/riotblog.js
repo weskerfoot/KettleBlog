@@ -15,6 +15,7 @@ import 'whatwg-fetch';
 window.cache = {};
 window.riot = riot;
 window.RiotControl = RiotControl;
+window.RiotControl.addStore(new riot.observable());
 
 window.cached = fetchCached({
   fetch: fetch,

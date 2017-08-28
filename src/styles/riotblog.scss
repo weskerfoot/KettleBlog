@@ -278,6 +278,20 @@ p, h6, h4 {
   height: 250px !important;
 }
 
+.browse-content {
+  margin: auto;
+  max-width: 90%;
+  @media (max-width: 1000px) {
+    max-width: 95%;
+  }
+  @media (max-width: 800px) {
+    max-width: 97%;
+  }
+  @media (max-width: 400px) {
+    max-width: 100%;
+  }
+}
+
 .content {
   margin: auto;
   max-width: 80%;

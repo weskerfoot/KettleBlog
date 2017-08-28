@@ -33,7 +33,7 @@
         show={menuActive}
         class="mobile-menu tab tab-block menu">
         <li
-          each="{page in ['posts', 'projects', 'links', 'about']}"
+          each="{page in ['browse', 'projects', 'links', 'about']}"
           class={"navigate-tab tab-item " + (parent.active.get(page) ? "active" : "")}
           data-is="navtab"
           active={parent.active.get(page)}
@@ -47,7 +47,7 @@
 
     <ul class="hide-md hide-sm hide-xs navigate tab tab-block">
       <li
-        each="{page in ['posts', 'projects', 'links', 'about']}"
+        each="{page in ['browse', 'projects', 'links', 'about']}"
         class={"navigate-tab tab-item " + (parent.active.get(page) ? "active" : "")}
         data-is="navtab"
         active={parent.active.get(page)}
@@ -128,15 +128,6 @@ document.addEventListener("click", function(event) {
     }
   }
 });
-
-window.RiotControl.on("postswitch",
-  (ev) => {
-    self.update(
-      {
-        "currentPage" : ev.title
-      })
-    }
-);
 
 self.state = {
     "page" : self.opts.page,
@@ -221,13 +212,22 @@ to(name) {
 }
 
 self.on("mount", () => {
-  window.RiotControl.addStore(new riot.observable());
-  RiotControl.on("openpost",
+  window.RiotControl.on("openpost",
     (id) => {
       console.log("caught the event in the app tag");
       console.log(`the id is ${id}`);
       posts(id);
     }
+  );
+
+  window.RiotControl.on("postswitch",
+    (ev) => {
+      console.log("updating the title");
+      self.update(
+        {
+          "currentPage" : ev.title
+        })
+      }
   );
 
   self.route.base('/blog/')
@@ -243,11 +243,6 @@ self.on("mount", () => {
   self.route("browse/*/*", browse);
   route.start(true);
 });
-
-self.on("unmount", () => {
-  RiotControl.off("openpost");
-  RiotControl.off("postswitch");
-})
 
 </script>
 </app>

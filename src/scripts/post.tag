@@ -29,6 +29,7 @@
         </p>
         <div class="divider"></div>
       </div>
+      <categories></categories>
     </div>
     <div
       data-is="postcontrols"
@@ -42,7 +43,6 @@
     </div>
   </div>
 <script>
-import './loading.tag';
 import './raw.tag';
 import './social.tag';
 import './postcontrols.tag';
@@ -67,10 +67,6 @@ self.nextloading = "";
 self.swipe = false;
 self.start = false;
 self.end = false;
-
-self.on("unmount", () => {
-  window.RiotControl.off("postswitch");
-});
 
 prev(ev) {
   ev.preventDefault();
@@ -130,8 +126,6 @@ updatePost(postcontent) {
   self.loading = false;
   self.prevloading = "";
   self.nextloading = "";
-  self.route("/posts/"+self._id);
-
   window.RiotControl.trigger("postswitch", {"title" : self.title});
 
   self.parent.update();

@@ -75,7 +75,7 @@ def NeverWhere(configfile=None):
                 "postcontent" : postcontent,
                 "links" : dumps([]),
                 "projects" : dumps([]),
-                "category_filter" : dumps([]),
+                "category_filter" : dumps(False),
                 "categories" : cacheit("categories", lambda : dumps(posts.categories()))
         }
 
