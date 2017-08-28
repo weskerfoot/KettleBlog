@@ -49,7 +49,7 @@ var self = this;
 
 self.route = route;
 self.loading = false;
-self.category = false;
+self.category = self.opts.state.category_filter;
 self.converter = new showdown.Converter();
 
 self.openPost = (id) => {

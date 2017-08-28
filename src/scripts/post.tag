@@ -29,7 +29,6 @@
         </p>
         <div class="divider"></div>
       </div>
-      <categories></categories>
     </div>
     <div
       data-is="postcontrols"
