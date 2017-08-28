@@ -16,11 +16,6 @@
   <div class="app-body">
 
     <section class="text-center nav navbar centered navbar-section">
-      <sidebar
-        if={this.active.get("posts")}
-        name="Filter By Category"
-        items={state.categories}>
-      </sidebar>
     </section>
 
     <div id="menu"
