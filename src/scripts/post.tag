@@ -180,9 +180,7 @@ prevPost(_id) {
 }
 
 self.on("mount", () => {
-  if (self.opts.state.page !== "posts") {
-    self.getPost(self._id);
-  }
+  self.getPost(self._id);
 });
 
 </script>

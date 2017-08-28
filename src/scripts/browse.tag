@@ -102,8 +102,6 @@ self.getInitial = () => {
 }
 
 self.on("mount", () => {
-  console.log("XXX");
-  console.log(self.opts.state.category_filter);
   if (!self.opts.state.category_filter) {
     self.getInitial();
   }
