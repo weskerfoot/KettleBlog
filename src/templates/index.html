@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#67ADDB"/>
-    <title>{{ postcontent["title"] }}</title>
+    <title>{{ postcontent["title"] if page == "posts" else page }}</title>
   </head>
   <body>
     <noscript>{{ postcontent['content']|safe }}</noscript>

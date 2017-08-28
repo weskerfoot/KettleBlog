@@ -117,6 +117,7 @@ updatePost(postcontent) {
   self.content = postcontent.content;
   self.title = postcontent.title;
 
+  /* Do not route to this post if we're already on the same route */
   if (window.location.pathname !== `/blog/posts/${self._id}`) {
     self.route(`/posts/${self._id}`);
   }
