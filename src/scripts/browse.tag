@@ -1,7 +1,7 @@
 <browse>
   <div class="content container">
     <div class="columns">
-      <div class="column col-2">
+      <div class="column hide-xs hide-sm hide-md col-2">
         <categoryfilter
           name="Categories"
           category={category}
@@ -10,7 +10,7 @@
         >
         </categoryfilter>
       </div>
-      <div class="column col-10">
+      <div class="column col-sm-12 col-10">
         <loading if={loading}></loading>
         <div
           if={!loading}
