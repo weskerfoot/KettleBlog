@@ -201,10 +201,7 @@ to(name) {
       this.menuOff(e);
     }
     console.log("routing to " + name);
-    if (name == "posts") {
-      this.route(`${name}/${self.state._id}`);
-    }
-    else {
+    if (name != "posts") {
       this.route(name);
     }
     return;

@@ -117,7 +117,7 @@ updatePost(postcontent) {
   self.content = postcontent.content;
   self.title = postcontent.title;
 
-  if (self.opts.state._id !== self._id) {
+  if (window.location.pathname !== `/blog/posts/${self._id}`) {
     self.route(`/posts/${self._id}`);
   }
 

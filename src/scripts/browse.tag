@@ -55,6 +55,7 @@ self.converter = new showdown.Converter();
 self.openPost = (id) => {
   return ((ev) => {
     self.route(`/posts/${id}`);
+    RiotControl.trigger("openpost", id);
   });
 };
 
