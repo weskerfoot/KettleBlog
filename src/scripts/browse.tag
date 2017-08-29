@@ -54,7 +54,6 @@ self.converter = new showdown.Converter();
 
 self.openPost = (id) => {
   return ((ev) => {
-    self.route(`/posts/${id}`);
     RiotControl.trigger("openpost", id);
   });
 };
@@ -70,14 +69,16 @@ self.linkStyle = {
 
 self.filterCategories = (category) => {
   return ((ev) => {
-    ev.preventDefault();
+    if (ev !== undefined) {
+      ev.preventDefault();
+      self.route(`browse/${category}`);
+    }
 
     self.update({
       "loading" : true
     });
     self.opts.state.category_filter = category;
 
-    self.route(`browse/${category}`);
     window.cached(`/blog/getbrowse/${category}/0`)
     .then((resp) => { return resp.json() })
     .then((results) => {
@@ -102,8 +103,12 @@ self.getInitial = () => {
 }
 
 self.on("mount", () => {
-  if (!self.opts.state.category_filter) {
+  if (!self.opts.state.category_filter && !self.opts.state.category_tag) {
     self.getInitial();
+  }
+  else if (self.opts.state.category_tag) {
+    self.filterCategories(self.opts.state.category_tag)();
+    self.one("updated", () => { self.opts.state.category_tag = false; });
   }
 });
 

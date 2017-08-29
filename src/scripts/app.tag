@@ -134,6 +134,7 @@ self.state = {
     "results" : self.decode(self.opts.results),
     "start" : self.opts.start,
     "category_filter" : self.decode(self.opts.category_filter),
+    "category_tag" : false,
     "_id" : self.opts.postid.slice(-hashLength),
     "author" : self.opts.author,
     "title" : self.opts.title,
@@ -173,6 +174,8 @@ function activate(page) {
       self.currentPage = document.title;
     }
     else {
+      console.log("XXX");
+      console.log(self.currentPage);
       self.currentPage = self.state.title;
     }
     self.active = lens.setActive(self.active, page);
@@ -213,9 +216,17 @@ self.on("mount", () => {
     (id) => {
       console.log("caught the event in the app tag");
       console.log(`the id is ${id}`);
-      posts(id);
+      self.route(`/posts/${id}`);
     }
   );
+
+  window.RiotControl.on("browsecategories",
+    (category) => {
+      console.log("browse event fired");
+      console.log(category);
+      self.state.category_tag = category;
+      self.route(`/browse/${category}`);
+    });
 
   window.RiotControl.on("postswitch",
     (ev) => {

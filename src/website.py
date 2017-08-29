@@ -171,14 +171,14 @@ def NeverWhere(configfile=None):
                                 results=dumps(results))
 
     @cache.cached(timeout=50)
-    @app.route("/blog/switchpost/<pid>/<category>")
-    def getpostid(pid, category):
+    @app.route("/blog/switchpost/<pid>")
+    def getpostid(pid):
         return posts.iterpost(startkey=pid)
 
     # get the post previous to this one
     @cache.cached(timeout=50)
-    @app.route("/blog/prevpost/<pid>/<category>")
-    def prevpost(pid, category):
+    @app.route("/blog/prevpost/<pid>")
+    def prevpost(pid):
         return posts.iterpost(endkey=pid)
 
     # get the contents of any post

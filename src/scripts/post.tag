@@ -1,5 +1,6 @@
 <post>
   <div class="posts-box post centered">
+    <categories names={categories}></categories>
     <div
       data-is="postcontrols"
       prevloading={prevloading}
@@ -29,7 +30,6 @@
         </p>
         <div class="divider"></div>
       </div>
-      <categories></categories>
     </div>
     <div
       data-is="postcontrols"
@@ -56,8 +56,8 @@ const hashLength = 8;
 self.route = route;
 
 self.loading = false;
-self.category = "programming";
 
+self.categories = [];
 self._id = self.opts.state._id.slice(-hashLength);
 self.author = self.opts.state.author;
 self.title = self.opts.state.title;
@@ -112,6 +112,7 @@ updatePost(postcontent) {
     self.update();
     return;
   }
+  self.categories = postcontent.categories;
   self._id = postcontent._id.slice(-hashLength);
   self.author = postcontent.author;
   self.content = postcontent.content;
@@ -152,7 +153,7 @@ getPost(_id) {
 
 nextPost(_id) {
   self.update({"loading" : true});
-  window.cached(`/blog/switchpost/${_id.slice(-hashLength)}/${self.category}`)
+  window.cached(`/blog/switchpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
     var content = JSON.parse(resp);
@@ -172,7 +173,7 @@ nextPost(_id) {
 
 prevPost(_id) {
   self.update({"loading" : true});
-  window.cached(`/blog/prevpost/${_id.slice(-hashLength)}/${self.category}`)
+  window.cached(`/blog/prevpost/${_id.slice(-hashLength)}`)
   .then((resp) => resp.text())
   .then((resp) => {
     self.updatePost(JSON.parse(resp))

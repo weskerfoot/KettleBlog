@@ -1,5 +1,5 @@
 <categoryfilter>
-  <div>
+  <div class="categorybar">
     <h4>
       { opts.name }
     </h4>

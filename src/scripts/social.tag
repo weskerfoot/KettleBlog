@@ -37,12 +37,16 @@ loadButtons() {
   window.twttr.ready(() => {
     if (window.twttr.widgets !== undefined) {
       console.log("twitter was defined");
-      window.twttr.widgets.load(self.refs.twitter.root);
+      if (self.refs.twitter !== undefined) {
+        window.twttr.widgets.load(self.refs.twitter.root);
+      }
     }
   });
 
   if (FB !== undefined && FB.XFBML !== undefined) {
-    FB.XFBML.parse(self.refs.facebook.root);
+    if (self.refs.facebook !== undefined) {
+      FB.XFBML.parse(self.refs.facebook.root);
+    }
   }
   self.old_id = self._id;
 }
