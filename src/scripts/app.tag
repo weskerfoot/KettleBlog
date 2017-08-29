@@ -130,6 +130,7 @@ document.addEventListener("click", function(event) {
 });
 
 self.state = {
+    "browsed" : false, /* was a link clicked to a post yet */
     "page" : self.opts.page,
     "results" : self.decode(self.opts.results),
     "start" : self.opts.start,
@@ -141,7 +142,8 @@ self.state = {
     "loaded" : false,
     "initial" : document.getElementsByTagName("noscript")[0].textContent,
     "links" : self.decode(self.opts.links),
-    "categories" : self.decode(self.opts.categories)
+    "categories" : self.decode(self.opts.categories),
+    "post_categories" : self.decode(self.opts.post_categories)
 };
 
 self.active = lens.actives({
@@ -215,6 +217,7 @@ self.on("mount", () => {
   window.RiotControl.on("openpost",
     (id) => {
       console.log("caught the event in the app tag");
+      self.state.browsed = true;
       console.log(`the id is ${id}`);
       self.route(`/posts/${id}`);
     }

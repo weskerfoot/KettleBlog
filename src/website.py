@@ -69,6 +69,7 @@ def NeverWhere(configfile=None):
         postcontent["title"] = initial_post["title"]
         return {
                 "quote" : quote,
+                "dumps" : dumps,
                 "start" : 0,
                 "results" : dumps([]),
                 "postid" : initial_post["_id"],

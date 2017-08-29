@@ -57,7 +57,7 @@ self.route = route;
 
 self.loading = false;
 
-self.categories = [];
+self.categories = self.opts.state.post_categories;
 self._id = self.opts.state._id.slice(-hashLength);
 self.author = self.opts.state.author;
 self.title = self.opts.state.title;
@@ -181,7 +181,9 @@ prevPost(_id) {
 }
 
 self.on("mount", () => {
-  self.getPost(self._id);
+  if (self.opts.state.browsed) {
+    self.getPost(self._id);
+  }
 });
 
 </script>

@@ -27,6 +27,7 @@
             start: "{{ start }}",
             results: "{{ quote(results) }}",
             categories: "{{ quote(categories) }}",
+            post_categories: "{{ quote(dumps(postcontent['categories'])) }}",
             links : "{{ quote(links) }}",
             page : "{{ page }}",
             author : "{{ postcontent['author'] }}",
