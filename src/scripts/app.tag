@@ -130,12 +130,12 @@ document.addEventListener("click", function(event) {
 });
 
 self.state = {
-    "browsed" : false, /* was a link clicked to a post yet */
+    "browsed" : false, /* was a link clicked to a post yet? */
     "page" : self.opts.page,
     "results" : self.decode(self.opts.results),
     "start" : self.opts.start,
     "category_filter" : self.decode(self.opts.category_filter),
-    "category_tag" : false,
+    "category_tag" : false, /* used if browse page accessed by a category tag */
     "_id" : self.opts.postid.slice(-hashLength),
     "author" : self.opts.author,
     "title" : self.opts.title,
@@ -156,7 +156,6 @@ self.active = lens.actives({
 
 menuOn(ev) {
   ev.preventDefault();
-  console.log("clicked it");
   self.menuActive = true;
   self.update();
 }
@@ -176,8 +175,6 @@ function activate(page) {
       self.currentPage = document.title;
     }
     else {
-      console.log("XXX");
-      console.log(self.currentPage);
       self.currentPage = self.state.title;
     }
     self.active = lens.setActive(self.active, page);
@@ -216,24 +213,19 @@ to(name) {
 self.on("mount", () => {
   window.RiotControl.on("openpost",
     (id) => {
-      console.log("caught the event in the app tag");
       self.state.browsed = true;
-      console.log(`the id is ${id}`);
       self.route(`/posts/${id}`);
     }
   );
 
   window.RiotControl.on("browsecategories",
     (category) => {
-      console.log("browse event fired");
-      console.log(category);
       self.state.category_tag = category;
       self.route(`/browse/${category}`);
     });
 
   window.RiotControl.on("postswitch",
     (ev) => {
-      console.log("updating the title");
       self.update(
         {
           "currentPage" : ev.title

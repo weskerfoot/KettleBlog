@@ -21,7 +21,6 @@ self.title = self.opts.title;
 self.old_id = false;
 
 updateButton(_id, title) {
-  console.log("trying to update buttons");
   document.title = title;
   if (_id == undefined) {
     _id = self.opts.postid;
@@ -33,10 +32,8 @@ updateButton(_id, title) {
 }
 
 loadButtons() {
-  console.log("trying to load buttons");
   window.twttr.ready(() => {
     if (window.twttr.widgets !== undefined) {
-      console.log("twitter was defined");
       if (self.refs.twitter !== undefined) {
         window.twttr.widgets.load(self.refs.twitter.root);
       }
