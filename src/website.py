@@ -10,7 +10,6 @@ from flask_login import LoginManager, login_required, login_user
 from flask_wtf.csrf import CSRFProtect
 from flask.ext.cache import Cache
 
-from urllib.parse import unquote
 from urllib.parse import quote, unquote
 from json import dumps, loads
 from admin import Admin
@@ -156,7 +155,7 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/browse/<start>")
     def browse(start):
-        results = posts.browse(10, start*10, categories=[], json=False)
+        results = posts.browse(4, start*4, categories=[], json=False)
         return render_template("index.html",
                                 page="browse",
                                 start=start,
@@ -164,7 +163,7 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/browse/<category>/<start>")
     def browse_categories(category, start):
-        results = posts.browse(10, start*10, categories=[category], json=False)
+        results = posts.browse(4, start*4, categories=[category], json=False)
         return render_template("index.html",
                                 page="browse",
                                 start=start,
@@ -231,14 +230,14 @@ def NeverWhere(configfile=None):
         author = request.form.get("author", "no author")
         title = request.form.get("title", "no title")
         content = request.form.get("content", "no content")
-        category = request.form.get("category", "programming")
+        category = request.form.get("categories", ["programming"])
         postid = request.form.get("_id", False)
 
         post = {
                 "author" : author,
                 "title" : title,
                 "content" : content,
-                "category" : category,
+                "categories" : category,
                 "_id" : postid
                 }
 
@@ -255,14 +254,21 @@ def NeverWhere(configfile=None):
     def projects():
         return jsonify(loads(cacheit("projects", getProjects)))
 
-    @app.route("/blog/getbrowse/<start>")
-    def getbrowse(start):
-        return posts.browse(10, start*10, categories=[])
+    @app.route("/blog/getbrowse/<limit>")
+    def getbrowsefirst(limit):
+        return posts.browse(limit, False)
 
-    @app.route("/blog/getbrowse/<category>/<start>")
-    def getbycategory(category, start):
-        return posts.browse(10, start*10, categories=[category])
+    @app.route("/blog/getbrowselim/<limit>/<startkey>")
+    def getbrowse(limit, startkey):
+        return posts.browse(limit, startkey)
 
+    @app.route("/blog/getbrowse/<category>/<limit>/<startkey>")
+    def getbycategory(category, limit, startkey):
+        return posts.browse(limit, startkey, categories=[category])
+
+    @app.route("/blog/getbrowsecat/<category>/<limit>")
+    def getbycategoryinitial(category, limit):
+        return posts.browse(limit, False, categories=[category])
     return app
 
 app = NeverWhere()

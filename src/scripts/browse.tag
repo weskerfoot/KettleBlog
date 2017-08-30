@@ -47,6 +47,7 @@ import { default as showdown } from 'showdown';
 
 var self = this;
 
+self.pagenum = 0;
 self.route = route;
 self.loading = false;
 self.category = self.opts.state.category_filter;
@@ -79,7 +80,7 @@ self.filterCategories = (category) => {
     });
     self.opts.state.category_filter = category;
 
-    window.cached(`/blog/getbrowse/${category}/0`)
+    window.cached(`/blog/getbrowse/${category}/5/${self.lastkey}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
@@ -92,7 +93,7 @@ self.filterCategories = (category) => {
 
 self.getInitial = () => {
     self.update({"loading" : true});
-    window.cached(`/blog/getbrowse/0`)
+    window.cached(`/blog/getbrowse/5/${self.lastkey}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;

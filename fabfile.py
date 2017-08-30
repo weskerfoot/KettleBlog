@@ -54,6 +54,7 @@ def serveUp():
     sudo("systemctl daemon-reload")
     sudo("systemctl enable blog.service")
     sudo("systemctl restart blog.service")
+    sudo("systemctl restart memcached")
 
 @task(default=True)
 def build():

@@ -145,13 +145,19 @@ class Posts:
                                      group=True)
                 ])))
 
-    def browse(self, count, skip, categories=[], json=True):
+    def browse(self, limit, startkey, categories=[], json=True):
+        args = {
+                "num" : limit,
+                "categories" : dumps(categories)
+                }
+
+        if startkey:
+            args["startkey"] = startkey
+
         results = self.db.list(
                     "blogPosts/categories",
                     "blogPosts/format",
-                    count=count,
-                    skip=skip,
-                    categories=dumps(categories))[1].get("results", [])
+                    **args)[1].get("results", [])
 
         posts = []
         for categories, post in results:

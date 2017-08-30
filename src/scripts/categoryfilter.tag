@@ -61,7 +61,7 @@
 var self = this;
 
 self.start = 0;
-self.pagesize = 5;
+self.pagesize = 10;
 self.items = self.opts.items;
 
 preventDefault(ev) {
