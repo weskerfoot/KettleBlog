@@ -52,6 +52,7 @@ self.route = route;
 self.loading = false;
 self.category = self.opts.state.category_filter;
 self.converter = new showdown.Converter();
+self.lastkey = false;
 
 self.openPost = (id) => {
   return ((ev) => {
@@ -80,7 +81,7 @@ self.filterCategories = (category) => {
     });
     self.opts.state.category_filter = category;
 
-    window.cached(`/blog/getbrowse/${category}/5/${self.lastkey}`)
+    window.cached(`/blog/getbrowse/${category}/5/${self.lastkey ? self.lastkey : ""}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
@@ -93,7 +94,7 @@ self.filterCategories = (category) => {
 
 self.getInitial = () => {
     self.update({"loading" : true});
-    window.cached(`/blog/getbrowse/5/${self.lastkey}`)
+    window.cached("/blog/getbrowse/5")
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
@@ -109,7 +110,9 @@ self.on("mount", () => {
   }
   else if (self.opts.state.category_tag) {
     self.filterCategories(self.opts.state.category_tag)();
-    self.one("updated", () => { self.opts.state.category_tag = false; });
+    self.one("updated", () => {
+      self.opts.state.category_tag = false;
+    });
   }
 });
 

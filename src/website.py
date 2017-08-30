@@ -266,7 +266,7 @@ def NeverWhere(configfile=None):
     def getbycategory(category, limit, startkey):
         return posts.browse(limit, startkey, categories=[category])
 
-    @app.route("/blog/getbrowsecat/<category>/<limit>")
+    @app.route("/blog/getbrowse/<category>/<limit>/")
     def getbycategoryinitial(category, limit):
         return posts.browse(limit, False, categories=[category])
     return app
