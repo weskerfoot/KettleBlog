@@ -33,6 +33,15 @@
             </a>
           </div>
         </div>
+        <div class="getmore">
+          <button
+            class="btn btn-primary branded"
+            if={opts.state.results.length == pagesize}
+            onclick={getmore}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -53,6 +62,7 @@ self.loading = false;
 self.category = self.opts.state.category_filter;
 self.converter = new showdown.Converter();
 self.lastkey = false;
+self.pagesize = 5;
 
 self.openPost = (id) => {
   return ((ev) => {
@@ -73,15 +83,15 @@ self.filterCategories = (category) => {
   return ((ev) => {
     if (ev !== undefined) {
       ev.preventDefault();
-      self.route(`browse/${category}`);
     }
 
+    self.route(`browse/${category}`);
     self.update({
       "loading" : true
     });
     self.opts.state.category_filter = category;
 
-    window.cached(`/blog/getbrowse/${category}/5/${self.lastkey ? self.lastkey : ""}`)
+    window.cached(`/blog/getbrowse/${category}/${self.pagesize}/${self.lastkey ? self.lastkey : ""}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
@@ -92,9 +102,30 @@ self.filterCategories = (category) => {
   })
 }
 
+self.getNext = (startkey) => {
+    self.update({"loading" : true});
+    var endpoint;
+
+    if (self.category) {
+      endpoint = `/blog/getbrowse/${self.category}/${self.pagesize}/${startkey}`;
+    }
+    else {
+      endpoint = `/blog/getbrowselim/${self.pagesize}/${startkey}`;
+    }
+
+    window.cached(endpoint)
+    .then((resp) => { return resp.json() })
+    .then((results) => {
+      self.opts.state.results = results.slice(1, results.length);
+      self.update({
+        "loading" : false
+      });
+    });
+}
+
 self.getInitial = () => {
     self.update({"loading" : true});
-    window.cached("/blog/getbrowse/5")
+    window.cached(`/blog/getbrowse/${self.pagesize}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
@@ -102,6 +133,11 @@ self.getInitial = () => {
         "loading" : false
       });
     });
+}
+
+self.getmore = (ev) => {
+  ev.preventDefault();
+  self.getNext(self.opts.state.results.slice(-1)[0][1].id)
 }
 
 self.on("mount", () => {
