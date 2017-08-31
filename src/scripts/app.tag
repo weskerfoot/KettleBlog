@@ -130,6 +130,7 @@ document.addEventListener("click", function(event) {
 });
 
 self.state = {
+    "pagenum" : 0, /* the current page of posts in the browse tab */
     "browsed" : false, /* was a link clicked to a post yet? */
     "page" : self.opts.page,
     "results" : self.decode(self.opts.results),

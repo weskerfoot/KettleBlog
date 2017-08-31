@@ -37,7 +37,7 @@
           <div class="columns">
             <div class="col-6 getprev">
               <button
-                if={pagenum > 0}
+                if={opts.state.pagenum > 0}
                 class="btn btn-primary branded"
                 onclick={getprev}
               >
@@ -69,7 +69,6 @@ import { default as showdown } from 'showdown';
 
 var self = this;
 
-self.pagenum = 0;
 self.route = route;
 self.loading = false;
 self.category = self.opts.state.category_filter;
@@ -102,6 +101,7 @@ self.filterCategories = (category) => {
     self.update({
       "loading" : true
     });
+    self.opts.state.pagenum = 0;
     self.opts.state.category_filter = category;
 
     window.cached(`/blog/getbrowse/${category}/${self.pagesize}/${self.startkey ? self.startkey : ""}`)
@@ -125,14 +125,14 @@ self.getPrev = (endkey) => {
     else {
       endpoint = `/blog/prevbrowse/${self.pagesize}/${endkey}`;
     }
+    self.opts.state.pagenum--;
 
     window.cached(endpoint)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
       self.update({
-        "loading" : false,
-        "pagenum" : self.pagenum-1
+        "loading" : false
       });
     });
 }
@@ -147,21 +147,22 @@ self.getNext = (startkey) => {
     else {
       endpoint = `/blog/getbrowselim/${self.pagesize}/${startkey}`;
     }
+    self.opts.state.pagenum++;
 
     window.cached(endpoint)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results.slice(1, results.length);
       self.update({
-        "loading" : false,
-        "pagenum" : self.pagenum+1
+        "loading" : false
       });
     });
 }
 
 self.getInitial = () => {
-    self.update({"loading" : true});
-    window.cached(`/blog/getbrowse/${self.pagesize}`)
+  self.update({"loading" : true});
+  self.opts.state.pagenum = 0;
+  window.cached(`/blog/getbrowse/${self.pagesize}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
