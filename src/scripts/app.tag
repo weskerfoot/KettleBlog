@@ -129,18 +129,18 @@ document.addEventListener("click", function(event) {
   }
 });
 
+/* Mostly contains stuff that is preloaded depending on the page accessed initially */
+/* Not meant as the ultimate source of truth for everything */
 self.state = {
     "pagenum" : 0, /* the current page of posts in the browse tab */
     "browsed" : false, /* was a link clicked to a post yet? */
     "page" : self.opts.page,
     "results" : self.decode(self.opts.results),
-    "start" : self.opts.start,
     "category_filter" : self.decode(self.opts.category_filter),
     "category_tag" : false, /* used if browse page accessed by a category tag */
     "_id" : self.opts.postid.slice(-hashLength),
     "author" : self.opts.author,
     "title" : self.opts.title,
-    "loaded" : false,
     "initial" : document.getElementsByTagName("noscript")[0].textContent,
     "links" : self.decode(self.opts.links),
     "categories" : self.decode(self.opts.categories),
