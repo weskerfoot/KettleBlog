@@ -71,7 +71,6 @@ var self = this;
 
 self.route = route;
 self.loading = false;
-self.category = self.opts.state.category_filter;
 self.converter = new showdown.Converter();
 self.lastkey = false;
 self.pagesize = 4;
@@ -119,7 +118,7 @@ self.getPrev = (endkey) => {
     self.update({"loading" : true});
     var endpoint;
 
-    if (self.category) {
+    if (self.opts.state.category_filter) {
       endpoint = `/blog/prevbrowse/${self.opts.state.category_filter}/${self.pagesize}/${endkey}`;
     }
     else {
@@ -141,7 +140,7 @@ self.getNext = (startkey) => {
     self.update({"loading" : true});
     var endpoint;
 
-    if (self.category) {
+    if (self.opts.state.category_filter) {
       endpoint = `/blog/getbrowse/${self.opts.state.category_filter}/${self.pagesize}/${startkey}`;
     }
     else {
@@ -162,6 +161,7 @@ self.getNext = (startkey) => {
 self.getInitial = () => {
   self.update({"loading" : true});
   self.opts.state.pagenum = 0;
+  self.opts.state.category_filter = false;
   window.cached(`/blog/getbrowse/${self.pagesize}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
