@@ -127,7 +127,7 @@ def NeverWhere(configfile=None):
     @cache.cached(timeout=50)
     @app.route("/blog/", methods=("GET", "POST"))
     def index():
-        return renderInitial()
+        return browse_root()
 
     # get the next post
     @cache.cached(timeout=50)
@@ -148,10 +148,6 @@ def NeverWhere(configfile=None):
     def browse_root():
         return browse(0)
 
-    @app.route("/blog/browse/<category>/")
-    def browse_categories_(category):
-        return browse_categories(category, 0)
-
     @app.route("/blog/browse/<start>")
     def browse(start):
         results = posts.browse(4, start*4, categories=[], json=False)
@@ -160,8 +156,18 @@ def NeverWhere(configfile=None):
                                 start=start,
                                 results=dumps(results))
 
+    @app.route("/blog/browse/<category>/")
+    def browse_categories_(category):
+        """
+        Get the first page of categories
+        """
+        return browse_categories(category, 0)
+
     @app.route("/blog/browse/<category>/<start>")
     def browse_categories(category, start):
+        """
+        Get the nth page of categories
+        """
         results = posts.browse(4, start*4, categories=[category], json=False)
         return render_template("index.html",
                                 page="browse",

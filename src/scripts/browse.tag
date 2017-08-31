@@ -1,5 +1,33 @@
 <browse>
   <div class="browse-content container">
+    <div
+      style={navStyle}
+      class="container"
+    >
+      <div class="columns">
+        <div class="col-4">
+          <button
+            disabled={opts.state.pagenum == 0}
+            class="btn btn-primary branded"
+            style={prevStyle}
+            onclick={getprev}
+          >
+            Previous
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            class="btn btn-primary branded"
+            disabled={opts.state.results.length != pagesize}
+            style={nextStyle}
+            onclick={getmore}
+          >
+            Next
+          </button>
+        </div>
+        <div class="col-4"></div>
+      </div>
+    </div>
     <div class="columns">
       <div class="column hide-xs hide-sm hide-md col-3">
         <categoryfilter
@@ -27,32 +55,11 @@
             <raw content="{ converter.makeHtml(result[1].content) }"></raw>
             <a
               style={linkStyle}
+              href={"/blog/posts/"+result[1].id}
               onclick={openPost(result[1].id)}
             >
               Read More
             </a>
-          </div>
-        </div>
-        <div class="container">
-          <div class="columns">
-            <div class="col-6 getprev">
-              <button
-                if={opts.state.pagenum > 0}
-                class="btn btn-primary branded"
-                onclick={getprev}
-              >
-                Previous
-              </button>
-            </div>
-            <div class="col-6 getmore">
-              <button
-                class="btn btn-primary branded"
-                if={opts.state.results.length == pagesize}
-                onclick={getmore}
-              >
-                Next
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -72,7 +79,6 @@ var self = this;
 self.route = route;
 self.loading = false;
 self.converter = new showdown.Converter();
-self.lastkey = false;
 self.pagesize = 4;
 
 self.openPost = (id) => {
@@ -88,6 +94,18 @@ self.cardStyle = {
 
 self.linkStyle = {
   "cursor" : "pointer"
+};
+
+self.prevStyle = {
+  "float" : "right"
+}
+
+self.nextStyle = {
+  "float" : "left"
+}
+
+self.navStyle = {
+  "margin-top" : "8px"
 };
 
 self.filterCategories = (category) => {

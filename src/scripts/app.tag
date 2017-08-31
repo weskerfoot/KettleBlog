@@ -171,7 +171,11 @@ menuOff(ev) {
 
 function activate(page) {
   return function() {
-    if (page !== "posts") {
+    if (page == "browse") {
+      document.title = "Wes Kerfoot";
+      self.currentPage = document.title;
+    }
+    else if (page !== "posts") {
       document.title = page.slice(0,1).toUpperCase()+page.slice(1,page.length);
       self.currentPage = document.title;
     }
@@ -235,7 +239,7 @@ self.on("mount", () => {
   );
 
   self.route.base('/blog/')
-  self.route("/", () => { self.route(`/posts/${self.state._id}`); });
+  self.route("/", () => { self.route("/browse"); });
   self.route("/posts", () => { self.route(`/posts/${self.state._id}`); });
   self.route("posts/*", posts);
   self.route("posts", (() => {posts(self.state._id)}));
