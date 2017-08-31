@@ -7,7 +7,7 @@
       <div class="columns">
         <div class="col-4">
           <button
-            disabled={opts.state.pagenum == 0}
+            disabled={(opts.state.pagenum == 0) || loading}
             class="btn btn-primary branded"
             style={prevStyle}
             onclick={getprev}
@@ -18,7 +18,7 @@
         <div class="col-4">
           <button
             class="btn btn-primary branded"
-            disabled={opts.state.results.length != pagesize}
+            disabled={(opts.state.results.length != pagesize) || loading}
             style={nextStyle}
             onclick={getmore}
           >
