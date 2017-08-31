@@ -105,12 +105,12 @@ def NeverWhere(configfile=None):
                                postcontent=post)
 
     @cache.cached(timeout=50)
-    @app.route("/blog/projects", methods=("GET",))
+    @app.route("/blog/projects/", methods=("GET",))
     def showProjects():
         return render_template("index.html", page="projects")
 
     @cache.cached(timeout=50)
-    @app.route("/blog/links", methods=("GET",))
+    @app.route("/blog/links/", methods=("GET",))
     def showLinks():
         return render_template("index.html",
                                links=dumps(
@@ -120,7 +120,7 @@ def NeverWhere(configfile=None):
                                         )
 
     @cache.cached(timeout=50)
-    @app.route("/blog/about", methods=("GET",))
+    @app.route("/blog/about/", methods=("GET",))
     def showAbout():
         return render_template("index.html", page="about")
 
@@ -146,10 +146,9 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/browse/")
     def browse_root():
-        results = posts.browse(4, start*4, categories=[], json=False)
+        results = posts.browse(4, False, json=False)
         return render_template("index.html",
                                 page="browse",
-                                start=start,
                                 results=dumps(results))
 
     @app.route("/blog/browse/<category>/")
@@ -157,17 +156,9 @@ def NeverWhere(configfile=None):
         """
         Get the first page of categories
         """
-        return browse_categories(category, 0)
-
-    @app.route("/blog/browse/<category>/<start>")
-    def browse_categories(category, start):
-        """
-        Get the nth page of categories
-        """
-        results = posts.browse(4, start*4, categories=[category], json=False)
+        results = posts.browse(4, False, categories=[category], json=False)
         return render_template("index.html",
                                 page="browse",
-                                start=start,
                                 category_filter=dumps([category]),
                                 results=dumps(results))
 
