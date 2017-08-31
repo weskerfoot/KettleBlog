@@ -145,14 +145,14 @@ class Posts:
                                      group=True)
                 ])))
 
-    def browse(self, limit, startkey, categories=[], json=True):
+    def browse(self, limit, startkey, categories=[], json=True, backwards=False):
         args = {
                 "num" : limit,
                 "categories" : dumps(categories)
                 }
 
         if startkey:
-            args["startkey"] = startkey
+            args["endkey" if backwards else "startkey"] = startkey
 
         results = self.db.list(
                     "blogPosts/categories",
@@ -163,5 +163,4 @@ class Posts:
         for categories, post in results:
             post["content"] = markdown(post["content"])
             posts.append([categories, post])
-
         return jsonify(posts) if json else posts

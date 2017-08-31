@@ -33,14 +33,27 @@
             </a>
           </div>
         </div>
-        <div class="getmore">
-          <button
-            class="btn btn-primary branded"
-            if={opts.state.results.length == pagesize}
-            onclick={getmore}
-          >
-            Next
-          </button>
+        <div class="container">
+          <div class="columns">
+            <div class="col-6 getprev">
+              <button
+                if={pagenum > 0}
+                class="btn btn-primary branded"
+                onclick={getprev}
+              >
+                Previous
+              </button>
+            </div>
+            <div class="col-6 getmore">
+              <button
+                class="btn btn-primary branded"
+                if={opts.state.results.length == pagesize}
+                onclick={getmore}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -62,7 +75,7 @@ self.loading = false;
 self.category = self.opts.state.category_filter;
 self.converter = new showdown.Converter();
 self.lastkey = false;
-self.pagesize = 5;
+self.pagesize = 4;
 
 self.openPost = (id) => {
   return ((ev) => {
@@ -91,7 +104,7 @@ self.filterCategories = (category) => {
     });
     self.opts.state.category_filter = category;
 
-    window.cached(`/blog/getbrowse/${category}/${self.pagesize}/${self.lastkey ? self.lastkey : ""}`)
+    window.cached(`/blog/getbrowse/${category}/${self.pagesize}/${self.startkey ? self.startkey : ""}`)
     .then((resp) => { return resp.json() })
     .then((results) => {
       self.opts.state.results = results;
@@ -102,12 +115,34 @@ self.filterCategories = (category) => {
   })
 }
 
+self.getPrev = (endkey) => {
+    self.update({"loading" : true});
+    var endpoint;
+
+    if (self.category) {
+      endpoint = `/blog/prevbrowse/${self.opts.state.category_filter}/${self.pagesize}/${endkey}`;
+    }
+    else {
+      endpoint = `/blog/prevbrowse/${self.pagesize}/${endkey}`;
+    }
+
+    window.cached(endpoint)
+    .then((resp) => { return resp.json() })
+    .then((results) => {
+      self.opts.state.results = results;
+      self.update({
+        "loading" : false,
+        "pagenum" : self.pagenum-1
+      });
+    });
+}
+
 self.getNext = (startkey) => {
     self.update({"loading" : true});
     var endpoint;
 
     if (self.category) {
-      endpoint = `/blog/getbrowse/${self.category}/${self.pagesize}/${startkey}`;
+      endpoint = `/blog/getbrowse/${self.opts.state.category_filter}/${self.pagesize}/${startkey}`;
     }
     else {
       endpoint = `/blog/getbrowselim/${self.pagesize}/${startkey}`;
@@ -118,7 +153,8 @@ self.getNext = (startkey) => {
     .then((results) => {
       self.opts.state.results = results.slice(1, results.length);
       self.update({
-        "loading" : false
+        "loading" : false,
+        "pagenum" : self.pagenum+1
       });
     });
 }
@@ -138,6 +174,11 @@ self.getInitial = () => {
 self.getmore = (ev) => {
   ev.preventDefault();
   self.getNext(self.opts.state.results.slice(-1)[0][1].id)
+}
+
+self.getprev = (ev) => {
+  ev.preventDefault();
+  self.getPrev(self.opts.state.results[0][1].id)
 }
 
 self.on("mount", () => {

@@ -163,7 +163,7 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/browse/<category>/<start>")
     def browse_categories(category, start):
-        results = posts.browse(5, start*5, categories=[category], json=False)
+        results = posts.browse(4, start*4, categories=[category], json=False)
         return render_template("index.html",
                                 page="browse",
                                 start=start,
@@ -262,6 +262,7 @@ def NeverWhere(configfile=None):
     def getbrowse(limit, startkey):
         return posts.browse(limit, startkey)
 
+    # forwards pagination
     @app.route("/blog/getbrowse/<category>/<limit>/<startkey>")
     def getbycategory(category, limit, startkey):
         return posts.browse(limit, startkey, categories=[category])
@@ -269,6 +270,16 @@ def NeverWhere(configfile=None):
     @app.route("/blog/getbrowse/<category>/<limit>/")
     def getbycategoryinitial(category, limit):
         return posts.browse(limit, False, categories=[category])
+
+    # backwards pagination
+    @app.route("/blog/prevbrowse/<limit>/<endkey>")
+    def prevbrowse(limit, endkey):
+        return posts.browse(limit, endkey, backwards=True)
+
+    @app.route("/blog/prevbrowse/<category>/<limit>/<endkey>")
+    def prevbycategory(category, limit, endkey):
+        return posts.browse(limit, endkey, categories=[category], backwards=True)
+
     return app
 
 app = NeverWhere()
