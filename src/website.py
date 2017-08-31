@@ -146,7 +146,7 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/browse/")
     def browse_root():
-        results = posts.browse(4, False, json=False)
+        results = posts.browse(4, json=False)
         return render_template("index.html",
                                 page="browse",
                                 results=dumps(results))
@@ -156,7 +156,7 @@ def NeverWhere(configfile=None):
         """
         Get the first page of categories
         """
-        results = posts.browse(4, False, categories=[category], json=False)
+        results = posts.browse(4, categories=[category], json=False)
         return render_template("index.html",
                                 page="browse",
                                 category_filter=dumps([category]),
@@ -233,6 +233,7 @@ def NeverWhere(configfile=None):
                 "_id" : postid
                 }
 
+        memcache.clear()
         return posts.savepost(**post)
 
     @app.route("/blog/glinks/", methods=("GET",))
@@ -248,29 +249,29 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/getbrowse/<limit>")
     def getbrowsefirst(limit):
-        return posts.browse(limit, False)
+        return posts.browse(limit)
 
     @app.route("/blog/getbrowselim/<limit>/<startkey>")
     def getbrowse(limit, startkey):
-        return posts.browse(limit, startkey)
+        return posts.browse(limit, startkey=startkey)
 
     # forwards pagination
     @app.route("/blog/getbrowse/<category>/<limit>/<startkey>")
     def getbycategory(category, limit, startkey):
-        return posts.browse(limit, startkey, categories=[category])
+        return posts.browse(limit, startkey=startkey, categories=[category])
 
     @app.route("/blog/getbrowse/<category>/<limit>/")
     def getbycategoryinitial(category, limit):
-        return posts.browse(limit, False, categories=[category])
+        return posts.browse(limit, categories=[category])
 
     # backwards pagination
-    @app.route("/blog/prevbrowse/<limit>/<endkey>")
+    @app.route("/blog/prevbrowse/<limit>/<endkey>/")
     def prevbrowse(limit, endkey):
-        return posts.browse(limit, endkey, backwards=True)
+        return posts.browse(limit, endkey=endkey)
 
-    @app.route("/blog/prevbrowse/<category>/<limit>/<endkey>")
+    @app.route("/blog/prevbrowse/<category>/<limit>/<endkey>/")
     def prevbycategory(category, limit, endkey):
-        return posts.browse(limit, endkey, categories=[category], backwards=True)
+        return posts.browse(limit, endkey=endkey, categories=[category])
 
     return app
 

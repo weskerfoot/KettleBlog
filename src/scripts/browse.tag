@@ -169,7 +169,7 @@ self.getNext = (startkey) => {
     window.cached(endpoint)
     .then((resp) => { return resp.json() })
     .then((results) => {
-      self.opts.state.results = results.slice(1, results.length);
+      self.opts.state.results = results;
       self.update({
         "loading" : false
       });

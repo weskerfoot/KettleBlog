@@ -138,6 +138,7 @@ class Posts:
                     c["key"][1] for c in
                         self.db.view("blogPosts/categories",
                                      startkey=["categories"],
+                                     startkey_docid=["categories"],
                                      endkey=["categories", {}],
                                      inclusive_end=False,
                                      reduce=True,
@@ -145,14 +146,25 @@ class Posts:
                                      group=True)
                 ])))
 
-    def browse(self, limit, startkey, categories=[], json=True, backwards=False):
+    def browse(self,
+               limit,
+               startkey=False,
+               endkey=False,
+               categories=[],
+               json=True):
+
         args = {
                 "num" : limit,
                 "categories" : dumps(categories)
                 }
 
         if startkey:
-            args["endkey" if backwards else "startkey"] = startkey
+            args["startkey"] = startkey
+            args["startkey_docid"] = startkey
+
+        if endkey:
+            args["endkey"] = endkey
+            args["getlast"] = "true"
 
         results = self.db.list(
                     "blogPosts/categories",
