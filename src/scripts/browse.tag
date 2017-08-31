@@ -207,6 +207,9 @@ self.on("mount", () => {
   else if (self.opts.state.category_tag) {
     self.filterCategories(self.opts.state.category_tag)();
   }
+  else if (self.opts.state.category_filter) {
+    self.filterCategories(self.opts.state.category_filter)();
+  }
 });
 
 </script>
