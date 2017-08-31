@@ -146,10 +146,6 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/browse/")
     def browse_root():
-        return browse(0)
-
-    @app.route("/blog/browse/<start>")
-    def browse(start):
         results = posts.browse(4, start*4, categories=[], json=False)
         return render_template("index.html",
                                 page="browse",
