@@ -206,9 +206,6 @@ self.on("mount", () => {
   }
   else if (self.opts.state.category_tag) {
     self.filterCategories(self.opts.state.category_tag)();
-    self.one("updated", () => {
-      self.opts.state.category_tag = false;
-    });
   }
 });
 
