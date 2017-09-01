@@ -219,7 +219,7 @@ self.on("mount", () => {
     self.getInitial();
   }
   /* Check for preloaded results */
-  else if (self.opts.state.results.length > 0 && !self.opts.state.category_tag) {
+  else if ((self.opts.state.results.length > 0) && !self.opts.state.category_tag) {
     return;
   }
   /* If we're coming from clicking a tag button */
