@@ -57,13 +57,12 @@
       </li>
     </ul>
     <div class="projects-content">
-      <projectsview
+      <projects
         class=""
         if={active.get("projects")}
         state={state}
-        ref="projectsview"
       >
-      </projectsview>
+      </projects>
     </div>
 
     <div class="content">
@@ -92,7 +91,7 @@
 <script>
 import './sidebar.tag';
 import './navtab.tag';
-import './projectsview.tag';
+import './projects.tag';
 import './postsview.tag';
 import './about.tag';
 import './links.tag';

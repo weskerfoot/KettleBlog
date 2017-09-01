@@ -214,15 +214,19 @@ self.getprev = (ev) => {
 }
 
 self.on("mount", () => {
+  /* If they clicked on the "browse" button */
   if (!self.opts.state.category_filter && !self.opts.state.category_tag) {
     self.getInitial();
   }
+  /* Check for preloaded results */
   else if (self.opts.state.results.length > 0 && !self.opts.state.category_tag) {
     return;
   }
+  /* If we're coming from clicking a tag button */
   else if (self.opts.state.category_tag) {
     self.filterCategories(self.opts.state.category_tag)();
   }
+  /* If we're coming from the back button */
   else if (self.opts.state.category_filter) {
     self.filterCategories(self.opts.state.category_filter)();
   }
