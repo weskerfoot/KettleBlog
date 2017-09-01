@@ -4,7 +4,11 @@
       style={navStyle}
       class="container"
     >
-      <div class="columns">
+      <div
+        if={opts.state.pagenum > 0 ||
+            opts.state.results.length == pagesize}
+        class="columns"
+      >
         <div class="col-4">
           <button
             disabled={(opts.state.pagenum == 0) || loading}
@@ -18,7 +22,9 @@
         <div class="col-4">
           <button
             class="btn btn-primary branded"
-            disabled={(opts.state.results.length != pagesize) || loading}
+            disabled={((opts.state.results.length != pagesize) ||
+                        loading ||
+                        disabled)}
             style={nextStyle}
             onclick={getmore}
           >
@@ -78,6 +84,7 @@ var self = this;
 
 self.route = route;
 self.loading = false;
+self.disabled = false;
 self.converter = new showdown.Converter();
 self.pagesize = 4;
 
@@ -116,6 +123,7 @@ self.filterCategories = (category) => {
 
     self.route(`browse/${category}`);
     self.update({
+      "disabled" : false,
       "loading" : true
     });
     self.opts.state.pagenum = 0;
@@ -142,11 +150,11 @@ self.getPrev = (endkey) => {
     else {
       endpoint = `/blog/prevbrowse/${self.pagesize}/${endkey}`;
     }
-    self.opts.state.pagenum--;
 
     window.cached(endpoint)
     .then((resp) => { return resp.json() })
     .then((results) => {
+      self.opts.state.pagenum--;
       self.opts.state.results = results;
       self.update({
         "loading" : false
@@ -164,12 +172,17 @@ self.getNext = (startkey) => {
     else {
       endpoint = `/blog/getbrowselim/${self.pagesize}/${startkey}`;
     }
-    self.opts.state.pagenum++;
 
     window.cached(endpoint)
     .then((resp) => { return resp.json() })
     .then((results) => {
-      self.opts.state.results = results;
+      if (results.length > 0) {
+        self.opts.state.results = results;
+        self.opts.state.pagenum++;
+      }
+      else {
+        self.disabled = true;
+      }
       self.update({
         "loading" : false
       });
@@ -203,6 +216,9 @@ self.getprev = (ev) => {
 self.on("mount", () => {
   if (!self.opts.state.category_filter && !self.opts.state.category_tag) {
     self.getInitial();
+  }
+  else if (self.opts.state.results.length > 0 && !self.opts.state.category_tag) {
+    return;
   }
   else if (self.opts.state.category_tag) {
     self.filterCategories(self.opts.state.category_tag)();

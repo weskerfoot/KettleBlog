@@ -118,7 +118,12 @@ class Posts:
         return jsonify(posts)
 
     def links(self, json=True):
+        """
+        Get the links we want to show
+        """
         result = list(self.db.iterview("blogPosts/links", 1, include_docs=True))
+
+        # make sure there are results
         if len(result) >= 1:
             xs = result[0].doc.get("links", [])
             return jsonify(xs) if json else xs
@@ -134,6 +139,11 @@ class Posts:
             return jsonify(False)
 
     def categories(self):
+        """
+        Get the full list of all categories
+        """
+        # the view returns a list of lists of category names
+        # we want to get the unique ones in a flat list
         return list(set(chain.from_iterable([
                     c["key"][1] for c in
                         self.db.view("blogPosts/categories",

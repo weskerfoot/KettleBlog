@@ -13,7 +13,7 @@
             <div class="column col-6">
               <button
                 style={{"float" : "right"}}
-                class="btn btn-primary"
+                class="btn btn-primary branded"
                 onclick={goLeft}
               >
                 Prev
@@ -22,7 +22,7 @@
             <div class="column col-6">
               <button
                style={{"float" : "left"}}
-               class="btn btn-primary"
+               class="btn btn-primary branded"
                onclick={goRight}
               >
                Next
@@ -36,13 +36,13 @@
           <span>Editing post {!this.isNewPost ? this._id : ""}</span>
         <p>
           <button
-            class="btn btn-primary"
+            class="btn btn-primary branded"
             onclick={deletePost(!this.isNewPost ? this._id : false)}
           >
             Delete Post
           </button>
           <button
-            class="btn btn-primary"
+            class="btn btn-primary branded"
             onclick={newPost}
           >
             New Post
@@ -59,7 +59,7 @@
             { placeholder }
           </textarea>
           <button onclick={submit}
-                  class="btn post-submit centered">
+                  class="btn post-submit centered branded">
             Submit Post
           </button>
         </p>
