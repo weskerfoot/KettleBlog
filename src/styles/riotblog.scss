@@ -98,7 +98,7 @@ $navbarHeight: 100px;
 }
 
 .categorybar {
-  max-width: 250px;
+  max-width: 350px;
   float: right;
 }
 
@@ -305,6 +305,10 @@ p, h6, h4 {
   @media (max-width: 400px) {
     max-width: 100%;
   }
+}
+
+.post-card {
+  max-width: 80%;
 }
 
 .content {

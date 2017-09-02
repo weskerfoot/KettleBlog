@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="columns">
-      <div class="column hide-xs hide-sm hide-md col-3">
+      <div class="column hide-xs hide-sm hide-md col-2">
         <categoryfilter
           name="Categories"
           category={opts.state.category_filter}
@@ -44,12 +44,12 @@
         >
         </categoryfilter>
       </div>
-      <div class="column col-sm-12 col-9">
+      <div class="column col-sm-12 col-10">
         <loading if={loading}></loading>
         <div
           if={!loading}
           style={cardStyle}
-          class="card"
+          class="card post-card"
           each={result in opts.state.results}
         >
           <div class="card-header">
@@ -128,6 +128,7 @@ self.filterCategories = (category) => {
     });
     self.opts.state.pagenum = 0;
     self.opts.state.category_filter = category;
+    self.opts.state.category_tag = category;
 
     window.cached(`/blog/getbrowse/${category}/${self.pagesize}/${self.startkey ? self.startkey : ""}`)
     .then((resp) => { return resp.json() })
@@ -214,20 +215,19 @@ self.getprev = (ev) => {
 }
 
 self.on("mount", () => {
-  /* If they clicked on the "browse" button */
-  if (!self.opts.state.category_filter && !self.opts.state.category_tag) {
+  if (!self.opts.state.category_filter &&
+      !self.opts.state.category_tag &&
+      self.opts.state.results.length == 0) {
     self.getInitial();
   }
-  /* Check for preloaded results */
-  else if ((self.opts.state.results.length > 0) && !self.opts.state.category_tag) {
-    return;
-  }
-  /* If we're coming from clicking a tag button */
   else if (self.opts.state.category_tag) {
     self.filterCategories(self.opts.state.category_tag)();
   }
-  /* If we're coming from the back button */
-  else if (self.opts.state.category_filter) {
+  else if ((self.opts.state.results.length > 0) &&
+           !self.opts.state.category_tag) {
+    return;
+  }
+  else {
     self.filterCategories(self.opts.state.category_filter)();
   }
 });
