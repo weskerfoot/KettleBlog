@@ -49,7 +49,7 @@
         <div
           if={!loading}
           style={cardStyle}
-          class="card post-card"
+          class="animated fadeIn card post-card"
           each={result in opts.state.results}
         >
           <div class="card-header">

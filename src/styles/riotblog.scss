@@ -14,7 +14,6 @@ $navbarHeight: 100px;
   max-width: 70%;
   margin-left: auto;
   margin-right: auto;
-  font-size: 1.75em;
   font-weight: 400;
   color: black;
   @media (max-width: 600px) {
@@ -183,7 +182,7 @@ a {
   border: 1px;
 }
 
-p, h6, h4 {
+p, h6, h5, h4, h3, h2, h1 {
 	font-family: 'Open Sans',sans-serif !important;
 }
 

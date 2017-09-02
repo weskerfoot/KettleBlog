@@ -10,7 +10,7 @@
     class="header"
   >
     <section style={{"margin-top" : "0px"}} class="text-center nav navbar centered navbar-section">
-      <h4 class="blog-title">{ currentPage }</h4>
+      <h3 class="blog-title">{ currentPage }</h3>
     </section>
   </div>
   <div class="app-body">

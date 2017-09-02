@@ -2,9 +2,9 @@
   <div class="links-content container animated fadeIn">
     <div class="columns">
       <div class="column col-12">
-        <h3 class="text-center">
+        <h4 class="text-center">
           Interesting Links
-        </h3>
+        </h4>
       </div>
     </div>
     <div class="columns">

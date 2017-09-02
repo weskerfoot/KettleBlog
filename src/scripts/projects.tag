@@ -2,7 +2,9 @@
     <div class="projects-box">
       <div class="columns">
         <div class="column col-8">
-          <h3 class="float-right">My Projects</h3>
+          <h4 class="float-right">
+            Some Projects I Work On
+          </h4>
         </div>
         <div class="column col-4">
           <figure
