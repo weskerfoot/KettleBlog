@@ -1,20 +1,22 @@
 <app>
-  <div
-    style={
-            {
-              "border-bottom" : showBorder ? "solid 1px" : "none",
-              "opacity" : showBorder ? "0.7" : "1",
-              "background-color" : showBorder ? "white" : "white"
+  <div class="app-body">
+    <div
+      style={
+              {
+                "border-bottom" : showBorder ? "solid 1px" : "none",
+                "opacity" : showBorder ? "0.7" : "1",
+                "background-color" : showBorder ? "white" : "white"
+              }
             }
-          }
-    class="header"
-  >
-    <section style={{"margin-top" : "0px"}} class="text-center nav navbar centered navbar-section">
+      class="header"
+    >
+    <section
+      style={{"margin-top" : "5px"}}
+      class="text-center nav navbar centered navbar-section"
+    >
       <h3 class="blog-title">{ currentPage }</h3>
     </section>
   </div>
-  <div class="app-body">
-
     <section class="text-center nav navbar centered navbar-section">
     </section>
 
@@ -168,18 +170,22 @@ menuOff(ev) {
   self.update();
 }
 
+self.titles = {
+  "browse" : "Wes Kerfoot",
+  "projects" : "Software",
+  "links" : "Links",
+  "about" : "About Me"
+};
+
 function activate(page) {
   return function() {
-    if (page == "browse") {
-      document.title = "Wes Kerfoot";
-      self.currentPage = document.title;
-    }
-    else if (page !== "posts") {
+    if (page == "posts") {
       document.title = page.slice(0,1).toUpperCase()+page.slice(1,page.length);
       self.currentPage = document.title;
     }
     else {
-      self.currentPage = self.state.title;
+      self.currentPage = self.titles[page];
+      document.title = self.currentPage;
     }
     self.active = lens.setActive(self.active, page);
     self.update();

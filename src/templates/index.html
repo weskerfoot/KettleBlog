@@ -6,7 +6,7 @@
     <title>
     {{
       postcontent["title"] if page == "posts" else
-      "Wes Kerfoot" if page == "browse" else
+      titles[page] if page in titles else
       "%s%s" % (page[0].upper(), page[1:])
     }}
     </title>

@@ -23,6 +23,13 @@ cache = Cache(config={'CACHE_TYPE': 'memcached'})
 
 login_manager = LoginManager()
 
+page_titles = {
+                "about" : "About Me",
+                "projects" : "Software",
+                "links" : "Links",
+                "browse" : "Wes Kerfoot"
+                }
+
 def cacheit(key, thunk):
     """
     Explicit memcached caching
@@ -75,7 +82,8 @@ def NeverWhere(configfile=None):
                 "links" : dumps([]),
                 "projects" : dumps([]),
                 "category_filter" : dumps(False),
-                "categories" : cacheit("categories", lambda : dumps(posts.categories()))
+                "categories" : cacheit("categories", lambda : dumps(posts.categories())),
+                "titles" : page_titles
         }
 
     @login_manager.user_loader
