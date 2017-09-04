@@ -96,7 +96,7 @@ next() {
   console.log(self.project());
   self.update(
     {
-      "transition" : "fadeInRight",
+      "transition" : "flipInX",
       "swipe" : true
     }
   );
@@ -107,7 +107,7 @@ prev() {
   self.projects = Z.goLeft(self.projects);
   self.update(
     {
-      "transition" : "fadeInLeft",
+      "transition" : "flipInX",
       "swipe" : true
     }
   );

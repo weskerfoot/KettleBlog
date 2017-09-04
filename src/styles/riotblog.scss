@@ -16,10 +16,10 @@ $navbarHeight: 100px;
   font-weight: 400;
   color: black;
   @media (max-width: 600px) {
-    font-size: 1.6em;
+    font-size: 1.8em;
   }
   @media (max-width: 530px) {
-    font-size: 1.3em;
+    font-size: 1.5em;
   }
 }
 
@@ -284,7 +284,7 @@ p, h6, h5, h4, h3, h2, h1 {
 
 .projects-box {
   @extend .content-box;
-  height: 400px !important;
+  height: 385 !important;
 }
 
 .posts-box {
@@ -308,6 +308,9 @@ p, h6, h5, h4, h3, h2, h1 {
 
 .post-card {
   max-width: 80%;
+  @media(max-width: 400px) {
+    max-width: 95%;
+  }
 }
 
 .content {
