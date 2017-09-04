@@ -1,4 +1,5 @@
 *.sw*
+animate.css
 *.pyc
 *.cfg
 .vim-session
