@@ -3,7 +3,6 @@
     <div
       style={
               {
-                "border-bottom" : showBorder ? "solid 1px" : "none",
                 "opacity" : showBorder ? "0.7" : "1",
                 "background-color" : showBorder ? "white" : "white"
               }

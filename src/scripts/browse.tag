@@ -99,7 +99,7 @@ self.openPost = (id) => {
 
 self.cardStyle = {
   "margin" : "auto",
-  "margin-top" : "8px"
+  "margin-top" : "13px"
 };
 
 self.linkStyle = {

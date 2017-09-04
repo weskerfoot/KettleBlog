@@ -8,6 +8,31 @@ $menuWidth: 60px;
 
 $navbarHeight: 100px;
 
+.shadow {
+  -webkit-box-shadow: 1px 4px 20px -2px rgba(0,0,0,0.2);
+  -moz-box-shadow: 1px 4px 20px -2px rgba(0,0,0,0.2);
+  box-shadow: 1px 4px 20px -2px rgba(0,0,0,0.2);
+}
+
+.gradient {
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+  background-repeat:no-repeat !important;
+  background-color: #FBFCFD !important;
+}
+
+html {
+    min-height: 100%;
+    @extend .gradient;
+}
+
+.app-body {
+  @extend .gradient;
+  margin-top: 80px;
+}
+
 .blog-title {
   text-transform: capitalize;
   margin-top: 15px;
@@ -33,10 +58,7 @@ $navbarHeight: 100px;
   z-index: 1;
   width: 100%;
   margin: auto;
-}
-
-.app-body {
-  margin-top: 80px;
+  border-bottom: 1px solid $brandingBG;
 }
 
 .twitter-share-button-rendered {
@@ -289,6 +311,7 @@ p, h6, h5, h4, h3, h2, h1 {
 }
 
 .projects-card {
+  @extend .shadow;
   height: 200px !important;
 }
 
@@ -312,6 +335,7 @@ p, h6, h5, h4, h3, h2, h1 {
 }
 
 .post-card {
+  @extend .shadow;
   max-width: 80%;
   @media(max-width: 400px) {
     max-width: 95%;
@@ -369,6 +393,13 @@ code {
   @media (max-width: 400px) {
     max-width: 80%;
   }
+}
+
+.links-column {
+  @extend .shadow;
+  background-color: white;
+  margin: 5px 5px 5px 5px;
+  border: 1px solid $brandingBG;
 }
 
 .links-content {
