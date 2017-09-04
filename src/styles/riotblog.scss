@@ -99,11 +99,12 @@ $navbarHeight: 100px;
 .categorybar {
   max-width: 350px;
   float: right;
+  margin-right: 0px !important;
+  padding: 0px 0px 0px 0px !important;
 }
 
 .fewer-categories {
-  margin-bottom: 8px;
-  min-height: 8px;
+  margin-bottom: 3px;
 }
 
 .more-categories {

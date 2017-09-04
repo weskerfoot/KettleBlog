@@ -35,9 +35,12 @@
       </div>
     </div>
     <div class="columns">
-      <div class="column hide-xs hide-sm hide-md col-2">
+      <div
+        style={sidebarStyle}
+        class="column hide-xs hide-sm hide-md col-2"
+      >
         <categoryfilter
-          name="Categories"
+          name="Post Categories"
           category={opts.state.category_filter}
           items={opts.state.categories}
           onfilter={filterCategories}
@@ -113,6 +116,10 @@ self.nextStyle = {
 
 self.navStyle = {
   "margin-top" : "8px"
+};
+
+self.sidebarStyle = {
+  "margin-right" : "-40px"
 };
 
 self.filterCategories = (category) => {
