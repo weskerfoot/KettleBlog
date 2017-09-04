@@ -56,12 +56,12 @@
           each={result in opts.state.results}
         >
           <div class="card-header">
-            <h3 class="card-title">
+            <h2 class="card-title">
               { result[1].title } by { result[1].author }
-            </h3>
+            </h2>
           </div>
           <div class="card-body">
-            <raw content="{ converter.makeHtml(result[1].content) }"></raw>
+              <raw content="{ converter.makeHtml(result[1].content) }"></raw>
             <a
               style={linkStyle}
               href={"/blog/posts/"+result[1].id}

@@ -1,6 +1,8 @@
 <projects>
     <div class="projects-box">
-      <div class="columns">
+      <div
+        class="columns"
+      >
         <div class="column col-8">
           <h4 class="float-right">
             Some Projects I Work On
@@ -17,10 +19,21 @@
       </div>
 
       <loading if={loading}></loading>
-      <div if={!loading} class="text-break">
+      <div
+        if={!loading} class="text-break"
+      >
         <div if={this.swipe} class={"projects-card card animated "+this.transition}>
           <div class="card-header">
-            <h3 class="card-title project-title">{ this.project().name }</h3>
+            <h5
+              class="show-sm show-xs project-title"
+            >
+              { this.project().name }
+            </h5>
+            <h3
+              class="hide-sm hide-xs project-title"
+            >
+              { this.project().name }
+            </h3>
             <h5 class="project-description">{ this.project().description }</h5>
           </div>
           <div class="card-body">
@@ -96,7 +109,7 @@ next() {
   console.log(self.project());
   self.update(
     {
-      "transition" : "flipInX",
+      "transition" : "fadeInRight",
       "swipe" : true
     }
   );
@@ -107,7 +120,7 @@ prev() {
   self.projects = Z.goLeft(self.projects);
   self.update(
     {
-      "transition" : "flipInX",
+      "transition" : "fadeInLeft",
       "swipe" : true
     }
   );

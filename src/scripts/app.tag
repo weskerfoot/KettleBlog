@@ -10,7 +10,7 @@
       class="header"
     >
     <section
-      style={{"margin-top" : "5px"}}
+      style={{"margin-top" : page !== "posts" ? "15px" : "5px"}}
       class="text-center nav navbar centered navbar-section"
     >
       <h3 class="blog-title">{ currentPage }</h3>
