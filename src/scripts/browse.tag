@@ -67,7 +67,7 @@
               href={"/blog/posts/"+result[1].id}
               onclick={openPost(result[1].id)}
             >
-              Read More
+              More <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
             </a>
           </div>
         </div>

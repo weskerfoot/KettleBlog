@@ -178,11 +178,7 @@ self.titles = {
 
 function activate(page) {
   return function() {
-    if (page == "posts") {
-      document.title = page.slice(0,1).toUpperCase()+page.slice(1,page.length);
-      self.currentPage = document.title;
-    }
-    else {
+    if (page != "posts") {
       self.currentPage = self.titles[page];
       document.title = self.currentPage;
     }
