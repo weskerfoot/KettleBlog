@@ -18,7 +18,7 @@
 
       <loading if={loading}></loading>
       <div if={!loading} class="text-break">
-        <div if={this.swipe} class={"card animated "+this.transition}>
+        <div if={this.swipe} class={"projects-card card animated "+this.transition}>
           <div class="card-header">
             <h3 class="card-title project-title">{ this.project().name }</h3>
             <h5 class="project-description">{ this.project().description }</h5>

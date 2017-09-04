@@ -284,7 +284,11 @@ p, h6, h5, h4, h3, h2, h1 {
 
 .projects-box {
   @extend .content-box;
-  height: 385 !important;
+  height: 300px !important;
+}
+
+.projects-card {
+  height: 200px !important;
 }
 
 .posts-box {
