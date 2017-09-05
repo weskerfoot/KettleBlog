@@ -1,5 +1,7 @@
 $brandingBG: rgba(103, 173, 219, 0.40);
 $brandingBG2: rgba(75, 147, 193, 0.65);
+$brandingBG3: rgba(103, 173, 219, 0.27);
+
 $branding: #25658f;
 $branding2: #4b93c1;
 $branding3: #1b4c6c;
@@ -109,7 +111,7 @@ html {
 }
 
 .category-button {
-  border-radius: 5px !important;
+  border-radius: 2px !important;
   border-color: $branding2 !important;
 	display: block !important;
 	margin-top: 0;
@@ -149,7 +151,7 @@ html {
 }
 
 .branded {
-  border-radius: 5px !important;
+  border-radius: 2px !important;
   border-color: $branding2 !important;
 	display: block !important;
 	margin-top: 0;
@@ -261,7 +263,7 @@ p, h6, h5, h4, h3, h2, h1 {
 
 .navigate-tab {
   border: thin solid;
-  border-radius: 5px !important;
+  border-radius: 2px !important;
   margin-bottom: 5px;
   margin-left: 2px;
   margin-right: 2px;
@@ -290,7 +292,7 @@ p, h6, h5, h4, h3, h2, h1 {
 
 .mobile-menu {
   left: -100% !important;
-  border-radius: 5px !important;
+  border-radius: 2px !important;
   border: 1px solid !important;
   border-color: $branding !important;
 }
@@ -356,6 +358,33 @@ $bg-color: red;
   width: 100px;
   margin-top: -100px;
   position: absolute;
+}
+
+.readmore {
+  color: $branding !important;
+  &:hover {
+    background-color: $brandingBG3 !important;
+  }
+}
+
+.category-chip {
+  &:hover {
+    background-color: $brandingBG3 !important;
+  }
+}
+
+.post-buttons-large {
+  display: none !important;
+  @media(min-width: 400px) {
+    display: inherit !important;
+  }
+}
+
+.post-buttons-mobile {
+  display: none !important;
+  @media(max-width: 400px) {
+    display: inherit !important;
+  }
 }
 
 .post-card {
@@ -457,7 +486,7 @@ code {
 }
 
 .rounded-button {
-  border-radius: 13px;
+  border-radius: 2px;
 }
 
 .maxinput {

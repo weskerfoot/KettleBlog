@@ -1,6 +1,5 @@
 <post>
   <div class="posts-box post centered">
-    <categories names={categories}></categories>
     <div
       data-is="postcontrols"
       prevloading={prevloading}
@@ -12,16 +11,52 @@
     >
     </div>
     <loading if={loading}></loading>
+    <div
+      if={!loading}
+      class="container show-sm"
+    >
+      <div class="columns">
+        <div class="column col-12">
+          <div
+            data-is="categories"
+            names={categories}
+            style={{"float" : "left"}}
+          >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      if={!loading}
+      class="container hide-sm"
+    >
+      <div class="columns">
+        <div class="column col-4">
+          <div
+            data-is="social"
+            style={{"float" : "left"}}
+            show={!loading}
+            ref="social"
+            title={title}
+            postid={_id}
+          >
+          </div>
+        </div>
+        <div class="column col-4"></div>
+        <div class="column col-4">
+          <div
+            data-is="categories"
+            names={categories}
+            style={{"float" : "right"}}
+          >
+          </div>
+        </div>
+      </div>
+
+    </div>
     <div class="text-break">
       <div class={"" + (loading ? "invisible" : "fadeIn")}>
-
-        <social
-          show={!loading}
-          ref="social"
-          title={title}
-          postid={_id}
-        >
-        </social>
         <p class="post-content centered text-break">
           <raw
             content="{ content }"

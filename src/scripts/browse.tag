@@ -61,14 +61,18 @@
             </h2>
           </div>
           <div class="card-body">
-              <raw content="{ converter.makeHtml(result[1].content) }"></raw>
-            <a
+            <raw
+              classname=""
+              content="{ converter.makeHtml(result[1].content) }"
+            >
+            </raw>
+            <button
+              class="btn btn-link readmore"
               style={linkStyle}
-              href={"/blog/posts/"+result[1].id}
               onclick={openPost(result[1].id)}
             >
-              More <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
-            </a>
+              Read More
+            </button>
           </div>
         </div>
       </div>

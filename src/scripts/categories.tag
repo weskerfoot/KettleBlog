@@ -3,7 +3,7 @@
   <i class="fa fa-tag" aria-hidden="true"></i>
   <label
     each="{category in opts.names}"
-    class="chip"
+    class="chip category-chip"
     onclick={browseCategories(category)}
   >
     {category}
