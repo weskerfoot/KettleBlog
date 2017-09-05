@@ -62,7 +62,7 @@ self.toggle = (ev) => {
 }
 
 self.on("mount", () => {
-  RiotControl.on("closecategories", () => {
+  RiotControl.on("closecategories", (ev) => {
     if (self.active && self.opened) {
       self.update({
         "active" : false,
@@ -70,6 +70,7 @@ self.on("mount", () => {
       });
     }
     else if (self.active && !self.opened) {
+      ev.preventDefault();
       self.update({"opened" : true});
     }
   });

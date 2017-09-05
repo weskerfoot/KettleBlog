@@ -11,7 +11,22 @@
     >
     <div class="container">
       <div class="columns">
-        <div class="col-2"></div>
+        <div class="col-2">
+          <section
+            class="text-center nav navbar centered navbar-section header-social"
+            style={
+              {
+              "margin-left" : "5px",
+              "margin-right" : "5px",
+              "float" : "left"
+              }
+            }
+          >
+            <githubsocial
+              link="https://github.com/nisstyre56"
+            >
+            </githubsocial>
+        </div>
         <div class="col-8">
           <section
             style={{"margin-top" : page !== "posts" ? "15px" : "5px"}}
@@ -120,6 +135,7 @@ import './about.tag';
 import './links.tag';
 import './browse.tag';
 import './headersocial.tag';
+import './githubsocial.tag';
 
 import route from 'riot-route';
 import lens from './lenses.js';
@@ -263,10 +279,8 @@ self.on("mount", () => {
 
   self.one("updated", () => {
     document.addEventListener("click", function(event) {
-      console.log("detected click");
-      event.preventDefault();
       if (!event.target.closest('#categorymodal')) {
-        window.RiotControl.trigger("closecategories");
+        window.RiotControl.trigger("closecategories", event);
       }
     });
   });
