@@ -9,16 +9,37 @@
             }
       class="header"
     >
-    <section
-      style={{"margin-top" : page !== "posts" ? "15px" : "5px"}}
-      class="text-center nav navbar centered navbar-section"
-    >
-      <h3 class="blog-title">{ currentPage }</h3>
-    </section>
+    <div class="container">
+      <div class="columns">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <section
+            style={{"margin-top" : page !== "posts" ? "15px" : "5px"}}
+            class="text-center nav navbar centered navbar-section"
+          >
+            <h3 class="blog-title">{ currentPage }</h3>
+          </section>
+        </div>
+        <div class="col-2">
+          <section
+            class="text-center nav navbar centered navbar-section header-social"
+            style={
+              {
+              "margin-left" : "5px",
+              "margin-right" : "5px",
+              "float" : "right"
+              }
+            }
+          >
+            <headersocial
+              link="https://twitter.com/weskerfoot"
+            >
+            </headersocial>
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
-    <section class="text-center nav navbar centered navbar-section">
-    </section>
-
     <div id="menu"
       class={"show-md show-sm show-xs navigate-small dropdown dropdown-right " + (menuActive ? "active" : "")}
     >
@@ -32,7 +53,8 @@
       <!-- menu component -->
       <ul
         show={menuActive}
-        class="mobile-menu tab tab-block menu">
+        class="mobile-menu tab tab-block menu"
+      >
         <li
           each="{page in ['browse', 'projects', 'links', 'about']}"
           class={"navigate-tab tab-item " + (parent.active.get(page) ? "active" : "")}
@@ -97,6 +119,7 @@ import './postsview.tag';
 import './about.tag';
 import './links.tag';
 import './browse.tag';
+import './headersocial.tag';
 
 import route from 'riot-route';
 import lens from './lenses.js';

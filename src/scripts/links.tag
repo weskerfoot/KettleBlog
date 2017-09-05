@@ -14,7 +14,7 @@
       <div each={links in groups}
            class="column col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 links-column"
       >
-        <h5 class="text-center">{links.title}</h5>
+        <h4 class="text-center">{links.title}</h4>
         <div each={item in links.items} class="tile link-box">
           <div class="tile-icon">
 

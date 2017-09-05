@@ -5,7 +5,7 @@
       >
         <div class="column col-8">
           <h4 class="float-right">
-            Some Projects I Work On
+            Projects I Work On
           </h4>
         </div>
         <div class="column col-4">
@@ -78,7 +78,7 @@
                         src={"https://ghbtns.com/github-btn.html?user=nisstyre56&repo="+this.project().name+"&type=star&count=false&size=large"}
                         frameborder="0"
                         scrolling="0"
-                        width="70px"
+                        width="72px"
                         height="30px"
                       >
                       </iframe>
@@ -93,7 +93,7 @@
                         src={"https://ghbtns.com/github-btn.html?user=nisstyre56&repo="+this.project().name+"&type=fork&count=false&size=large"}
                         frameborder="0"
                         scrolling="0"
-                        width="70px"
+                        width="72px"
                         height="30px"
                       >
                       </iframe>

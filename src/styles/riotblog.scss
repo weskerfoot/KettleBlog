@@ -150,6 +150,28 @@ html {
   }
 }
 
+.header-social {
+  margin-top : 6%;
+  margin-bottom : 2%;
+  @media (max-width: 600px) {
+    margin-top: 7%;
+  }
+  @media (max-width: 530px) {
+    margin-top: 8%;
+  }
+}
+
+.social-brand {
+  border: none !important;
+	display: block !important;
+	padding: .6rem 1.2rem .4rem 1.2rem;
+	text-decoration: none;
+  line-height: 2rem;
+  &:hover {
+    color: $brandingBG !important;
+  }
+}
+
 .branded {
   border-radius: 2px !important;
   border-color: $branding2 !important;
@@ -316,9 +338,9 @@ p, h6, h5, h4, h3, h2, h1 {
 
 .projects-card {
   @extend .shadow;
-  height: 250px !important;
-  @media(max-width: 1000px) {
-    height: 285px !important;
+  height: 230px !important;
+  @media(max-width: 1468px) {
+    height: 310px !important;
   }
   @media(max-width: 800px) {
     height: 275px !important;
@@ -358,6 +380,48 @@ $bg-color: red;
   width: 100px;
   margin-top: -100px;
   position: absolute;
+}
+
+@mixin gradient-text($gradient, $bg : 'light') {
+  @supports(mix-blend-mode: lighten) {
+    display: inline-block;
+    position: relative;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+
+      background: unquote($gradient);
+      pointer-events: none;
+    }
+
+    @if ($bg == 'light') {
+      color: #000;
+      background: #fff;
+      mix-blend-mode: multiply;
+
+      &::before {
+        mix-blend-mode: screen;
+      }
+    } @else {
+      color: #fff;
+      background: #000;
+      mix-blend-mode: lighten;
+
+      &::before {
+        mix-blend-mode: multiply;
+      }
+    }
+  }
+}
+
+.summary {
+}
+
+.blurmore {
+  @include gradient-text('linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,1) 100%)', 'light');
 }
 
 .readmore {
