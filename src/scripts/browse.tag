@@ -33,6 +33,21 @@
         </div>
         <div class="col-4"></div>
       </div>
+      <div class="columns">
+        <div class="col-12">
+          <div
+            data-is="categorymodal"
+          >
+            <categoryfilter
+              name={false}
+              category={parent.opts.state.category_filter}
+              items={parent.opts.state.categories}
+              onfilter={parent.filterCategories}
+            >
+            </categoryfilter>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="columns">
       <div
@@ -83,6 +98,7 @@
 <script type="es6">
 import './raw.tag';
 import './categoryfilter.tag';
+import './categorymodal.tag';
 import './loading.tag';
 import route from 'riot-route';
 import { default as RiotControl } from 'riotcontrol';
@@ -132,6 +148,8 @@ self.filterCategories = (category) => {
     if (ev !== undefined) {
       ev.preventDefault();
     }
+
+    RiotControl.trigger("closecategories");
 
     self.route(`browse/${category}`);
     self.update({

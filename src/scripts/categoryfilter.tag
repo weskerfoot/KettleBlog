@@ -1,6 +1,6 @@
 <categoryfilter>
   <div class="categorybar">
-    <h4>
+    <h4 if={opts.name}>
       { opts.name }
     </h4>
 

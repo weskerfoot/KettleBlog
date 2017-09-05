@@ -261,6 +261,16 @@ self.on("mount", () => {
       }
   );
 
+  self.one("updated", () => {
+    document.addEventListener("click", function(event) {
+      console.log("detected click");
+      event.preventDefault();
+      if (!event.target.closest('#categorymodal')) {
+        window.RiotControl.trigger("closecategories");
+      }
+    });
+  });
+
   self.route.base('/blog/')
   self.route("/", () => { self.route("/browse"); });
   self.route("/posts", () => { self.route(`/posts/${self.state._id}`); });

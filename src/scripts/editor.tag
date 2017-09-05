@@ -52,7 +52,7 @@
           <textarea onfocus={clearplaceholder}
                     onblur={checkplaceholder}
                     oninput={echo}
-                    rows="10"
+                    rows="30"
                     cols="30"
                     __disabled={""}
                     class="editor form-input centered"
