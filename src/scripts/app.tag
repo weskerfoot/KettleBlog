@@ -3,7 +3,7 @@
     <div
       style={
               {
-                "opacity" : showBorder ? "0.7" : "1",
+                "opacity" : showBorder ? "0.8" : "1",
                 "background-color" : showBorder ? "white" : "white"
               }
             }

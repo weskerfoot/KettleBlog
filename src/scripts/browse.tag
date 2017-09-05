@@ -61,11 +61,12 @@
             </h2>
           </div>
           <div class="card-body">
-            <raw
-              classname=""
-              content="{ converter.makeHtml(result[1].content) }"
+            <div
+              data-is="raw"
+              class="summary"
+              content="{ converter.makeHtml(result[1].content)}"
             >
-            </raw>
+            </div>
             <button
               class="btn btn-link readmore"
               style={linkStyle}
@@ -225,7 +226,17 @@ self.getprev = (ev) => {
   self.getPrev(self.opts.state.results[0][1].id)
 }
 
+self.addEls = () => {
+  var summaries = document.getElementsByClassName("summary");
+  for(var i = 0; i < summaries.length; i++) {
+    var paragraphs = summaries[i].getElementsByTagName("p");
+    var paragraph = paragraphs[paragraphs.length-1];
+    paragraph.textContent = paragraph.textContent+"…";
+  }
+};
+
 self.on("mount", () => {
+  self.on("updated", self.addEls);
   if (!self.opts.state.category_filter &&
       !self.opts.state.category_tag &&
       self.opts.state.results.length == 0) {
@@ -235,7 +246,8 @@ self.on("mount", () => {
     self.filterCategories(self.opts.state.category_tag)();
   }
   else if ((self.opts.state.results.length > 0) &&
-           !self.opts.state.category_tag) {
+            !self.opts.state.category_tag) {
+    self.addEls();
     return;
   }
   else {

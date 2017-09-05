@@ -318,16 +318,16 @@ p, h6, h5, h4, h3, h2, h1 {
   @extend .shadow;
   height: 250px !important;
   @media(max-width: 1000px) {
-    height: 280px !important;
+    height: 285px !important;
   }
   @media(max-width: 800px) {
-    height: 270px !important;
-  }
-  @media(max-width: 360px) {
     height: 275px !important;
   }
+  @media(max-width: 360px) {
+    height: 280px !important;
+  }
   @media(max-width: 330px) {
-    height: 295px !important;
+    height: 300px !important;
   }
 }
 
@@ -367,23 +367,15 @@ $bg-color: red;
   }
 }
 
+.tags {
+  vertical-align: top !important;
+}
+
 .category-chip {
+  height: 22px !important;
+  vertical-align: top !important;
   &:hover {
     background-color: $brandingBG3 !important;
-  }
-}
-
-.post-buttons-large {
-  display: none !important;
-  @media(min-width: 400px) {
-    display: inherit !important;
-  }
-}
-
-.post-buttons-mobile {
-  display: none !important;
-  @media(max-width: 400px) {
-    display: inherit !important;
   }
 }
 

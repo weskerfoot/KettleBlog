@@ -26,11 +26,23 @@
           <div class="card-header">
             <h5
               class="show-sm show-xs project-title"
+              style={
+                {
+                  "margin" : "auto",
+                  "text-align" : "center"
+                }
+              }
             >
               { this.project().name }
             </h5>
             <h3
               class="hide-sm hide-xs project-title"
+              style={
+                {
+                  "margin" : "auto",
+                  "text-align" : "center"
+                }
+              }
             >
               { this.project().name }
             </h3>
@@ -39,17 +51,55 @@
           <div class="card-body">
             <div class="tile">
               <div class="tile-content">
-                <p class="tile-title">Written primarily in { this.project().language} </p>
-                <p class="tile-subtitle">Started on {moment(this.project().created_at).format("MMMM Do YYYY") }</p>
+                <div class="container">
+                  <div class="columns">
+                    <div class="col-md-12">
+                      <p class="tile-title">Written primarily in { this.project().language} </p>
+                    </div>
+                  </div>
+                  <div class="columns">
+                    <div class="col-md-12">
+                      <p class="tile-subtitle">Started on {moment(this.project().created_at).format("MMMM Do YYYY") }</p>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="tile-action">
-              <a
-                target="_blank"
-                href={this.project().html_url}>
-                  <button class="btn btn-primary branded">
-                    See on github
-                  </button>
-              </a>
+                <div class="container">
+                  <div class="columns">
+                    <div class="col-12">
+                      <iframe
+                        style={
+                          {
+                            "float" : "right",
+                            "margin-bottom" : "8px"
+                          }
+                        }
+                        src={"https://ghbtns.com/github-btn.html?user=nisstyre56&repo="+this.project().name+"&type=star&count=false&size=large"}
+                        frameborder="0"
+                        scrolling="0"
+                        width="70px"
+                        height="30px"
+                      >
+                      </iframe>
+                    </div>
+                    <div class="col-12">
+                      <iframe
+                        style={
+                          {
+                            "float" : "right"
+                          }
+                        }
+                        src={"https://ghbtns.com/github-btn.html?user=nisstyre56&repo="+this.project().name+"&type=fork&count=false&size=large"}
+                        frameborder="0"
+                        scrolling="0"
+                        width="70px"
+                        height="30px"
+                      >
+                      </iframe>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -106,7 +156,6 @@ project() {
 next() {
   self.update({"swipe" : false});
   self.projects = Z.goRight(self.projects);
-  console.log(self.project());
   self.update(
     {
       "transition" : "fadeInRight",

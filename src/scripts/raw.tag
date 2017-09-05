@@ -1,5 +1,5 @@
 <raw>
-  <div class={opts.classname}></div>
+  <div></div>
   <script>
   updateContent() {
     this.root.innerHTML = opts.content;
