@@ -230,14 +230,14 @@ def NeverWhere(configfile=None):
         author = request.form.get("author", "no author")
         title = request.form.get("title", "no title")
         content = request.form.get("content", "no content")
-        category = request.form.get("categories", ["programming"])
+        tags = [t for t in request.form.get("tags", "programming").split(",") if t]
         postid = request.form.get("_id", False)
 
         post = {
                 "author" : author,
                 "title" : title,
                 "content" : content,
-                "categories" : category,
+                "categories" : tags,
                 "_id" : postid
                 }
 

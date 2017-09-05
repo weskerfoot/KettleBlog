@@ -33,6 +33,7 @@
         <p>
           <span>title</span><input ref="title">
           <span>author</span><input ref="author"></input>
+          <span>tags</span><input ref="tags"></input>
           <span>Editing post {!this.isNewPost ? this._id : ""}</span>
         <p>
           <button
@@ -173,6 +174,7 @@ self.submit = () => {
       "title" : this.refs.title.value,
       "author" : this.refs.author.value,
       "content" : this.refs.textarea.value,
+      "tags" : this.refs.tags.value,
       "csrf_token" : this.opts.csrf_token
   };
 
@@ -229,6 +231,7 @@ self.loadPost = (_id) => {
       self.refs.textarea.value = resp.data.content;
       self.refs.title.value = resp.data.title;
       self.refs.author.value = resp.data.author;
+      self.refs.tags.value = resp.data.categories;
       self._id = resp.data._id;
       self.focused = true;
       self.isNewPost = false;

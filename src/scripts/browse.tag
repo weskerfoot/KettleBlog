@@ -57,7 +57,7 @@
         >
           <div class="card-header">
             <h2 class="card-title">
-              { result[1].title } by { result[1].author }
+              { result[1].title }
             </h2>
           </div>
           <div class="card-body">
