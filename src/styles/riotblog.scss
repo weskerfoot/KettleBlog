@@ -16,6 +16,22 @@ $navbarHeight: 100px;
   box-shadow: 1px 4px 20px -8px rgba(0,0,0,0.2);
 }
 
+.license {
+  margin: auto;
+}
+
+.mailme {
+  float: left;
+}
+
+.cc-license {
+  height: 20px;
+  width: 70px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: -5px;
+}
+
 .gradient {
   -webkit-background-size: cover !important;
   -moz-background-size: cover !important;
@@ -50,10 +66,10 @@ html {
   font-weight: 400;
   color: black;
   @media (max-width: 600px) {
-    font-size: 1.8em;
+    font-size: 1.6em;
   }
   @media (max-width: 530px) {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 }
 
@@ -68,6 +84,17 @@ html {
   z-index: 1;
   width: 100%;
   margin: auto;
+}
+
+.footer {
+  @extend .shadow;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
 }
 
 .twitter-share-button-rendered {
@@ -129,8 +156,7 @@ html {
 
 .categorybar {
   max-width: 350px;
-  float: right;
-  margin-right: 0px !important;
+  margin: auto;
   padding: 0px 0px 0px 0px !important;
 }
 

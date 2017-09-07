@@ -27,7 +27,7 @@ page_titles = {
                 "about" : "About Me",
                 "projects" : "Software",
                 "links" : "Links",
-                "browse" : "Wes Kerfoot"
+                "browse" : "Wes's Blog"
                 }
 
 def cacheit(key, thunk):
@@ -47,7 +47,8 @@ def get_posts():
     posts = getattr(g, "posts", None)
     if posts is None:
         posts = g._posts = Posts(app.config["COUCHDB_USER"],
-                                 app.config["COUCHDB_PASSWORD"])
+                                 app.config["COUCHDB_PASSWORD"],
+                                 app.config["COUCHDB_NAME"])
     return posts
 
 def get_initial():
@@ -188,10 +189,11 @@ def NeverWhere(configfile=None):
     def getpost(_id):
         return posts.getpost(_id)
 
+    # XXX should use unpublished
     @cache.cached(timeout=50)
     @app.route("/blog/getrawpost/<_id>")
     def getrawpost(_id):
-        return posts.getpost(_id, convert=False)
+        return posts.getpost(_id, convert=False, unpublished=True)
 
     # get the first post of a given category
     @cache.cached(timeout=50)
@@ -199,7 +201,7 @@ def NeverWhere(configfile=None):
     def bycategory(category):
         return posts.getbycategory(category)
 
-    # get the id of every post
+    # XXX get the id of every post
     @app.route("/blog/allposts")
     def allposts():
         return posts.allposts()
@@ -230,6 +232,7 @@ def NeverWhere(configfile=None):
         author = request.form.get("author", "no author")
         title = request.form.get("title", "no title")
         content = request.form.get("content", "no content")
+        draft = loads(request.form.get("draft", "false"))
         tags = [t for t in request.form.get("tags", "programming").split(",") if t]
         postid = request.form.get("_id", False)
 
@@ -238,7 +241,8 @@ def NeverWhere(configfile=None):
                 "title" : title,
                 "content" : content,
                 "categories" : tags,
-                "_id" : postid
+                "_id" : postid,
+                "draft" : draft
                 }
 
         memcache.clear()

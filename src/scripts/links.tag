@@ -3,7 +3,7 @@
     <div class="columns">
       <div class="column col-12">
         <h4 class="text-center">
-          Interesting Links
+          Stuff I Find Interesting
         </h4>
       </div>
     </div>

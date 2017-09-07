@@ -1,6 +1,17 @@
 <categoryfilter>
-  <div class="categorybar">
-    <h4 if={opts.name}>
+  <div
+    class="categorybar"
+    style={
+      {
+        "min-height": "500px",
+        "max-height" : "500px"
+      }
+    }
+  >
+    <h4
+      if={opts.name}
+      style={{"text-align" : "center"}}
+    >
       { opts.name }
     </h4>
 

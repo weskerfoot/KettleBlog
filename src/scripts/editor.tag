@@ -36,6 +36,17 @@
           <span>tags</span><input ref="tags"></input>
           <span>Editing post {!this.isNewPost ? this._id : ""}</span>
         <p>
+        <div class="form-group">
+          <label class="form-switch">
+            <input
+              type="checkbox"
+              ref="draft"
+              name="draft"
+              value="true"
+            />
+            <i class="form-icon"></i> Draft
+          </label>
+        </div>
           <button
             class="btn btn-primary branded"
             onclick={deletePost(!this.isNewPost ? this._id : false)}
@@ -170,12 +181,14 @@ self.newPost = () => {
 
 self.submit = () => {
   self.update({"loading" : true});
+  console.log(this.refs.draft.checked);
   var post = {
       "title" : this.refs.title.value,
       "author" : this.refs.author.value,
       "content" : this.refs.textarea.value,
       "tags" : this.refs.tags.value,
-      "csrf_token" : this.opts.csrf_token
+      "csrf_token" : this.opts.csrf_token,
+      "draft" : this.refs.draft.checked ? "true" : "false"
   };
 
   if (this._id) {
@@ -227,11 +240,13 @@ self.loadPost = (_id) => {
     self.update({"loading" : true});
     axios.get(`/blog/getrawpost/${_id.slice(-8)}`)
     .then(function(resp) {
+      console.log(resp);
       self.update({"loading" : false});
       self.refs.textarea.value = resp.data.content;
       self.refs.title.value = resp.data.title;
       self.refs.author.value = resp.data.author;
       self.refs.tags.value = resp.data.categories;
+      self.refs.draft.checked = resp.data.draft
       self._id = resp.data._id;
       self.focused = true;
       self.isNewPost = false;

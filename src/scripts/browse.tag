@@ -34,7 +34,8 @@
         <div class="col-4"></div>
       </div>
       <div class="columns">
-        <div class="col-12">
+        <div class="col-12"
+        >
           <div
             data-is="categorymodal"
           >
@@ -49,13 +50,15 @@
         </div>
       </div>
     </div>
-    <div class="columns">
+    <div
+      class="columns"
+    >
       <div
         style={sidebarStyle}
-        class="column hide-xs hide-sm hide-md col-2"
+        class="column hide-xs hide-sm hide-md col-2 shadow"
       >
         <categoryfilter
-          name="Post Categories"
+          name="Categories"
           category={opts.state.category_filter}
           items={opts.state.categories}
           onfilter={filterCategories}
@@ -140,7 +143,9 @@ self.navStyle = {
 };
 
 self.sidebarStyle = {
-  "margin-right" : "-40px"
+  "margin-right" : "-40px",
+  "min-height": "500px",
+  "max-height" : "500px"
 };
 
 self.filterCategories = (category) => {

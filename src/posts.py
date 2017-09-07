@@ -19,7 +19,7 @@ def get_mistune():
 markdown = LocalProxy(get_mistune)
 
 class Posts:
-    def __init__(self, user, password, host=None, port=None):
+    def __init__(self, user, password, name, host=None, port=None):
         if host is None:
             host = "localhost"
         if port is None:
@@ -29,11 +29,11 @@ class Posts:
 
         self.client.credentials = (user, password)
 
-        self.db = self.client["blog"]
+        self.db = self.client[name]
 
         self.iterpost = self.postIterator("blogPosts/blog-posts")
 
-    def savepost(self, title="", content="", author="", categories=[], _id=False):
+    def savepost(self, title="", content="", author="", categories=[], _id=False, draft=True):
         if _id:
             doc = self.db[_id]
             doc["title"] = title
@@ -41,21 +41,26 @@ class Posts:
             doc["author"] = author
             doc["categories"] = categories
             doc["_id"] = _id
+            doc["draft"] = draft
         else:
             doc = {
                     "title" : title,
                     "content" : content,
                     "author" : author,
                     "categories" : categories,
-                    "type" : "post"
+                    "type" : "post",
+                    "draft" : draft
                     }
 
 
         print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))
 
-    def getpost(self, _id, json=True, convert=True):
-        results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=_id)
+    def getpost(self, _id, json=True, convert=True, unpublished=False):
+        if unpublished:
+            results = self.db.iterview("blogPosts/unpublished", 1, include_docs=True, startkey=_id)
+        else:
+            results = self.db.iterview("blogPosts/blog-posts", 1, include_docs=True, startkey=_id)
 
         post = [result.doc for result in results][0]
 
@@ -105,7 +110,7 @@ class Posts:
         return inner
 
     def allposts(self):
-        result = self.db.iterview("blogPosts/blog-posts", 10, include_docs=True)
+        result = self.db.iterview("blogPosts/unpublished", 10, include_docs=True)
 
         posts = []
         for item in result:

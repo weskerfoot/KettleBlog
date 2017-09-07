@@ -38,6 +38,7 @@ def copyFiles():
     local("cp ./src/*py ./build/")
     local("cp *.cfg ./build/")
     local("cp ./src/styles/*.css ./build/styles/")
+    local("cp ./src/images/*png ./build/images/")
     local("uglifycss ./build/styles/*css > ./build/styles/primop.min.css")
     local("cp -r ./src/templates ./build/templates")
 
@@ -48,8 +49,11 @@ def upload():
 
 @task
 def serveUp():
+    sudo("rm -rf /srv/http/riotblog_static")
     sudo("rm -fr /srv/http/riotblog")
-    sudo("cp -r /home/wes/build /srv/http/riotblog")
+    sudo("mkdir -p /srv/http/riotblog_static")
+    sudo("cp -r /home/wes/build/ /srv/http/riotblog/")
+    sudo("cp -r /home/wes/build/{styles,scripts,images} /srv/http/riotblog_static")
     sudo("cp /home/wes/build/blog.service /etc/systemd/system/blog.service")
     sudo("systemctl daemon-reload")
     sudo("systemctl enable blog.service")
@@ -59,7 +63,7 @@ def serveUp():
 @task(default=True)
 def build():
     local("rm -rf ./build")
-    local("mkdir -p build/{scripts,styles}")
+    local("mkdir -p build/{scripts,styles,images}")
     buildScss()
     buildJS()
     copyFiles()
@@ -69,7 +73,7 @@ def build():
 
 @task
 def update():
-    local("mkdir -p build/{scripts,styles}")
+    local("mkdir -p build/{scripts,styles,images}")
     buildScss()
     buildJS()
     copyFiles()
@@ -79,7 +83,7 @@ def update():
 @task
 def locbuild():
     local("rm -rf ./build")
-    local("mkdir -p build/{scripts,styles}")
+    local("mkdir -p build/{scripts,styles,images}")
     local("cp requirements.txt ./build/requirements.txt")
     buildLocalVenv()
     buildScss()
@@ -88,7 +92,7 @@ def locbuild():
     local("sudo rm -fr /srv/http/riotblog")
     local("sudo mkdir -p /srv/http/riotblog")
     local("sudo cp -r ./build/* /srv/http/riotblog/")
-    local("sudo cp /home/wes/primop.me/blog.service /etc/systemd/system/blog.service")
+    local("sudo cp /home/wes/primop.me/blog_test.service /etc/systemd/system/blog.service")
     local("sudo systemctl daemon-reload")
     local("sudo systemctl enable blog.service")
     local("sudo systemctl restart blog.service")

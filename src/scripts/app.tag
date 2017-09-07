@@ -32,7 +32,9 @@
             style={{"margin-top" : page !== "posts" ? "15px" : "5px"}}
             class="text-center nav navbar centered navbar-section"
           >
-            <h3 class="blog-title">{ currentPage }</h3>
+            <h3 class="blog-title">
+              { currentPage }
+            </h3>
           </section>
         </div>
         <div class="col-2">
@@ -125,6 +127,36 @@
       >
       </browse>
     </div>
+    <div
+      class="footer"
+      if={false}
+    >
+      <div class="container">
+        <div class="columns">
+          <div class="col-2">
+            <a
+              class="mailme"
+              href="mailto:wjak56@gmail.com"
+            >
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="col-8">
+            <div class="license">
+              Content Licensed under CC
+              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+                <img
+                  class="cc-license"
+                  src="/images/88x31.png"
+                >
+                </img>
+              </a>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </div>
+    </div>
   </div>
 <script>
 import './sidebar.tag';
@@ -209,7 +241,7 @@ menuOff(ev) {
 }
 
 self.titles = {
-  "browse" : "Wes Kerfoot",
+  "browse" : "Wes's Blog",
   "projects" : "Software",
   "links" : "Links",
   "about" : "About Me"
