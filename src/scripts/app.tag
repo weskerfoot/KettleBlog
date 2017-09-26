@@ -144,7 +144,11 @@
           <div class="col-8">
             <div class="license">
               Content Licensed under CC
-              <a target="_blank" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+              <a
+                target="_blank"
+                rel="noopener"
+                href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+              >
                 <img
                   class="cc-license"
                   src="/images/88x31.png"

@@ -3,6 +3,7 @@
     <a
       href={opts.link}
       target="_blank"
+      rel="noopener"
       class="social-brand tooltip tooltip-right"
       data-tooltip="My Github"
       style={
