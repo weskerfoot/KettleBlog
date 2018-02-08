@@ -2,7 +2,9 @@
 
 import couchdb
 import mistune
+
 from json import dumps
+from collections import defaultdict
 
 from werkzeug.local import Local, LocalProxy, LocalManager
 from couchdb.http import ResourceConflict, ResourceNotFound
@@ -21,7 +23,7 @@ markdown = LocalProxy(get_mistune)
 class Posts:
     def __init__(self, user, password, name, host=None, port=None):
         if host is None:
-            host = "localhost"
+            host = "127.0.0.1"
         if port is None:
             port = "5984"
 
@@ -71,7 +73,12 @@ class Posts:
     def getinitial(self):
         results = list(self.db.iterview("blogPosts/blog-posts", 2, include_docs=True))
 
-        post = [result.doc for result in results][0]
+        posts = [result.doc for result in results]
+
+        if len(posts) == 0:
+            return defaultdict(str)
+
+        post = posts[0]
 
         post["content"] = markdown(post["content"])
 
@@ -184,10 +191,12 @@ class Posts:
         results = self.db.list(
                     "blogPosts/categories",
                     "blogPosts/format",
-                    **args)[1].get("results", [])
+                    **args)
+        if len(results) == 0:
+            return jsonify([])
 
         posts = []
-        for categories, post in results:
+        for categories, post in results[1].get("results", []):
             post["content"] = markdown(post["content"])
             posts.append([categories, post])
         return jsonify(posts) if json else posts

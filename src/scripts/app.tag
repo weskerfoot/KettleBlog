@@ -245,7 +245,7 @@ menuOff(ev) {
 }
 
 self.titles = {
-  "browse" : "Wes's Blog",
+  "browse" : "Wesley Kerfoot",
   "projects" : "Software",
   "links" : "Links",
   "about" : "About Me"

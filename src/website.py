@@ -27,7 +27,7 @@ page_titles = {
                 "about" : "About Me",
                 "projects" : "Software",
                 "links" : "Links",
-                "browse" : "Wes's Blog"
+                "browse" : "Wesley Kerfoot"
                 }
 
 def cacheit(key, thunk):
