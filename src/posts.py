@@ -35,7 +35,16 @@ class Posts:
 
         self.iterpost = self.postIterator("blogPosts/blog-posts")
 
-    def savepost(self, title="", content="", author="", categories=[], _id=False, draft=True):
+    def savepost(self,
+                 title="",
+                 content="",
+                 author="",
+                 categories=[],
+                 _id=False,
+                 draft=True):
+        """
+        Save a post
+        """
         if _id:
             doc = self.db[_id]
             doc["title"] = title
@@ -58,7 +67,14 @@ class Posts:
         print("post was saved %s" % doc)
         return jsonify(self.db.save(doc))
 
-    def getpost(self, _id, json=True, convert=True, unpublished=False):
+    def getpost(self,
+                _id,
+                json=True,
+                convert=True,
+                unpublished=False):
+        """
+        Get a post by id
+        """
         if unpublished:
             results = self.db.iterview("blogPosts/unpublished", 1, include_docs=True, startkey=_id)
         else:
@@ -71,10 +87,14 @@ class Posts:
         return jsonify(post) if json else post
 
     def getinitial(self):
+        """
+        Get the initial post to start from
+        """
         results = list(self.db.iterview("blogPosts/blog-posts", 2, include_docs=True))
 
         posts = [result.doc for result in results]
 
+        # if there are no posts, return a defaultdict instead
         if len(posts) == 0:
             return defaultdict(str)
 
@@ -85,6 +105,9 @@ class Posts:
         return post
 
     def postIterator(self, viewname):
+        """
+        Post pagination
+        """
         def inner(endkey=False, startkey=False):
             if startkey and not endkey:
                 results = self.db.iterview(viewname, 2, include_docs=True, startkey=startkey)
@@ -117,6 +140,9 @@ class Posts:
         return inner
 
     def allposts(self):
+        """
+        Gets all of the post IDs in the database. May be inefficient.
+        """
         result = self.db.iterview("blogPosts/unpublished", 10, include_docs=True)
 
         posts = []

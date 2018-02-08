@@ -202,6 +202,7 @@ def NeverWhere(configfile=None):
         return posts.getbycategory(category)
 
     # XXX get the id of every post
+    # Needs to be fixed
     @app.route("/blog/allposts")
     def allposts():
         return posts.allposts()
