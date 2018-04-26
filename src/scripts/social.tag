@@ -40,9 +40,9 @@ loadButtons() {
     }
   });
 
-  if (FB !== undefined && FB.XFBML !== undefined) {
+  if (window.FB !== undefined && window.FB.XFBML !== undefined) {
     if (self.refs.facebook !== undefined) {
-      FB.XFBML.parse(self.refs.facebook.root);
+      window.FB.XFBML.parse(self.refs.facebook.root);
     }
   }
   self.old_id = self._id;
@@ -57,13 +57,15 @@ test(ev) {
 }
 
 self.one("updated", () => {
-  self.updateButton(self._id, self.title);
-  self.update({"old_id" : self._id});
-  self.one("updated", () => {
-    self.shouldUpdate = (() => {
-      return self.old_id != self.parent._id;
+  if (!(window.FB == undefined && window.twttr == undefined)) {
+    self.updateButton(self._id, self.title);
+    self.update({"old_id" : self._id});
+    self.one("updated", () => {
+      self.shouldUpdate = (() => {
+        return self.old_id != self.parent._id;
+      });
     });
-  });
+  }
 });
 
 </script>

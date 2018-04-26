@@ -253,9 +253,11 @@ self.addEls = () => {
   var summaries = document.getElementsByClassName("summary");
   for(var i = 0; i < summaries.length; i++) {
     var paragraphs = summaries[i].getElementsByTagName("p");
-    var paragraph = paragraphs[paragraphs.length-1];
-    paragraph.textContent = paragraph.textContent+"…";
-    paragraph.className = "blurmore";
+    if (paragraphs.length > 0) {
+      var paragraph = paragraphs[paragraphs.length-1];
+      paragraph.textContent = paragraph.textContent+"…";
+      paragraph.className = "blurmore";
+    }
   }
 };
 

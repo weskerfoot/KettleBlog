@@ -171,7 +171,9 @@ updatePost(postcontent) {
 
   self.parent.update();
 
-  self.refs.social.updateButton(self._id, self.title);
+  if (self.refs.social.updateButton !== undefined) {
+    self.refs.social.updateButton(self._id, self.title);
+  }
 
   self.one("updated", self.toTop);
   self.update();
