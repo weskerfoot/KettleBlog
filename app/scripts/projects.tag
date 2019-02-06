@@ -75,7 +75,7 @@
                             "margin-bottom" : "8px"
                           }
                         }
-                        src={"https://ghbtns.com/github-btn.html?user=nisstyre56&repo="+this.project().name+"&type=star&count=false&size=large"}
+                        src={"https://ghbtns.com/github-btn.html?user=weskerfoot&repo="+this.project().name+"&type=star&count=false&size=large"}
                         frameborder="0"
                         scrolling="0"
                         width="72px"
@@ -90,7 +90,7 @@
                             "float" : "right"
                           }
                         }
-                        src={"https://ghbtns.com/github-btn.html?user=nisstyre56&repo="+this.project().name+"&type=fork&count=false&size=large"}
+                        src={"https://ghbtns.com/github-btn.html?user=weskerfoot&repo="+this.project().name+"&type=fork&count=false&size=large"}
                         frameborder="0"
                         scrolling="0"
                         width="72px"

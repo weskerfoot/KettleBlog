@@ -23,7 +23,7 @@
             }
           >
             <githubsocial
-              link="https://github.com/nisstyre56"
+              link="https://github.com/weskerfoot"
             >
             </githubsocial>
         </div>

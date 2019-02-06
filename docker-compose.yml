@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    build: app
+    ports:
+      - "80"
+    environment:
+      SECRET_KEY: "asdsdgfdgsdfdsf"
+      ADMIN_PASSWORD: "***REMOVED***"
+      JSONIFY_PRETTYPRINT_REGULAR: "False"
+    network_mode: host
+  couch:
+    image: couchdb
+    ports:
+      - "127.0.0.1:5984:5984"

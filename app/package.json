@@ -4,8 +4,8 @@
   "description": "Riot Blog",
   "main": "src/scripts/riotblog.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup src/scripts/riotblog.js"
+    "build_riotblog": "rollup --input /src/scripts/riotblog.js -c /src/rollup.config.riotblog.js",
+    "build_editor": "rollup --input /src/scripts/editor.js -c /src/rollup.config.editor.js"
   },
   "repository": {
     "type": "git",

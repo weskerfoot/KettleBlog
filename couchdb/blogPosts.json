@@ -1,0 +1,26 @@
+{
+  "_id": "_design/blogPosts",
+  "_rev": "128-d6bf6a41f78d140bdbb71a8bed3c2554",
+  "views": {
+    "blog-posts": {
+      "map": "function (doc) {\n  if (doc.type == \"post\" && !doc.draft) {\n    emit(doc._id.slice(-8), 1);\n  }\n}\n\n\n\n\n"
+    },
+    "links": {
+      "map": "function (doc) {\n  if (doc.type == \"links\") { emit(doc._id, 1); }\n}"
+    },
+    "categories": {
+      "map": "function (doc) {\n  if (doc.categories !== undefined && !doc.draft) {\n    emit([\"categories\", doc.categories], 1);\n  }\n}",
+      "reduce": "function (keys, values, rereduce) {\n  return null;\n}"
+    },
+    "format": {
+      "map": "function (doc) {\n  if (doc.categories !== undefined && !doc.draft) {\n    emit(doc._id.slice(-8),\n    {\n      \"categories\" : doc.categories,\n      \"author\" : doc.author,\n      \"title\" : doc.title,\n      \"id\" : doc._id.slice(-8),\n      \"content\" : doc.content.slice(0, 250)\n    });\n  }\n}"
+    },
+    "unpublished": {
+      "map": "function (doc) {\n  if (doc.type == \"post\") {\n    emit(doc._id.slice(-8), 1);\n  }\n}"
+    }
+  },
+  "lists": {
+    "categories": "function(head, req) {  var row, results;  var results = [];  var categories = (req.query.categories !== undefined ? JSON.parse(req.query.categories) : []);  var num = parseInt(req.query.num, 10);  var getlast = req.query.getlast;  var full_results;  if (getlast == undefined) {    while (results.length < num && (row = getRow())) {      if (categories.length == 0 ||          categories.some(function(c) { return row.value.categories.indexOf(c) !== -1; })) {        results.push([row.value.categories, row.value]);      }    }    full_results = results;  }  else {    while (row = getRow()) {      if (categories.length == 0 ||          categories.some(function(c) { return row.value.categories.indexOf(c) !== -1; })) {        results.push([row.value.categories, row.value]);      }    }    full_results = results.slice(results.length-(num+1), results.length-1);  }  return JSON.stringify({q : req.query.categories, results : full_results});}"
+  },
+  "language": "javascript"
+}

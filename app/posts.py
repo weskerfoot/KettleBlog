@@ -27,11 +27,14 @@ class Posts:
         if port is None:
             port = "5984"
 
+        host = "127.0.0.1"
+        port = "5984"
+
         self.client = couchdb.Server("http://%s:%s" % (host, port))
 
         self.client.credentials = (user, password)
 
-        self.db = self.client[name]
+        self.db = self.client["blog"]
 
         self.iterpost = self.postIterator("blogPosts/blog-posts")
 

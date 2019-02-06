@@ -13,15 +13,15 @@ from flask.ext.cache import Cache
 from urllib.parse import quote, unquote
 from json import dumps, loads
 from admin import Admin
-from werkzeug.contrib.cache import MemcachedCache
+#from werkzeug.contrib.cache import simpleCache
 
 from posts import Posts
 from projects import getProjects
 
-memcache = MemcachedCache(['127.0.0.1:11211'])
-cache = Cache(config={'CACHE_TYPE': 'memcached'})
-
 login_manager = LoginManager()
+
+#memcache = simpleCache(['127.0.0.1:11211'])
+cache = Cache(config={'CACHE_TYPE': 'simple'})
 
 page_titles = {
                 "about" : "About Me",
@@ -32,13 +32,13 @@ page_titles = {
 
 def cacheit(key, thunk):
     """
-    Explicit memcached caching
+    Explicit simple caching
     """
-    cached = memcache.get(quote(key))
+    cached = cache.get(quote(key))
     if cached is None:
         print("cache miss for %s" % key)
         result = thunk()
-        memcache.set(quote(key), result)
+        cache.set(quote(key), result)
         return result
     print("cache hit for %s" % key)
     return cached
@@ -60,7 +60,7 @@ def get_initial():
 def NeverWhere(configfile=None):
     app = Flask(__name__)
     app.config["TEMPLATES_AUTO_RELOAD"] = True
-    app.config["COUCHDB_SERVER"] = "http://localhost:5984"
+    app.config["COUCHDB_SERVER"] = "http://127.0.0.1:5984"
     app.config["COUCHDB_DATABASE"] = "blog"
     #def favicon():
         #return send_from_directory("/srv/http/goal/favicon.ico",
@@ -68,6 +68,14 @@ def NeverWhere(configfile=None):
 
     print(environ["RIOTBLOG_SETTINGS"])
     app.config.from_envvar('RIOTBLOG_SETTINGS')
+
+    @app.route("/styles/<path:path>")
+    def send_styles(path):
+        return send_from_directory("build/styles", path)
+
+    @app.route("/scripts/<path:path>")
+    def send_scripts(path):
+        return send_from_directory("build/scripts", path)
 
     # Set template variables to be injected
     @app.context_processor
@@ -246,7 +254,7 @@ def NeverWhere(configfile=None):
                 "draft" : draft
                 }
 
-        memcache.clear()
+        cache.clear()
         return posts.savepost(**post)
 
     @app.route("/blog/glinks/", methods=("GET",))
@@ -288,24 +296,26 @@ def NeverWhere(configfile=None):
 
     return app
 
-app = NeverWhere()
-
-@app.teardown_appcontext
-def teardown_couchdb(exception):
-    posts = getattr(g, 'posts', None)
-    if posts is not None:
-        del posts.db
-
-posts = LocalProxy(get_posts)
-initial_post = LocalProxy(get_initial)
-
-login_manager.init_app(app)
-
-csrf = CSRFProtect()
-
-csrf.init_app(app)
-
-cache.init_app(app)
-
 if __name__ == "__main__":
-    NeverWhere().run(host="localhost", port=8001, debug=True)
+
+    app = NeverWhere()
+
+    @app.teardown_appcontext
+    def teardown_couchdb(exception):
+        posts = getattr(g, 'posts', None)
+        if posts is not None:
+            del posts.db
+
+    csrf = CSRFProtect()
+
+    csrf.init_app(app)
+
+    cache.init_app(app)
+
+    posts = LocalProxy(get_posts)
+
+    initial_post = LocalProxy(get_initial)
+
+    login_manager.init_app(app)
+
+    app.run(host="0.0.0.0", port=80, debug=True)
