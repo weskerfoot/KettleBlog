@@ -4,10 +4,6 @@ services:
     build: app
     ports:
       - "80"
-    environment:
-      SECRET_KEY: "asdsdgfdgsdfdsf"
-      ADMIN_PASSWORD: "***REMOVED***"
-      JSONIFY_PRETTYPRINT_REGULAR: "False"
     network_mode: host
   couch:
     image: couchdb
