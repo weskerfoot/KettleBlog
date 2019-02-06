@@ -12,3 +12,4 @@ deploy.sh
 tags
 build
 .sass_cache
+.envrc

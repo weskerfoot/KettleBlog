@@ -14,6 +14,7 @@ RUN mkdir -p ./build/styles ./build/scripts
 RUN npm run-script build_riotblog
 RUN npm run-script build_editor
 RUN sassc ./styles/riotblog.scss > ./styles/riotblog.intermediate.min.css
+RUN cp ./styles/*.css ./build/styles/
 RUN uglifycss ./styles/*.css > ./build/styles/riotblog.min.css
 ENTRYPOINT ["python3"]
 ENV RIOTBLOG_SETTINGS "/src/riotblog_local.cfg"
