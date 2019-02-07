@@ -34,7 +34,7 @@ class Posts:
 
         self.client.credentials = (user, password)
 
-        self.db = self.client["blog"]
+        self.db = self.client[name]
 
         self.iterpost = self.postIterator("blogPosts/blog-posts")
 

@@ -1,6 +1,5 @@
 {
   "_id": "_design/blogPosts",
-  "_rev": "128-d6bf6a41f78d140bdbb71a8bed3c2554",
   "views": {
     "blog-posts": {
       "map": "function (doc) {\n  if (doc.type == \"post\" && !doc.draft) {\n    emit(doc._id.slice(-8), 1);\n  }\n}\n\n\n\n\n"

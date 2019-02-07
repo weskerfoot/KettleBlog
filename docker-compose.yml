@@ -1,5 +1,11 @@
 version: '3'
 services:
+  couch:
+    build: couchdb
+    ports:
+      - "127.0.0.1:5984:5984"
+    env_file:
+      - "./.envrc"
   web:
     build: app
     ports:
@@ -7,9 +13,5 @@ services:
     network_mode: host
     env_file:
       - "./.envrc"
-  couch:
-    build: couchdb
-    ports:
-      - "127.0.0.1:5984:5984"
-    env_file:
-      - "./.envrc"
+    depends_on:
+      - "couch"
