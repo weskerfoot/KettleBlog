@@ -5,8 +5,10 @@ services:
     ports:
       - "80"
     network_mode: host
+    env_file:
+      - "./.envrc"
   couch:
-    image: couchdb
+    build: couchdb
     ports:
       - "127.0.0.1:5984:5984"
     env_file:
