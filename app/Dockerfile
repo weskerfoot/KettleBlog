@@ -30,4 +30,4 @@ COPY blogPosts.json /blogPosts.json
 ENTRYPOINT ["/bin/bash", "/run.sh"]
 CMD ["/src/website.py"]
 
-EXPOSE 80
+EXPOSE 6969
