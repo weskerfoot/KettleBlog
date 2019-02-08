@@ -69,11 +69,11 @@ def NeverWhere(configfile=None):
     print(environ["RIOTBLOG_SETTINGS"])
     app.config.from_envvar('RIOTBLOG_SETTINGS')
 
-    @app.route("/styles/<path:path>")
+    @app.route("/blog/styles/<path:path>")
     def send_styles(path):
         return send_from_directory("build/styles", path)
 
-    @app.route("/scripts/<path:path>")
+    @app.route("/blog/scripts/<path:path>")
     def send_scripts(path):
         return send_from_directory("build/scripts", path)
 
