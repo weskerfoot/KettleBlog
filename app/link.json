@@ -3,15 +3,90 @@
   "links" :[
     {
       "type" : "links",
-      "title" : "test 1",
-      "href" : "https://wesk.tech",
-      "sub" : "wat"
+      "title" : "Books",
+      "items" : [
+        {
+          "href" : "https://www.goodreads.com/book/show/12964806-borrow",
+          "sub" : "History of consumer debt in America",
+          "title" : "Borrow: The American Way of Debt"
+        },
+        {
+          "href" : "https://www.goodreads.com/book/show/3450744-nudge",
+          "sub" : "A really interesting book on hehavioural economics",
+          "title" : "Nudge: Improving Decisions About Health, Wealth, and Happiness"
+        },
+        {
+          "href" : "https://play.google.com/store/books/details?id=N0OnBQAAQBAJ",
+          "sub" : "How the stock market actually works",
+          "title" : "A Random Walk Down Wall Street"
+        },
+        {
+          "href" : "http://cs.brown.edu/courses/cs173/2012/book/",
+          "sub" : "A good book on how to implement your own programming language",
+          "title" : "Programming Languages: Application and Interpretation"
+        },
+        {
+          "href" : "https://play.google.com/store/books/details?id=xHTVk23ui2YC",
+          "sub" : "A great book about life",
+          "title" : "When Things Fall Apart"
+        },
+        {
+          "href" : "https://swtch.com/~rsc/regexp/regexp1.html",
+          "sub" : "If you want to understand what regular expressions actually are",
+          "title" : "Regular expression matching can be simple and fast"
+        },
+        {
+          "href" : "https://eli.thegreenplace.net/2012/08/02/parsing-expressions-by-precedence-climbing",
+          "sub" : "This is the best way to write an infix expression parser",
+          "title" : "Parsing expressions by precedence climbing"
+        }
+      ]
     },
     {
       "type" : "links",
-      "title" : "test 2",
-      "href" : "https://wesk.tech",
-      "sub" : "lolwat"
+      "title" : "Cool Projects",
+      "items" : [
+        {
+          "title" : "Quirk",
+          "sub" : "A mobile CBT app",
+          "href" : "https://github.com/flaque/quirk"
+        },
+        {
+          "title" : "DuckDuckGo Browser",
+          "sub" : "The DDG browser",
+          "href" : "https://play.google.com/store/apps/details?id=com.duckduckgo.mobile.android"
+        },
+        {
+          "title" : "Datalog in Racket",
+          "sub" : "A tutorial on learning deductive programming",
+          "href" : "https://docs.racket-lang.org/datalog/"
+        },
+        {
+          "title" : "Containers from Scratch",
+          "sub" : "Who needs docker or kubernetes?",
+          "href" : "https://ericchiang.github.io/post/containers-from-scratch/"
+        },
+        {
+          "title" : "Closure Conversion",
+          "sub" : "Or 'how to compile lambda'",
+          "href" : "http://matt.might.net/articles/closure-conversion/"
+        },
+        {
+          "title" : "Basic Polymorphic Typechecking",
+          "sub" : "How to write your own type inference engine",
+          "href" : "http://lucacardelli.name/Papers/BasicTypechecking.pdf"
+        },
+        {
+          "title" : "Code Kata",
+          "sub" : "A great way to learn new things",
+          "href" : "http://codekata.com/"
+        },
+        {
+          "title" : "Magic Wormhole",
+          "sub" : "get things from one computer to another, safely",
+          "href" : "https://github.com/warner/magic-wormhole"
+        }
+      ]
     }
   ]
 }
