@@ -246,9 +246,9 @@ menuOff(ev) {
 
 self.titles = {
   "browse" : "Wesley Kerfoot",
-  "projects" : "Software",
+  "projects" : "GitHub Projects",
   "links" : "Links",
-  "about" : "About Me"
+  "about" : "Who am I?"
 };
 
 function activate(page) {

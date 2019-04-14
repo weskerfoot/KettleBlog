@@ -19,3 +19,7 @@ services:
       - ".env"
     depends_on:
       - "couch"
+    environment:
+      - "COUCHDB_USER"
+      - "COUCHDB_PASSWORD"
+      - "COUCHDB_NAME"
