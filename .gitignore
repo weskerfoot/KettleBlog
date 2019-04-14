@@ -13,3 +13,5 @@ tags
 build
 .sass_cache
 .envrc
+cut_release.sh
+.env
