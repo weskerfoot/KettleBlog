@@ -85,6 +85,62 @@
           "title" : "Magic Wormhole",
           "sub" : "get things from one computer to another, safely",
           "href" : "https://github.com/warner/magic-wormhole"
+        },
+        {
+          "title" : "Concurrency is not Parallelism",
+          "sub" : "Rob Pike on concurrency vs. parallelism",
+          "href" : "https://blog.golang.org/concurrency-is-not-parallelism"
+        },
+        {
+          "title" : "Software Patents are Bad",
+          "sub" : "Donald Knuth on why software patents are bad for society",
+          "href" : "https://www.cs.montana.edu/courses/spring2007/580-old/Resources/Knuth2.pdf"
+        },
+        {
+          "title" : "Guy L. Steele on programming languages",
+          "sub" : "Or why Python sucks",
+          "href" : "https://www.youtube.com/watch?v=_ahvzDzKdB0"
+        },
+        {
+          "title" : "Beautiful Racket",
+          "sub" : "How to create programming languages",
+          "href" : "https://beautifulracket.com/"
+        }
+      ]
+    },
+    {
+      "type" : "links",
+      "title" : "Inspiration",
+      "items" : [
+        {
+          "title" : "Iron and The Soul",
+          "sub" : "Henry Rollins on fitness",
+          "href" : "https://www.nerdfitness.com/iron-and-soul/"
+        },
+        {
+          "title" : "How to be a Stoic",
+          "sub" : "Why I practice stoicism and virtue ethics",
+          "href" : "https://howtobeastoic.wordpress.com/2018/06/11/virtue-ethics-is-a-big-tent-a-response-to-edith-hall/"
+        },
+        {
+          "title" : "On Death",
+          "sub" : "Douglas Hofstadter's take on death",
+          "href" : "https://drive.google.com/file/d/1ktwGfo1J7xQfFTxsAUKM_WkS_00T1bvs/view?usp=sharing"
+        },
+        {
+          "title" : "JWZ on startups",
+          "sub" : "Some thoughts from JWS on work/life balance",
+          "href" : "https://www.jwz.org/blog/2011/11/watch-a-vc-use-my-name-to-sell-a-con/"
+        },
+        {
+          "title" : "Barely succeed! It's easier!",
+          "sub" : "Why you don't need to be a unicorn",
+          "href" : "https://www.youtube.com/watch?v=5Vt8zqhHe_c&"
+        },
+        {
+          "title" : "The Relativity of Wrong",
+          "sub" : "Why nothing has to be perfect",
+          "href" : "http://chem.tufts.edu/AnswersInScience/RelativityofWrong.htm"
         }
       ]
     }

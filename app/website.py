@@ -8,7 +8,7 @@ from werkzeug.local import Local, LocalProxy, LocalManager
 from flask_appconfig import AppConfig
 from flask_login import LoginManager, login_required, login_user
 from flask_wtf.csrf import CSRFProtect
-from flask.ext.cache import Cache
+from flask_caching import Cache
 
 from urllib.parse import quote, unquote
 from json import dumps, loads
