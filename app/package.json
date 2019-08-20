@@ -40,7 +40,7 @@
     "fetch-cached": "^2.0.3",
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
-    "jquery": "^3.2.1",
+    "jquery": "^3.4.0",
     "lodash": "^4.17.13",
     "lodash-es": "^4.17.4",
     "moment": "^2.18.1",
