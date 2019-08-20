@@ -1,6 +1,7 @@
 version: '3'
 services:
   couch:
+    restart: always
     build: couchdb
     ports:
       - "127.0.0.1:5984:5984"
@@ -11,6 +12,7 @@ services:
       - "COUCHDB_PASSWORD"
       - "COUCHDB_NAME"
   web:
+    restart: always
     build: app
     ports:
       - "80"
