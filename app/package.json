@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "animate.css": "^3.5.2",
-    "axios": "^0.16.2",
+    "axios": "^0.18.1",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-es2015-template-literals": "^6.22.0",
     "babel-preset-es2015-riot": "^1.1.0",
