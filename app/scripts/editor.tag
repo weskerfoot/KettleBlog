@@ -86,7 +86,7 @@
 import './loading.tag';
 import './raw.tag';
 import { default as showdown } from 'showdown';
-import querystring from 'querystring';
+import { default as querystring } from 'querystring';
 import Z from './zipper.js';
 
 this.loading = false;
