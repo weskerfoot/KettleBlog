@@ -1,10 +1,11 @@
 language: python
 warnings_are_errors: false
-
 env:
   DOCKER_COMPOSE_VERSION: 1.24.1
-
+  global:
+  - secure: J4UQv56hjFeMdekHuNjSiyTcz+1eoutqUDGzGoZVwoRK2hZz0PjbmHsxxypiGvZyShh+lnkkVzBhA9oTdR+FjCJ7sR4o27+iF32u7S1em+EEcjBfPXN4fYGLEa2GywEU2fkCnEwlP/ubYGS5kLfY4Uljy9rkJo/GU/vFCdNfvyo5iGJe9KWb/C4hy01hXUmsZ5I9RNu8GZ+hFLOcJgX4QqdI1CIZp9sRDdjjaGHS8sAOfw1/rt5dcmcZcfZkATSl6hndRBrkla2uZakkqUAL8PKba4wdnF2kCzIJKWRBH5iz+thl6EQA0LkcBYuzfjcLISSFjmKFpVIdyqoLHmcW+czTZcvJRjvfaIzXZ/6D6zfRWLCaSJYY3KpXRqJ3RNSpQjt3gF2FMCJjHl8NN3ssl7rOoAP+mYF9GXgFbYJrytfKa6eQ8SwRRI6LoKiYvUmgfqQzpygi8a4Nfm+3Z9Q6Vk1DI2N+Ylm3REHeB/RO1sHqDV7XY/2B6e3ZV4B3V0lCUelrhzQ7MXOPqMQGNNINj0XDSIKurczqV+zQUV3O88+DIRl6TPmUjZkA5Ms/pTQQwGdWML/ZQMSKYouuqwbONzNaLT+8PHq3UNtbC3H2UiTSVZXViwwG9Of5v0EdTwtcFexuteYoyevjws92M4s3R69J7JAEJekdxkTUETLuTSY=
+  - secure: FVEbb10S6e5jQ/CmfAcZsDpVfqON/1uOrIHv39Rfy4WL/NFSoAErPhOJbpdUgiNWVwwP6L4aflJV7GRiklXXXo+NVzl9HUAUmDdSTV2hKhcf7XyW8neC2Q65j+Z7qcKuhwdO1urmxG8fL/bE+gECybbsCr/Jix79z3pdM8MJ7i5cXpu4xkbED5lmxD3bJwour3LU0e2I+eWVudS3CuKGUcZpkegiKQAbv7w5nfDbYVzM9ORQLbjjEz4+Zngv5BqrIRn8wqLeVrjTOSX8VZzBwURBG088YYPyyIyGl26HhuGDxPHS5jx32XOwC9dltob9UY7xVm040i/on6rLgWHzqy7UkjM4/vyBtYd8iGiuA/Vfajb40/2/Aql22iVuV1guPCXNAMutNAV3KLRxvF2NlJ+N5muVcfKavjeU4TRSnWTQ6y5mZ0OYwRjMEgCDi52rWfMbdKJeDgn+nefSLYqxlwY5KdGVazdJicvjsWUHca4aqEBB0d5z6/DLi1QknP4gaX9Bk+pb7a9GTwZGN+1iK2rxb8G5nW95GBeh/FrKaOwIMdNHKgA0UShO7clbM62T8TET/uA/CJNWYoQMRclcg2LU0SYq11HwlOi13ttmcZ8qdtgKZLNM6VsWDJRDrpJ58Qzs92V26IWdaKnH+0+iLzIzn2waTQXBmF0Cd1Qnnxs=
 script:
-  - docker-compose --version
-  - docker-compose -f docker-compose-dev.yml pull
-  - docker-compose -f docker-compose-dev.yml build
+- docker-compose --version
+- docker-compose -f docker-compose-dev.yml pull
+- docker-compose -f docker-compose-dev.yml build
