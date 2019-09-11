@@ -16,6 +16,8 @@ services:
     build: app
     ports:
       - "80"
+    env_file:
+      - ".env"
     network_mode: host
     depends_on:
       - "couch"

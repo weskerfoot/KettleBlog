@@ -2,8 +2,7 @@ FROM ubuntu:latest
 MAINTAINER wes kerfoot "wjak56@gmail.com"
 
 RUN apt-get update -y
-RUN apt-get install -y python3-pip python3-dev build-essential sassc jq
-RUN apt-get install -y curl
+RUN apt-get install -y python3-pip python3-dev build-essential sassc jq curl
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash
 RUN apt-get install -y nodejs
 RUN npm install -g uglifycss uglifyjs
