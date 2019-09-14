@@ -9,6 +9,6 @@ script:
 - docker-compose --version
 - docker-compose -f docker-compose-dev.yml pull
 - docker-compose -f docker-compose-dev.yml build
-- echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com -u "$DOCKER_USERNAME" --password-stdin
+- echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com --username "$DOCKER_USERNAME" --password-stdin
 - docker build -t registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h) app
 - docker push registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h)
