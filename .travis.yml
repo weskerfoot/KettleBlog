@@ -1,21 +1,21 @@
 language: python
 warnings_are_errors: false
-
 before_install:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-
+- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+- sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu
+  $(lsb_release -cs) stable"
+- sudo apt-get update
+- sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
 env:
   DOCKER_COMPOSE_VERSION: 1.24.1
   global:
-  - secure: WXbGcbop3myHqaUdfQ4EVfd0yomp2QAAcEVy5eTNWrUKP4vtf+2lFAicdncCheMCUqLq+HFTBails8FOFqT5aGyR8DSm7WqeKc+8F3cXtAusRCz6JMinmREB45RFWRTkY6JQ4yZWx+MoE9Czklyi2Yn4tzD+3aZOqVxpVuIvjwllVGxxqVy97ZcemY9qZO8mogZmzkLrjhA23os3M8Ro+soOvT0QvU+NFYuh+xa9BsLZxtIKGfWKQuEo3NoVGez9FKE1iYTRCculjAI12O0lRQ/sTwjhyPfXC5dn3ozlwaVQFwcHsF+Fk+PfXj39Ox45qmX3pRR5PY4UgUaWgGm47SIkERADil/NhsqrKOlMId8zzAARTltLBWdr8z0pRAWDkOtSqjbBw6wt+wode/h3twtegQ8Echi3iwv94GkoSBNX4xd6IFD4/0DPnUmB5I2zTW5aSFxmVH+75EVu69jTlMz98KLJ3KPtWDL3iTOPTzYXQXtcs4n8XN4TkiLeEFAsS88evPca3goRx8iP595E2wq62Xc1RUZYtYWILz/j9NSE2jz5B7d1kCDc7mwM39u/OajYFGHqVF0I/FzCyj1isslxEm44PneUNqRb+R6wzG/yV4LtSvyBOy9OA3ZVqhsDXRTOOzlmPQ1rCl7UaBeUQJ0JdYxOOClF1jZ8ThI+gsY=
-  - secure: t14uNuYef66OR/waeKsxJRAhWxIHXN3wi8ywT/OJkDuV4Ua4vWAcZfx12IXUI9cXJY3ltrJM1ce1/lHNgbl+c75Ylf9Tiqz2MW7sWZx1k6SesGE9Dp48xjqEeZMGi1gy4BO3rwColkFMidQaMmp32We+ckxAlpVteh4RfdPRlmthKs+2osRQieeYihYupWJ4OBsKmbNyw5MuE1Fcac/f3Ql/qHbj08DPWqGxvggq5K5Xck+ba6PYWnIXeV/KRBaToTLAPvANtqJHVRH8/vYsYFtrq5P2JYXsvEsUGsy4WprNffCP7SrJMpcvauuquNaBovvH8Fvbqr6z7dncuDlCskKI72fBkIPxZhb9BignuLk8vV9lCSXyuj7C/TAs5SO4D+g5wiKPYT8Tou+FT8CmK2Sr+zh5Kjg1KN8IMOhdJJfUl58ZkyBc6HSmSXIXSpQhSaIG5RC8ro169/I6K7hQBusBdSVIyBh41LbxdPb2fifCzzZQ6zmuBR1KTmU7GhORUvfWZflZyHSlXT/F9tyofdOlbm/mC834ZEyz+sqva9CiBlBMsrH/aw0U2V/nh8SA5uv95tJ2Yi33SfNzfvlVwxnm+XA4uuSqYeFH8ggYc8Hy06SvUy2drw85CC46tly6OB3Ilk3AG8995jMk1s6wdcMRzPP+XrLz5pC29aBh6j4=
+  - secure: KIpxdkaLZ/HZFHIsfw7WaTdQ+FHTn9NqBvkvaL0bNeIIczWZucoRD2T0feniXnxDMtQCKVlKlGkYXaE8ebXSNf1fUys64VhUYSnMIzr83zcqUHYYpRAvTuKjOhGKArgSPuJE5YXGglgPJIaL4teoN6lReGDbEk8+meyPxTUSFsGQe1F+LBKd3HzQzW/a2Slp+DLWCgX7KUd5NzIDhZw8Jau79yvwRNAt65GJ029Lpi+bQTFVjq66KfAlGi692RLl+/21VlrwJ3JwwNQ4t0jsS03ev+cVu82KgU/eoePlUb8nYkkUYc6wyASML/LtMHb3rtnwvRDLWrLfJQXDGnyRMvJFi5R8HUdftNkjJvTmgkNI/w2CY49s715GCUC7KCjIAIqJBrHR9oY/u1NtgEmt6UBa9Ex9S5n4UuQ3ZW1BUBSWmG3TXfChCmr1nc/ftEsXfJHytj3gOD1+wHOo3jv+8j3LWXsTgGm9dbMMeqsIqbC8t/BYF9V6mseIhF+xjpeHq6p+dmLQ7iBxsccbI4WewMAw2UitC97zQyjhOxy2jPiuTi2qmh9V9eIW03FeTvoSGyrRMyVtuNb7kr+0gxQKTxpGEwSXEClu6Z5Ja1AwUKm/2O/aJp1vp7JjoZDmMPyyhdJA8cdteX1M8GlZs4xFJvGP/xgFlbBe0A/7jGapf9A=
+  - secure: XT6Gx6uWam3564Gf6u81+mbfK2cDt2Ui8LAAsjk/XBAJ+bwF/C7TT7kqfVBH3OQcphEGEqRae0wQXb0lXNIKqpE9cdkdCKuLEcG1Gg6hfhNSh5vjmz3ZYyUlQAR1O+s63dyFTvqvVIQZKN6Z+nH3REOcjwU41beRa4uzOrctTc2llwEmD04ofyFxFjZ5EqItZP5UnjBsE8VtY8vGWCL9hJtjOnUzYVef5M4xAtkKQLcV/TEGT4Sdznnmp7BWDgzZdRtjLoOzHbR3ZGCSdOCLewvCg7FG3WzfUPkl3+fpRSshHx09RLFEqF5u+ms2hlpJxGoMAM/GA5V+zOD/Jpru6UNk+PJWU532hX582ixrTxhAOX4wPirrn7By/5IkXmzxy8bBdbJaAHnuDXccVWzeQHUXxV8EO6Mhd4Ksz+Wv5D4a6fo2W5DiwUVtfMdgi2SOWJCojABjZngv3+/CTW0+36D/QXXE+PB76DEtraYtIzNbjE227x6m4FTDzCaiHK1Wm4G33J2NtyKI7A+vFx5ryL0ksL8L+KZIK2X/vq/b63w2TEemaWG8UhwM4ZSy/ta7ujU7kvCWXgL9xvB488lRzzPaeztLHnUyFKP8HWgbZqQP68yWEd8iZ2nN9v160AQrm/uWQnroV6M/luMWdm5PFTn+P2fiSwbV3EBxGxDuGkg=
 script:
 - docker-compose --version
 - docker-compose -f docker-compose-dev.yml pull
 - docker-compose -f docker-compose-dev.yml build
 - echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com --username "$DOCKER_USERNAME" --password-stdin
-- docker build -t registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h) app
+- docker build -t registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h)
+  app
 - docker push registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h)
