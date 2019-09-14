@@ -46,9 +46,9 @@ def cacheit(key, thunk):
 def get_posts():
     posts = getattr(g, "posts", None)
     if posts is None:
-        posts = g._posts = Posts(app.config.from_envvar("COUCHDB_USER"),
-                                 app.config.from_envvar("COUCHDB_PASSWORD"),
-                                 app.config.from_envvar("COUCHDB_NAME"))
+        posts = g._posts = Posts(environ.get("COUCHDB_USER"),
+                                 environ.get("COUCHDB_PASSWORD"),
+                                 environ.get("COUCHDB_NAME"))
     return posts
 
 def get_initial():
@@ -100,7 +100,7 @@ def NeverWhere(configfile=None):
     def admin_login():
         password = request.args.get("password")
         success = False
-        if password == app.config["ADMIN_PASSWORD"]:
+        if password == environ.get("ADMIN_PASSWORD"):
             print("logged in successfully")
             success = True
             login_user(Admin())
