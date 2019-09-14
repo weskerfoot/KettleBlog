@@ -60,6 +60,7 @@ def get_initial():
 def NeverWhere(configfile=None):
     app = Flask(__name__)
     app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.config["SECRET_KEY"] = environ.get("SECRET_KEY")
     app.config["COUCHDB_SERVER"] = "http://127.0.0.1:5984"
     app.config["COUCHDB_DATABASE"] = "blog"
     #def favicon():
