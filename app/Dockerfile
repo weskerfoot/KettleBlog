@@ -21,8 +21,6 @@ RUN sassc ./styles/riotblog.scss > ./styles/riotblog.intermediate.min.css
 RUN cp ./styles/*.css ./build/styles/
 RUN uglifycss ./styles/*.css > ./build/styles/riotblog.min.css
 
-ENV RIOTBLOG_SETTINGS "/src/riotblog_local.cfg"
-
 COPY run.sh /run.sh
 COPY blogPosts.json /blogPosts.json
 

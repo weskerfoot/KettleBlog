@@ -66,9 +66,6 @@ def NeverWhere(configfile=None):
         #return send_from_directory("/srv/http/goal/favicon.ico",
                                    #'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-    print(environ["RIOTBLOG_SETTINGS"])
-    app.config.from_envvar('RIOTBLOG_SETTINGS')
-
     @app.route("/blog/styles/<path:path>")
     def send_styles(path):
         return send_from_directory("build/styles", path)
