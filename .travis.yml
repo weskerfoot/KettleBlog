@@ -13,8 +13,6 @@ env:
   - secure: XT6Gx6uWam3564Gf6u81+mbfK2cDt2Ui8LAAsjk/XBAJ+bwF/C7TT7kqfVBH3OQcphEGEqRae0wQXb0lXNIKqpE9cdkdCKuLEcG1Gg6hfhNSh5vjmz3ZYyUlQAR1O+s63dyFTvqvVIQZKN6Z+nH3REOcjwU41beRa4uzOrctTc2llwEmD04ofyFxFjZ5EqItZP5UnjBsE8VtY8vGWCL9hJtjOnUzYVef5M4xAtkKQLcV/TEGT4Sdznnmp7BWDgzZdRtjLoOzHbR3ZGCSdOCLewvCg7FG3WzfUPkl3+fpRSshHx09RLFEqF5u+ms2hlpJxGoMAM/GA5V+zOD/Jpru6UNk+PJWU532hX582ixrTxhAOX4wPirrn7By/5IkXmzxy8bBdbJaAHnuDXccVWzeQHUXxV8EO6Mhd4Ksz+Wv5D4a6fo2W5DiwUVtfMdgi2SOWJCojABjZngv3+/CTW0+36D/QXXE+PB76DEtraYtIzNbjE227x6m4FTDzCaiHK1Wm4G33J2NtyKI7A+vFx5ryL0ksL8L+KZIK2X/vq/b63w2TEemaWG8UhwM4ZSy/ta7ujU7kvCWXgL9xvB488lRzzPaeztLHnUyFKP8HWgbZqQP68yWEd8iZ2nN9v160AQrm/uWQnroV6M/luMWdm5PFTn+P2fiSwbV3EBxGxDuGkg=
 script:
 - docker-compose --version
-- docker-compose -f docker-compose-dev.yml pull
-- docker-compose -f docker-compose-dev.yml build
 - echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com --username "$DOCKER_USERNAME" --password-stdin
 - docker build -t registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h)
   app
