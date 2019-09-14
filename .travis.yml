@@ -15,5 +15,4 @@ script:
 - docker-compose --version
 - echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com --username "$DOCKER_USERNAME" --password-stdin
 - docker build -t registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h)
-  app
 - docker push registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h)
