@@ -1,7 +1,7 @@
 <about>
   <div class="centered content-box animated fadeIn">
     <h4 style={headerStyle}>
-      Who am I?
+      What I Do
     </h4>
     <p class="post-content">
       I'm a full stack application developer who builds web and mobile apps. I am a huge fan of functional programming, compilers, and solving problems creatively and efficiently. I enjoy helping other people learn more, and I am constantly learning as well. This blog covers my thoughts on everything from computer science, psychology, philosophy, economics, and anything else I'm currently interested in.

@@ -248,7 +248,7 @@ self.titles = {
   "browse" : "Wesley Kerfoot",
   "projects" : "GitHub Projects",
   "links" : "Links",
-  "about" : "Who am I?"
+  "about" : "What I Do"
 };
 
 function activate(page) {
