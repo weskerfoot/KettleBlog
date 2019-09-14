@@ -46,9 +46,9 @@ def cacheit(key, thunk):
 def get_posts():
     posts = getattr(g, "posts", None)
     if posts is None:
-        posts = g._posts = Posts(app.config["COUCHDB_USER"],
-                                 app.config["COUCHDB_PASSWORD"],
-                                 app.config["COUCHDB_NAME"])
+        posts = g._posts = Posts(app.config.from_envvar("COUCHDB_USER"),
+                                 app.config.from_envvar("COUCHDB_PASSWORD"),
+                                 app.config.from_envvar("COUCHDB_NAME"))
     return posts
 
 def get_initial():
