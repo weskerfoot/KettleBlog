@@ -21,3 +21,4 @@ services:
       - "COUCHDB_USER"
       - "COUCHDB_PASSWORD"
       - "COUCHDB_NAME"
+      - "SECRET_KEY"
