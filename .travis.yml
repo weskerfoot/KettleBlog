@@ -1,5 +1,12 @@
 language: python
 warnings_are_errors: false
+
+before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+
 env:
   DOCKER_COMPOSE_VERSION: 1.24.1
   global:
@@ -9,6 +16,6 @@ script:
 - docker-compose --version
 - docker-compose -f docker-compose-dev.yml pull
 - docker-compose -f docker-compose-dev.yml build
-- echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com --username="$DOCKER_USERNAME" --password-stdin
+- echo "$DOCKER_PASSWORD" | docker login registry.gitlab.com --username "$DOCKER_USERNAME" --password-stdin
 - docker build -t registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h) app
 - docker push registry.gitlab.com/weskerfoot/kettleblog:$(git log -1 --pretty=%h)
