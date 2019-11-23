@@ -66,7 +66,7 @@ html {
   font-weight: 400;
   color: black;
   @media (max-width: 600px) {
-    font-size: 1.6em;
+    font-size: 1.7em;
   }
   @media (max-width: 530px) {
     font-size: 1.3em;
@@ -475,8 +475,8 @@ $bg-color: red;
 
 .post-card {
   @extend .shadow;
-  max-width: 80%;
-  @media(max-width: 400px) {
+  max-width: 85%;
+  @media(max-width: 500px) {
     max-width: 95%;
   }
 }
