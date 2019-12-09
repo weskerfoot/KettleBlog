@@ -16,3 +16,4 @@ build
 cut_release.sh
 .env
 docker-compose-dev.yml
+deploy.sh
