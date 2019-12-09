@@ -24,4 +24,4 @@ function makeBundle(item) {
   };
 }
 
-export default makeBundle(["./scripts/editor.js", "./build/scripts/editor.min.js"]);
+export default makeBundle(["./scripts/editor.js", "/scripts/editor.min.js"]);

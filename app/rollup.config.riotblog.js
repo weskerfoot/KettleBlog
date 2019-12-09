@@ -24,4 +24,4 @@ function makeBundle(item) {
   };
 }
 
-export default makeBundle(["./scripts/riotblog.js", "./build/scripts/riotblog.min.js"]);
+export default makeBundle(["./scripts/riotblog.js", "/scripts/riotblog.min.js"]);

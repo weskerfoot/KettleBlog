@@ -2,10 +2,10 @@
   "name": "riotblog",
   "version": "1.0.0",
   "description": "Riot Blog",
-  "main": "src/scripts/riotblog.js",
+  "main": "/scripts/riotblog.js",
   "scripts": {
-    "build_riotblog": "rollup /src/scripts/riotblog.js --config /src/rollup.config.riotblog.js",
-    "build_editor": "rollup /src/scripts/editor.js --config /src/rollup.config.editor.js"
+    "build_riotblog": "rollup /scripts/riotblog.js --config /scripts/rollup.config.riotblog.js",
+    "build_editor": "rollup /scripts/editor.js --config /scripts/rollup.config.editor.js"
   },
   "repository": {
     "type": "git",

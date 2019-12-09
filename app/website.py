@@ -69,11 +69,11 @@ def NeverWhere(configfile=None):
 
     @app.route("/blog/styles/<path:path>")
     def send_styles(path):
-        return send_from_directory("build/styles", path)
+        return send_from_directory("/styles", path)
 
     @app.route("/blog/scripts/<path:path>")
     def send_scripts(path):
-        return send_from_directory("build/scripts", path)
+        return send_from_directory("/scripts", path)
 
     # Set template variables to be injected
     @app.context_processor
