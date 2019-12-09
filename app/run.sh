@@ -7,7 +7,7 @@ function updateLinks() {
   then
     curl -XDELETE "http://$COUCHDB_USER:$COUCHDB_PASSWORD@127.0.0.1:5984/$COUCHDB_NAME/links?rev=$revision_id" || true
   fi
-  curl -XPUT http://$COUCHDB_USER:$COUCHDB_PASSWORD@127.0.0.1:5984/$COUCHDB_NAME/links -d @link.json || true
+  curl -XPUT http://$COUCHDB_USER:$COUCHDB_PASSWORD@127.0.0.1:5984/$COUCHDB_NAME/links -d @/src/link.json || true
 
 }
 
@@ -18,7 +18,7 @@ while [ $? != 0 ]; do
 done
 
 curl -XPUT http://$COUCHDB_USER:$COUCHDB_PASSWORD@127.0.0.1:5984/$COUCHDB_NAME || true
-curl -XPUT http://$COUCHDB_USER:$COUCHDB_PASSWORD@127.0.0.1:5984/$COUCHDB_NAME/_design/blogPosts -d @/blogPosts.json || true
+curl -XPUT http://$COUCHDB_USER:$COUCHDB_PASSWORD@127.0.0.1:5984/$COUCHDB_NAME/_design/blogPosts -d @/src/blogPosts.json || true
 
 updateLinks
 
