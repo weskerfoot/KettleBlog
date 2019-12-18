@@ -1,9 +1,9 @@
-$brandingBG: rgba(103, 173, 219, 0.40);
-$brandingBG2: rgba(75, 147, 193, 0.65);
-$brandingBG3: rgba(103, 173, 219, 0.27);
+$brandingBG: #d5e7ef;
+$brandingBG2: #d5e7ef;
+$brandingBG3: #d5e7ef;
 
-$branding: black;
-$branding2: blue;
+$branding: #002a54;
+$branding2: #307193;
 $branding3: #1b4c6c;
 
 $menuWidth: 65px;
@@ -38,7 +38,7 @@ $navbarHeight: 100px;
   -o-background-size: cover !important;
   background-size: cover !important;
   background-repeat:no-repeat !important;
-  background-color: #FBFCFD !important;
+  background-color: #f7fafc !important;
 }
 
 html {
@@ -385,6 +385,7 @@ p, h6, h5, h4, h3, h2, h1 {
 
 .posts-box {
   @extend .content-box;
+  background-color: #fbfcfd;
   height: 250px !important;
 }
 
