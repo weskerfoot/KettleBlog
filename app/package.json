@@ -41,7 +41,7 @@
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.2",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lodash-es": "^4.17.15",
     "moment": "^2.24.0",
     "querystring": "^0.2.0",
