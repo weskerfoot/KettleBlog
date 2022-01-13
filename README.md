@@ -1,3 +1,5 @@
+# **This repository has moved to [https://git.wesk.tech/wes/KettleBlog](https://git.wesk.tech/wes/KettleBlog)**
+
 A simple single-page blog written in RiotJS and Flask
 
 Includes a tag that pulls projects from Github and puts them in a carousel-like
