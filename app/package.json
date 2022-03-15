@@ -42,7 +42,7 @@
     "immutable": "^3.8.2",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "moment": "^2.24.0",
     "querystring": "^0.2.0",
     "riotcontrol": "^0.0.3",
