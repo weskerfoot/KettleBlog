@@ -25,7 +25,7 @@ Jinja2==2.10.1
 lxml==4.4.1
 MarkupSafe==1.1.1
 marshmallow==3.0.0
-mistune==0.8.4
+mistune==2.0.3
 packaging==19.1
 pip-upgrader==1.4.15
 pycparser==2.19
